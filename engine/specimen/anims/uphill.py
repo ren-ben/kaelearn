@@ -36,13 +36,11 @@ class Uphill(KLScene3D):
         surf = kl_surface(ax, f, [-3, 3], [-3, 3])
         self.play(self.say(r'The surface is the graph of $f$: its height above each point $(x,y)$.'),
                   Create(surf), run_time=2.5)
-        self.begin_ambient_camera_rotation(rate=0.05)
-        self.wait(3)
-        self.stop_ambient_camera_rotation()
+        self.orbit(30, run_time=6)
 
-        # from straight above, the surface becomes a map
-        self.play(self.say(r'Look down from above. Each ring joins the points where $f$ has the same height.'))
-        self.move_camera(phi=0, theta=-90 * DEGREES, zoom=0.78, run_time=3)
+        # from straight above, the surface becomes a map; the caption changes while the camera moves
+        self.move_camera(phi=0, theta=-90 * DEGREES, zoom=0.78, run_time=3.5, added_anims=[
+            self.say(r'Look down from above. Each ring joins the points where $f$ has the same height.')])
         unit = ax.x_axis.get_unit_size()
         rings = VGroup(*[Circle(radius=np.sqrt(-4 * np.log(c / 2.2)) * unit, color=DIM, stroke_width=2)
                          .move_to(ax.c2p(0, 0, 2.4)) for c in LEVELS])
@@ -70,11 +68,11 @@ class Uphill(KLScene3D):
         self.wait(1.5)
 
         # back to the side: the same path, now as a climb
-        self.play(FadeOut(rings), FadeOut(arrows), surf.animate.set_fill(opacity=0.85).set_stroke(opacity=1),
-                  self.say(r'From the side, that path is the steepest way up the hill. At the top, $\nabla f = 0$.'),
-                  run_time=1.5)
-        self.move_camera(**SIDE, run_time=3)
-        dot.move_to(path.get_start())
+        self.move_camera(**SIDE, run_time=3.5, added_anims=[
+            FadeOut(rings), FadeOut(arrows), FadeOut(dot), surf.animate.set_fill(opacity=0.85).set_stroke(opacity=1),
+            self.say(r'From the side, that path is the steepest way up the hill. At the top, $\nabla f = 0$.')])
+        dot = Dot3D(path.get_start(), radius=0.09, color=HI)
+        self.play(FadeIn(dot), run_time=0.6)
         self.play(MoveAlongPath(dot, path), run_time=4, rate_func=smooth)
         self.wait(2)
 

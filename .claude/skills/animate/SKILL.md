@@ -26,9 +26,15 @@ context: an `\anim` panel in the PDF, or an embed in the concept note.
    the student can think.
 5. `self.idea_card(...)`: the answer in one or two sentences.
 
-**Motion is smooth.** Nothing snaps. A quantity that has to be a whole number (an index, a
-count) glides to each new value: animate a second `ValueTracker` for its position alongside the
-first, as `heads-and-tails.py` does with ε and N.
+**Motion is smooth.** Every move eases in and out (manim's default `smooth`). Nothing snaps,
+teleports, pops in or out, or starts and stops at full speed.
+- A quantity that has to be a whole number (an index, a count) glides to each new value: animate
+  a second `ValueTracker` for its position alongside the first, as `heads-and-tails.py` does with
+  ε and N.
+- To bring an object back to a start point, fade it out and a new one in. Never `move_to` it
+  between frames.
+- Run caption changes during a motion (`added_anims=[self.say(...)]`), not in a dead pause
+  between two motions.
 
 Silent, with no voice-over. Math goes in `MathTex` or `Tex` (Garamond, through XeLaTeX); plain
 words go in `Text`. Use only the inks from `klmanim`:
@@ -57,8 +63,10 @@ subclass `KLScene3D`. The model is `engine/specimen/anims/uphill.py`.
   by height from `LOW` to `HI`.
 - Captions and cards stay flat on the screen by themselves. Anything else that should stay flat
   goes through `self.pin(...)`.
-- Set the camera with `set_camera_orientation(phi=60-70°, theta=...)`. A slow
-  `begin_ambient_camera_rotation(rate=0.05)` gives depth; stop it before the idea card.
+- Set the camera with `set_camera_orientation(phi=60-70°, theta=...)`. For depth, use
+  `self.orbit(degrees, run_time)`, a slow eased swing. Never use ambient camera rotation: it
+  starts and stops with a jerk, and `kl.py anim` refuses scenes that use it. Every other camera
+  change is a `move_camera(...)`, which eases by default.
 - **One layer at a time.** Flat objects (arrows, rings, curves) always draw on top of every 3D
   face, so a map stacked under a surface ends up over it. For a map or a field, move the camera
   straight above (`move_camera(phi=0, theta=-90°, zoom≈0.8)`), fade the surface to about 0.3,
@@ -74,6 +82,9 @@ subclass `KLScene3D`. The model is `engine/specimen/anims/uphill.py`.
    - the captions are readable
    - the change is visible
    - the idea card fits
+   - no `motion:` warnings. The render flags any motion that starts or stops abruptly, at its
+     timestamp. It only sees motion that covers a lot of the frame, so slow or small moves still
+     depend on the rules above.
 
    Fix and repeat until it passes.
 2. `python engine/kl.py anim <file.py> --poster 0.6` renders the final 1080p30 video. It writes

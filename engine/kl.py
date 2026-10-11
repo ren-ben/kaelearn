@@ -129,6 +129,8 @@ def publish(f: Path):
 def anim(py: Path, draft: bool, poster: float):
     """Render a manim scene file; final renders land beside it as <stem>.mp4 and a <stem>.png poster."""
     py = py.resolve()
+    if 'ambient_camera_rotation' in py.read_text(encoding='utf8'):
+        sys.exit('ambient camera rotation starts and stops with a jerk; use self.orbit() (eased) instead')
     out = CACHE / 'anim' / py.stem
     env = clean_env()
     env['PYTHONPATH'] = str(ENGINE)
@@ -155,6 +157,8 @@ def anim(py: Path, draft: bool, poster: float):
             v = dest
         print(f'{v.relative_to(ROOT).as_posix()}  {frames[0]:.0f} s  {v.stat().st_size / 1e6:.1f} MB')
         print((out / f'{stem}-sheet.png').relative_to(ROOT).as_posix())
+        for j in frames[2]:
+            print('motion:', j)
 
 
 def contact_sheet(mp4: Path, out: Path, poster: float, n: int = 12):
@@ -165,20 +169,50 @@ def contact_sheet(mp4: Path, out: Path, poster: float, n: int = 12):
         total = s.frames
         want = {round(i * (total - 1) / (n - 1)) for i in range(n)}
         pick = round(poster * (total - 1))
-        tiles, still = [], None
+        tiles, still, prev, diffs = [], None, None, []
         for i, fr in enumerate(c.decode(s)):
+            img = fr.to_image()
             if i in want:
-                tiles.append(fr.to_image().resize((480, 270)))
+                tiles.append(img.resize((480, 270)))
             if i == pick:
-                still = fr.to_image()
-        dur = float(s.duration * s.time_base) if s.duration else total / float(s.average_rate)
+                still = img
+            small = np.asarray(img.convert('L').resize((160, 90)), dtype=np.float32)
+            diffs.append(0.0 if prev is None else float(np.abs(small - prev).mean()))
+            prev = small
+        fps = float(s.average_rate)
+        dur = float(s.duration * s.time_base) if s.duration else total / fps
+    jerks = motion_jumps(diffs, fps)
     g, cols = 8, 4
     rows = -(-len(tiles) // cols)
     sheet = Image.new('RGB', (cols * (480 + g) + g, rows * (270 + g) + g), (64, 62, 58))
     for i, t in enumerate(tiles):
         sheet.paste(t, (g + (i % cols) * (480 + g), g + (i // cols) * (270 + g)))
     sheet.save(out)
-    return dur, still
+    return dur, still, jerks
+
+
+def motion_jumps(d, fps, still=0.03, ratio=0.6):
+    # d: mean frame-to-frame change. Split the video into runs of motion. Eased motion starts and
+    # ends slow compared with its peak; a run already near full speed in its first or last two frames
+    # started or stopped with a jerk (ambient rotation, an unanimated move). Runs under half a second
+    # are skipped: quick fades, and the one-frame blips where each play() clip starts on a keyframe.
+    out, i, n = [], 0, len(d)
+    while i < n:
+        if d[i] <= still:
+            i += 1
+            continue
+        j = i  # a run ends at two still frames in a row, so jittery motion (dashes drawn) stays one run
+        while j < n and not (d[j] <= still and (j + 1 == n or d[j + 1] <= still)):
+            j += 1
+        run = d[i:j]
+        peak = float(np.percentile(run, 90))
+        if peak > 0.12 and j - i >= fps / 2:  # caption fades peak below 0.1
+            if np.median(run[:3]) > ratio * peak:
+                out.append(f'{i / fps:.1f} s: motion starts abruptly')
+            if np.median(run[-3:]) > ratio * peak:
+                out.append(f'{(j - 1) / fps:.1f} s: motion stops abruptly')
+        i = j
+    return out
 
 
 def mirror():

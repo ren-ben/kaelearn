@@ -129,4 +129,10 @@ class KLScene3D(_Cards, ThreeDScene):
     def pin(self, *mobs):
         self.add_fixed_in_frame_mobjects(*mobs)
 
+    def orbit(self, degrees, run_time=6, *anims):
+        """Swing the camera around the vertical axis, easing in and out. Use this, never ambient
+        rotation: that starts and stops with a jerk."""
+        self.move_camera(theta=self.camera.get_theta() + degrees * DEGREES, run_time=run_time,
+                         rate_func=smooth, added_anims=list(anims))
+
 
