@@ -143,9 +143,16 @@ def anim(py: Path, draft: bool, poster: float):
         stem = py.stem if len(vids) == 1 else f'{py.stem}-{v.stem}'
         frames = contact_sheet(v, out / f'{stem}-sheet.png', poster)
         if not draft:
-            shutil.copyfile(v, py.with_name(stem + '.mp4'))
+            dest = py.with_name(stem + '.mp4')
+            shutil.copyfile(v, dest)
+            for crf in (28, 32, 36):  # too big for the vault: re-encode until it fits
+                if dest.stat().st_size / 1e6 <= MAX_MB:
+                    break
+                subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', str(v), '-c:v', 'libx264', '-crf', str(crf),
+                                '-preset', 'slow', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', str(dest)],
+                               check=True, env=env)
             frames[1].save(py.with_name(stem + '.png'))
-            v = py.with_name(stem + '.mp4')
+            v = dest
         print(f'{v.relative_to(ROOT).as_posix()}  {frames[0]:.0f} s  {v.stat().st_size / 1e6:.1f} MB')
         print((out / f'{stem}-sheet.png').relative_to(ROOT).as_posix())
 

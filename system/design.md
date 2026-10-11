@@ -88,9 +88,12 @@ to a `.dat` file in the folio's `figs/` folder, and plot it with `\addplot table
 ## Animations
 
 Manim videos in the same look: `engine/klmanim.py` sets the inks, Garamond for math (XeLaTeX)
-and text, and gives `KLScene` (title card, idea card), `kl_axes`, `label`, `caption` and `leds`.
-One idea per video, 30 to 90 seconds, silent, slow enough to think. The order, the files and
-the render loop are in `/animate`; the model is `engine/specimen/anims/heads-and-tails.py`.
+and text, and gives `KLScene` and `KLScene3D` (title, question and idea cards, the `say` caption
+line), `kl_axes`, `kl_axes3d`, `kl_surface`, `label`, `caption` and `leds`.
+One idea per video, 30 to 90 seconds, silent, slow enough to think, smooth, and clear without
+the PDF. The order, the files and
+the render loop are in `/animate`; the models are `engine/specimen/anims/heads-and-tails.py`
+(2D) and `uphill.py` (3D).
 In a PDF, `\anim{slug}{what to watch for}` shows the poster frame, and a tap plays the video
 in Obsidian.
 

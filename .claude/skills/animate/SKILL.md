@@ -13,12 +13,22 @@ the student asks for more.
 
 ## Shape: one idea, 30 to 90 seconds
 
+Every video has to make sense on its own, with no PDF beside it. It is also always placed in
+context: an `\anim` panel in the PDF, or an embed in the concept note.
+
 1. `self.title_card(title, subtitle)`.
-2. Build the object in steps. One caption line at the top (`Tex`, about 34 pt) says what to look
-   at, and changes as the video moves on.
-3. Show the change that carries the idea, slowly: 3 to 5 s per move, then `wait` 1 to 2 s so
+2. `self.question_card(...)`: the question the video answers, stated in full (the claim, the
+   problem, the definitions it needs). A viewer who has only seen this card knows what to watch
+   for.
+3. Build the object in steps. `self.play(self.say(...), ...)` sets the caption line at the top.
+   Each caption explains the step: what is happening and why it matters, not just a label.
+4. Show the change that carries the idea, slowly: 3 to 5 s per move, then `wait` 1 to 2 s so
    the student can think.
-4. `self.idea_card(...)`: the idea in one or two sentences.
+5. `self.idea_card(...)`: the answer in one or two sentences.
+
+**Motion is smooth.** Nothing snaps. A quantity that has to be a whole number (an index, a
+count) glides to each new value: animate a second `ValueTracker` for its position alongside the
+first, as `heads-and-tails.py` does with ε and N.
 
 Silent, with no voice-over. Math goes in `MathTex` or `Tex` (Garamond, through XeLaTeX); plain
 words go in `Text`. Use only the inks from `klmanim`:
@@ -39,6 +49,20 @@ Kael'thos appears only in the title card.
 Write one scene class per file: `from klmanim import *`, then subclass `KLScene`. The model is
 `engine/specimen/anims/heads-and-tails.py`.
 
+## 3D
+
+For surfaces, fields in space, gradients, divergence and curl, or thermodynamic state surfaces,
+subclass `KLScene3D`. The model is `engine/specimen/anims/uphill.py`.
+- Build with `kl_axes3d(...)` and `kl_surface(ax, f, x_range, y_range)`. The surface is shaded
+  by height from `LOW` to `HI`.
+- Captions and cards stay flat on the screen by themselves. Anything else that should stay flat
+  goes through `self.pin(...)`.
+- Set the camera with `set_camera_orientation(phi=60-70°, theta=...)`. A slow
+  `begin_ambient_camera_rotation(rate=0.05)` gives depth; stop it before the idea card.
+- To show a field under a surface, put it on a floor plane well below the surface and lower the
+  surface's opacity while the floor is being explained.
+- 3D renders slowly (about 5 minutes for 45 s at 1080p), so get the draft right first.
+
 ## Render, check, publish
 
 1. `python engine/kl.py anim <file.py> --draft` renders fast at 480p and prints a contact sheet
@@ -54,7 +78,8 @@ Write one scene class per file: `from klmanim import *`, then subclass `KLScene`
    video that shows the most telling frame.
 3. Publish the video: `kl.py publish <slug>.mp4` puts it beside its PDF in the vault, or under
    `Anims/<s>/` for standalone videos. Rebuild and publish the PDF that shows it. Keep each video
-   under 3 MB (`publish` refuses bigger: the vault has 1 GB in total); the render prints the size.
+   under 3 MB (`publish` refuses bigger: the vault has 1 GB in total). `kl.py anim` re-encodes a
+   render that comes out too big, and prints the final size.
 4. Embed it in the concept note it explains as `![[<slug>.mp4]]`.
 5. Commit and push.
 
@@ -65,3 +90,5 @@ Write one scene class per file: `from klmanim import *`, then subclass `KLScene`
 - Use `always_redraw` for anything that depends on a `ValueTracker`. Call `clear_updaters()`
   before fading out.
 - Give dots a `z_index` so lines drawn later don't cut through them.
+- In 3D, never `Transform` a pinned text into another: the new letters come out unpinned and
+  vanish. Crossfade instead (`say` does).
