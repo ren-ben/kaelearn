@@ -5,7 +5,10 @@
                                               render pages to PNG (and a contact sheet) to check them
   python engine/kl.py plate <scene> <out.png> [--seed N]
                                               a dithered plate; scenes: nave horizon orrery field lattice
-  python engine/kl.py publish <file.pdf>      copy a PDF into the vault, then mirror the md files
+  python engine/kl.py anim <scene.py> [--draft] [--poster 0.66]
+                                              render a manim scene (engine/klmanim.py) to <scene>.mp4 + poster,
+                                              and a contact sheet of frames to check it
+  python engine/kl.py publish <file>          copy a PDF or MP4 into the vault, then mirror the md files
   python engine/kl.py mirror                  copy ATLAS.md and GRIMOIRE.md into the vault
 """
 import argparse
@@ -15,7 +18,9 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 from pathlib import Path
+from urllib.parse import quote
 
 import numpy as np
 from PIL import Image
@@ -44,7 +49,7 @@ def build(tex: Path):
     cmd = ['xelatex', '-interaction=nonstopmode', '-halt-on-error', f'-output-directory={out}', f'-jobname={tex.stem}']
     if miktex:
         cmd.append(f'-include-directory={ENGINE}')
-    cmd.append(r'\def\KLROOT{%s/}\input{%s}' % (ENGINE.as_posix(), tex.name))
+    cmd.append(r'\def\KLROOT{%s/}\def\KLVAULT{%s}\input{%s}' % (ENGINE.as_posix(), obsidian_url(vault_path(tex).parent), tex.name))
     for _ in range(2):  # twice: the page meter and the cover need the page count
         r = subprocess.run(cmd, cwd=tex.parent, capture_output=True, text=True, env=env, encoding='utf8', errors='replace')
         if r.returncode:
@@ -86,19 +91,77 @@ def look(pdf: Path, pages: str | None, dpi: int):
         print((d / 'sheet.png').relative_to(ROOT).as_posix())
 
 
-def publish(pdf: Path):
-    rel = pdf.resolve().relative_to(ROOT)
-    parts = rel.parts
-    if parts[0] == 'subjects':      # subjects/<s>/<kind>/.../x.pdf -> Folios|Debriefs|Exams/<s>/x.pdf
-        dest = VAULT / parts[2].capitalize() / parts[1] / rel.name
-    elif parts[0] == 'review':
-        dest = VAULT / 'Reviews' / rel.name
-    else:                           # codex and anything else at the top
-        dest = VAULT / rel.name
+def vault_path(f: Path) -> Path:
+    parts = f.resolve().relative_to(ROOT).parts
+    if parts[0] == 'subjects':      # subjects/<s>/<kind>/.../x -> Folios|Debriefs|Exams|Anims/<s>/x
+        return VAULT / parts[2].capitalize() / parts[1] / f.name
+    if parts[0] == 'review':
+        return VAULT / 'Reviews' / f.name
+    return VAULT / f.name           # codex and anything else at the top
+
+
+def obsidian_url(folder: Path) -> str:
+    # obsidian://open?vault=...&file=... for a folder in the vault, escaped for TeX
+    root = next((p for p in [VAULT, *VAULT.parents] if (p / '.obsidian').is_dir()), VAULT.parent)
+    url = f'obsidian://open?vault={quote(root.name)}&file={quote(folder.relative_to(root).as_posix() + "/", safe="")}'
+    return url.replace('%', r'\%')
+
+
+def publish(f: Path):
+    """Copy a PDF or MP4 into the vault (it lands where vault_path says), then mirror the md files."""
+    dest = vault_path(f)
     dest.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(pdf, dest)
+    shutil.copyfile(f, dest)
     print(dest)
     mirror()
+
+
+def anim(py: Path, draft: bool, poster: float):
+    """Render a manim scene file; final renders land beside it as <stem>.mp4 and a <stem>.png poster."""
+    py = py.resolve()
+    out = CACHE / 'anim' / py.stem
+    env = clean_env()
+    env['PYTHONPATH'] = str(ENGINE)
+    t0 = time.time()
+    q = ['-ql'] if draft else ['-qh', '--fps', '30']
+    r = subprocess.run([sys.executable, '-m', 'manim', 'render', *q, '-a', '--media_dir', str(out), str(py)],
+                       cwd=py.parent, env=env, capture_output=True, text=True, encoding='utf8', errors='replace')
+    if r.returncode:
+        sys.exit('render failed:\n' + (r.stderr or r.stdout)[-4000:])
+    vids = [v for v in (out / 'videos').rglob('*.mp4') if 'partial_movie_files' not in v.parts and v.stat().st_mtime >= t0]
+    for v in vids:
+        stem = py.stem if len(vids) == 1 else f'{py.stem}-{v.stem}'
+        frames = contact_sheet(v, out / f'{stem}-sheet.png', poster)
+        if not draft:
+            shutil.copyfile(v, py.with_name(stem + '.mp4'))
+            frames[1].save(py.with_name(stem + '.png'))
+            v = py.with_name(stem + '.mp4')
+        print(f'{v.relative_to(ROOT).as_posix()}  {frames[0]:.0f} s  {v.stat().st_size / 1e6:.1f} MB')
+        print((out / f'{stem}-sheet.png').relative_to(ROOT).as_posix())
+
+
+def contact_sheet(mp4: Path, out: Path, poster: float, n: int = 12):
+    # n evenly spaced frames in a 4-column grid, to check a render without watching it
+    import av
+    with av.open(str(mp4)) as c:
+        s = c.streams.video[0]
+        total = s.frames
+        want = {round(i * (total - 1) / (n - 1)) for i in range(n)}
+        pick = round(poster * (total - 1))
+        tiles, still = [], None
+        for i, fr in enumerate(c.decode(s)):
+            if i in want:
+                tiles.append(fr.to_image().resize((480, 270)))
+            if i == pick:
+                still = fr.to_image()
+        dur = float(s.duration * s.time_base) if s.duration else total / float(s.average_rate)
+    g, cols = 8, 4
+    rows = -(-len(tiles) // cols)
+    sheet = Image.new('RGB', (cols * (480 + g) + g, rows * (270 + g) + g), (64, 62, 58))
+    for i, t in enumerate(tiles):
+        sheet.paste(t, (g + (i % cols) * (480 + g), g + (i // cols) * (270 + g)))
+    sheet.save(out)
+    return dur, still
 
 
 def mirror():
@@ -250,7 +313,11 @@ if __name__ == '__main__':
     pl.add_argument('scene', choices=SCENES)
     pl.add_argument('out', type=Path)
     pl.add_argument('--seed', type=int, default=7)
-    sub.add_parser('publish').add_argument('pdf', type=Path)
+    an = sub.add_parser('anim')
+    an.add_argument('py', type=Path)
+    an.add_argument('--draft', action='store_true')
+    an.add_argument('--poster', type=float, default=0.66)
+    sub.add_parser('publish').add_argument('file', type=Path)
     sub.add_parser('mirror')
     a = ap.parse_args()
     if a.cmd == 'build':
@@ -259,7 +326,9 @@ if __name__ == '__main__':
         look(a.pdf, a.pages, a.dpi)
     elif a.cmd == 'plate':
         plate(a.scene, a.out, a.seed)
+    elif a.cmd == 'anim':
+        anim(a.py, a.draft, a.poster)
     elif a.cmd == 'publish':
-        publish(a.pdf)
+        publish(a.file)
     else:
         mirror()

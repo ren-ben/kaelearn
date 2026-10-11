@@ -18,6 +18,7 @@ Kaelearn/
   Hubs/                        one per topic: Sequences.md
   Folios/<subject>/            published folio PDFs
   Debriefs/<subject>/          one PDF per exercise session: path, weak points, deep idea, variants
+  Anims/<subject>/             standalone manim videos (videos of a folio or debrief sit beside it)
   Reviews/  Exams/<subject>/   published sheets
   Atlas.md  Grimoire.md        mirrors of the repo files (never edit these here)
   codex.pdf

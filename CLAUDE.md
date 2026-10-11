@@ -40,6 +40,7 @@ and exams, and keep the map of everything learned (`ATLAS.md`).
 | `/teach` | teach-back: the student explains, you hunt the gaps |
 | `/exam` | mock, oral, board or mixed set |
 | `/atlas` | the map, what's due, the Dozen |
+| `/animate` | a manim video, unasked, whenever motion makes an idea click |
 
 A dropped file that comes without instructions: handwriting goes to `/ingest`; an exercise sheet
 or a single problem to `/exercise`; Skript or book pages to `/folio` (ask which topic if it isn't
@@ -68,9 +69,10 @@ clear); an old exam to `/exam`. Ask only when the routing is genuinely unclear.
 python engine/kl.py build <file.tex>     compile; the PDF lands beside the source
 python engine/kl.py look <file.pdf>      render pages + a contact sheet to .kl-cache/look/ (read them)
 python engine/kl.py plate <scene> <out>  dithered plate: nave horizon orrery field lattice
-python engine/kl.py publish <file.pdf>   copy into the vault, mirror ATLAS.md and GRIMOIRE.md
+python engine/kl.py anim <file.py>       manim video + poster + frame sheet (--draft first)
+python engine/kl.py publish <file>       copy a PDF or MP4 into the vault, mirror ATLAS.md and GRIMOIRE.md
 python engine/kl.py mirror               mirror the md files only
 ```
 
-Needs XeLaTeX (MiKTeX installs missing packages on first use), Python with numpy and pillow,
+Needs XeLaTeX (MiKTeX installs missing packages on first use), Python with numpy, pillow and manim,
 `pdftoppm` (ships with MiKTeX), and Node for the hook. The vault path is in `kaelearn.json`.

@@ -7,7 +7,7 @@ giving away answers, and keeps the map of everything you've learned. Start with
 
 ## Setup
 
-1. Install XeLaTeX (MiKTeX or TeX Live), Python 3.11+ with `pip install numpy pillow`, and Node.
+1. Install XeLaTeX (MiKTeX or TeX Live), Python 3.11+ with `pip install numpy pillow manim`, and Node.
 2. Check `kaelearn.json` points at your vault folder (`D:/le vault/Kaelearn`).
 3. Connect GitHub:
    ```
@@ -25,6 +25,8 @@ giving away answers, and keeps the map of everything you've learned. Start with
   (names like `ANA 2026-10-14` and `ANA 2026-10-14 blurt`). Then run `/ingest`.
 - **Exercises:** attempt it, then `/exercise` with the problem and your attempt. Talk it
   through; say "debrief" at the end and the session becomes a short PDF in the vault.
+- **Videos:** Kael'thos makes short manim videos when motion helps, or on request with
+  `/animate <idea>`. They play in Obsidian; in a PDF, tap the frame.
 - **New topic:** `/folio analysis uniform convergence`, or drag in Skript pages.
 - **Weekly:** `/review`, then `/teach <concept>`.
 - **Exams:** `/exam mock ANA`, `/exam oral LA`, `/exam board EP1`, `/exam mixed`.

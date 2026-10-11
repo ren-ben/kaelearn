@@ -85,6 +85,15 @@ to a `.dat` file in the folio's `figs/` folder, and plot it with `\addplot table
 `\plotcaption{...}`: say what to see, not what the axes are. Labels placed outside the axis
 (`clip=false`) need room: set `width=.88\linewidth` on that axis, or the build warns about overfull lines.
 
+## Animations
+
+Manim videos in the same look: `engine/klmanim.py` sets the inks, Garamond for math (XeLaTeX)
+and text, and gives `KLScene` (title card, idea card), `kl_axes`, `label`, `caption` and `leds`.
+One idea per video, 30 to 90 seconds, silent, slow enough to think. The order, the files and
+the render loop are in `/animate`; the model is `engine/specimen/anims/heads-and-tails.py`.
+In a PDF, `\anim{slug}{what to watch for}` shows the poster frame, and a tap plays the video
+in Obsidian.
+
 ## Plates
 
 Each folio gets a dithered cover plate: `python engine/kl.py plate <scene> <folio-dir>/plate.png`.

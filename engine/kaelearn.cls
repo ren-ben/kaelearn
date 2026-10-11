@@ -151,6 +151,13 @@
   \begin{tikzpicture}\foreach \x in {0,5,...,\kl@w}{\foreach \y in {0,5,...,\kl@h}{\fill[kllow](\x mm,-\y mm) circle (.55pt);}}
   \end{tikzpicture}\par\smallskip}
 
+% ---- animations: the poster frame; a tap plays the video in Obsidian ----------
+% \anim{slug}{what to watch for}: anims/slug.png here, slug.mp4 published beside this PDF
+\providecommand\KLVAULT{}
+\newcommand\anim[2]{\begin{panel}[unbreakable]{Animation}{#1}{tap to play}
+  \noindent\href{\KLVAULT #1.mp4}{\includegraphics[width=\linewidth]{anims/#1.png}}\par\smallskip
+  {\fell\itshape\fontsize{10.5}{13}\selectfont\color{kldim}#2}\end{panel}}
+
 % ---- the wax seal (the one red thing) ---------------------------------------
 \newcommand\waxseal{\begin{tikzpicture}[scale=.5]
   \fill[klsealdk,decorate,decoration={random steps,segment length=1.4pt,amplitude=.7pt}](0,0) circle (1.02);

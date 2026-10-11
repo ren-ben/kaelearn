@@ -10,11 +10,12 @@ needed, never in advance.
 kaelearn/
   CLAUDE.md  README.md  ATLAS.md  GRIMOIRE.md  kaelearn.json (vault path)
   system/                 method, voice, design, structure, vault, student
-  engine/                 kaelearn.cls, kl.py, fonts/, art/, specimen/
+  engine/                 kaelearn.cls, kl.py, klmanim.py, fonts/, art/, specimen/
   codex/                  codex.tex, codex.pdf (the study system itself)
   subjects/<subject>/
-    folios/NN-slug/       NN-slug.tex, NN-slug.pdf, plate.png, figs/
+    folios/NN-slug/       NN-slug.tex, NN-slug.pdf, plate.png, figs/, anims/
     debriefs/DATE-slug/   DATE-slug.tex, .pdf, key.md   session debriefs from /exercise
+    anims/                <slug>.py, .mp4, .png   standalone videos (inside a folio or debrief: its anims/)
     exams/<slug>/         mock exams and cumulative sets (.tex, .pdf, key.md)
     triggers.md           every trigger of the subject, grown by folios and debriefs
     pretests.md           pretest questions, newest first
@@ -45,6 +46,7 @@ when a body of material doesn't fit any of these, and record it in `student.md` 
 |---|---|
 | `subjects/<s>/folios/.../x.pdf` | `Folios/<s>/x.pdf` |
 | `subjects/<s>/debriefs/.../x.pdf` | `Debriefs/<s>/x.pdf` |
+| `subjects/<s>/anims/x.mp4` | `Anims/<s>/x.mp4` (a video inside a folio or debrief lands beside its PDF) |
 | `subjects/<s>/exams/.../x.pdf` | `Exams/<s>/x.pdf` |
 | `review/.../review-2026-W42.pdf` | `Reviews/review-2026-W42.pdf` |
 | `codex/codex.pdf` | `codex.pdf` |

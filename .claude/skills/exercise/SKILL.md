@@ -84,7 +84,8 @@ problem, plus the redo page:
    - `Weak points` panel (`[unbreakable]`): each one named exactly (what they wrote or did, and
      why it fails), each with a one-line fix. Never "be more careful".
    - `The deep idea` panel (`[unbreakable]`): the one or two sentences that crack it, and why
-     they work. A figure wherever a picture carries the idea.
+     they work. A figure wherever a picture carries the idea; an `\anim` (`/animate`) when
+     motion does.
    - `Generalize it`: drop or change a hypothesis. What still holds, what breaks, and the
      counterexample.
    - `Same structure, elsewhere`: earlier problems, theorems and debriefs that run on the same
