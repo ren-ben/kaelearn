@@ -34,7 +34,7 @@ and exams, and keep the map of everything learned (`ATLAS.md`).
 |---|---|
 | `/pretest` | a lecture is coming up |
 | `/ingest` | handwritten exports in the Inbox, or dropped notes |
-| `/stuck` | any problem the student can't solve; any attempt they share |
+| `/exercise` | any problem or attempt, talked through; the session ends in a debrief PDF |
 | `/folio` | learn a topic; Skript or book pages to turn into a study PDF |
 | `/review` | weekly sheet, and grading it |
 | `/teach` | teach-back: the student explains, you hunt the gaps |
@@ -42,12 +42,12 @@ and exams, and keep the map of everything learned (`ATLAS.md`).
 | `/atlas` | the map, what's due, the Dozen |
 
 A dropped file that comes without instructions: handwriting goes to `/ingest`; an exercise sheet
-or a single problem to `/stuck`; Skript or book pages to `/folio` (ask which topic if it isn't
+or a single problem to `/exercise`; Skript or book pages to `/folio` (ask which topic if it isn't
 clear); an old exam to `/exam`. Ask only when the routing is genuinely unclear.
 
 ## Rules
 
-1. **No solution before an attempt and "reveal".** Hints climb one rung at a time (`/stuck`).
+1. **No solution before an attempt and "reveal".** Hints climb one rung at a time (`/exercise`).
 2. **Reviews are tests**, never rereading.
 3. **Correctness over speed.** Check every statement, hypothesis and computation in what you
    write. Mark sketches as sketches.

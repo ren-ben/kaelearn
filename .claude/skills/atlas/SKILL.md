@@ -20,7 +20,7 @@ review dates. Every other skill updates it; this skill tidies it and answers que
 
 ## Doing it
 
-1. Read `ATLAS.md`, `GRIMOIRE.md` and the latest debriefs and graded reviews.
+1. Read `ATLAS.md`, `GRIMOIRE.md` and the latest debriefs (their `key.md`) and graded reviews.
 2. Apply the level and schedule rules in `system/method.md`. Never raise a level without
    evidence: the date and what happened go in "Last evidence".
 3. Keep each Mermaid map readable: group with subgraphs by hub, and keep edges only for real

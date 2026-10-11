@@ -33,7 +33,7 @@ only when the student asks.
 | Before a lecture | 5 min: guesses at 3 questions on paper | Writes the 3 questions from the Skript or syllabus | `/pretest` |
 | In the lecture | Own words only, skips the obvious, notes own ideas, predicts the next step | Nothing; this habit is already right | |
 | Same day | 5 min blurt on a blank Notability page, then exports notes and blurt to the vault Inbox | Transcribes, compares the blurt with the notes, writes gaps, review questions and card ideas, builds concept notes | `/ingest` |
-| Homework | Attempts first, then asks | Hint ladder, earned reveal, debrief; logs errors and triggers | `/stuck` |
+| Exercises | Attempts first, then talks it through | Questions, hint ladder, earned reveal; one debrief PDF per session with a variant per problem; logs errors and triggers | `/exercise` |
 | Evening | Makes the day's new Anki cards from the suggestions, learns them | Suggests cards (three types, below) | |
 | Morning | Anki due reviews (relearning after sleep) | | |
 | Weekly, ~45 min | Answers a review sheet on paper, then a teach-back on one concept | Builds the sheet from due items, grades the scan, updates the Atlas | `/review`, `/teach` |
@@ -54,8 +54,10 @@ Each concept in `ATLAS.md` has a level and a next review date. Levels move only 
 | 4 | owned | Used it unprompted in a new problem (mock, cumulative set, homework) | +60 days |
 
 A miss drops the concept one level, and it comes back in 3 days. Errors in `GRIMOIRE.md`
-carry their own next date: a re-attempt at +3 days, then +10, then +30. Exams pull
-everything at level 3 or below forward.
+carry their own next date: a re-attempt at +3 days, then +10, then +30. Debrief variants are
+due 7 days after the session; a success brings them back at +30 days, a second success retires
+them, and a miss brings them back in 3 days and goes to the grimoire. Exams pull everything at
+level 3 or below forward.
 
 ## Cards
 
@@ -78,7 +80,7 @@ monthly. Reviews in the morning, new cards in the evening.
 
 ## Problems: the decomposition protocol
 
-Used by `/stuck`, and by every worked solution in a folio:
+Used by `/exercise`, and by every worked solution in a folio:
 
 1. **Understand.** What is given, what is wanted, what does each word mean? Unfold
    definitions, especially the quantifiers.
@@ -86,8 +88,8 @@ Used by `/stuck`, and by every worked solution in a folio:
    Which trigger fires?
 3. **Execute with checkpoints.** Every few lines: is this plan working? (Schoenfeld:
    students who never ask this fail.)
-4. **Look back.** Check it: units, limiting cases, a numeric example. Then debrief: key idea,
-   how you could have found it, the generalization, the contrast with an earlier problem.
+4. **Look back.** Check it: units, limiting cases, a numeric example. Then debrief: your path,
+   your weak points, the deep idea, the generalization, the same structure elsewhere.
 
 ## Proofs
 

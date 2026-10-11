@@ -89,7 +89,7 @@ def look(pdf: Path, pages: str | None, dpi: int):
 def publish(pdf: Path):
     rel = pdf.resolve().relative_to(ROOT)
     parts = rel.parts
-    if parts[0] == 'subjects':      # subjects/<s>/<kind>/.../x.pdf -> Folios|Problems|Exams/<s>/x.pdf
+    if parts[0] == 'subjects':      # subjects/<s>/<kind>/.../x.pdf -> Folios|Debriefs|Exams/<s>/x.pdf
         dest = VAULT / parts[2].capitalize() / parts[1] / rel.name
     elif parts[0] == 'review':
         dest = VAULT / 'Reviews' / rel.name

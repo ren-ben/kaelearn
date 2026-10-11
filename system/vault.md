@@ -17,6 +17,7 @@ Kaelearn/
   Concepts/                    one atomic note per concept: Cauchy sequence.md
   Hubs/                        one per topic: Sequences.md
   Folios/<subject>/            published folio PDFs
+  Debriefs/<subject>/          one PDF per exercise session: path, weak points, deep idea, variants
   Reviews/  Exams/<subject>/   published sheets
   Atlas.md  Grimoire.md        mirrors of the repo files (never edit these here)
   codex.pdf
@@ -30,7 +31,7 @@ The student names Notability notes like this, and the exported PDFs keep the nam
 |---|---|
 | `ANA 2026-10-14` | lecture notes (course code, date) |
 | `ANA 2026-10-14 blurt` | the blurt for that lecture |
-| `ANA UE03 attempt` | a homework attempt (for `/stuck`) |
+| `ANA UE03 attempt` | a homework attempt (for `/exercise`) |
 | `REVIEW 2026-W42` | answers to a review sheet |
 | `TEACH Cauchy sequence` | a handwritten teach-back |
 

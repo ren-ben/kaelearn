@@ -23,7 +23,8 @@ giving away answers, and keeps the map of everything you've learned. Start with
 - **After a lecture:** in Notability, blurt for 5 minutes on a blank page. Export the notes and
   the blurt as PDF and use Save to Files to put them in `Obsidian/le vault/Kaelearn/Inbox`
   (names like `ANA 2026-10-14` and `ANA 2026-10-14 blurt`). Then run `/ingest`.
-- **Homework:** attempt it, then `/stuck` with the problem and your attempt.
+- **Exercises:** attempt it, then `/exercise` with the problem and your attempt. Talk it
+  through; say "debrief" at the end and the session becomes a short PDF in the vault.
 - **New topic:** `/folio analysis uniform convergence`, or drag in Skript pages.
 - **Weekly:** `/review`, then `/teach <concept>`.
 - **Exams:** `/exam mock ANA`, `/exam oral LA`, `/exam board EP1`, `/exam mixed`.

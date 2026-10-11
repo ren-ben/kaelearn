@@ -1,0 +1,228 @@
+% The reference debrief: what /exercise writes at the end of a session.
+% Specimen: no real session. Copy the structure, never the content.
+\documentclass{kaelearn}
+\subject{Analysis I}  \folio{Debrief}  \title{Heads and Tails}
+\shorttitle{Specimen · 2026-10-16}
+\subtitle{Two problems, one blind spot: who chooses $\varepsilon$.}
+\problemparts
+\begin{document}
+\makeheader
+\marginkael{proud}
+
+\begin{panel}{The session}{read this first}{}
+\begin{itemize}
+  \item \textbf{Specimen 1}, a convergent sequence is bounded: solved yourself after rung 1.
+  \item \textbf{Specimen 2}, $(-1)^n$ diverges: rung 3, then you finished it.
+  \item \textbf{The pattern:} both times, $\varepsilon$ was yours to choose and you waited for the
+        problem to hand you one. ``For every $\varepsilon$'' in a hypothesis is a promise you may
+        cash in at any value; ``there is an $\varepsilon$'' in a negation is a choice you make.
+        Choose the one that makes the rest easy.
+  \item \textbf{Again on 23 October:} one variant per problem on the last page. They come back in
+        your weekly review.
+\end{itemize}
+\end{panel}
+
+\section{Convergent Means Bounded}
+
+\begin{panel}[unbreakable]{The problem}{Specimen 1}{}
+Let $(a_n)$ be a real sequence with $a_n\to a$. Show that $(a_n)$ is bounded: there is an $M$ with
+$|a_n|\le M$ for all $n$.
+\end{panel}
+
+\subsection{Your path}
+You started by trying to bound $|a_n|$ directly and stalled: there are infinitely many terms, and
+nothing in the problem says how large any of them is. You wrote the definition of convergence down
+correctly, then treated its $\varepsilon$ as something the problem had to supply. The question that
+unlocked it (rung 1) was \emph{which $\varepsilon$ would you like?} You picked $\varepsilon=1$, saw
+that every term past $N$ sits within $1$ of $a$, and finished the proof yourself.
+\aside{The analysts of the 1800s needed decades to make ``eventually'' precise. You needed one
+question.}
+
+\begin{panel}[unbreakable]{Weak points}{named exactly}{}
+\begin{enumerate}
+  \item \textbf{You waited to be given $\varepsilon$.} In a hypothesis, ``for every $\varepsilon>0$
+        there is an $N$'' lets you choose the $\varepsilon$. \emph{Fix:} the moment a convergence
+        hypothesis appears, ask which $\varepsilon$ you would like.
+  \item \textbf{You tried to handle every term in one move.} Infinitely many terms looked like
+        infinitely many problems. \emph{Fix:} split the sequence into a finite head and a tail,
+        and treat them separately.
+\end{enumerate}
+\end{panel}
+
+\begin{panel}[unbreakable]{The deep idea}{head and tail}{}
+Convergence says nothing about the first terms and everything about the tail. Finitely many numbers
+are always harmless, because they have a maximum. So: tame the tail with one fixed $\varepsilon$,
+then take the maximum over the head.
+\end{panel}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,width=.88\linewidth,height=46mm,xmin=0.5,xmax=20.5,ymin=-1.4,ymax=6.4,
+  xtick={1,5,10,15,20},ytick={0},xlabel={$n$},ylabel={$a_n$}]
+  \fill[pattern={dither25},pattern color=kllow] (axis cs:6.5,1) rectangle (axis cs:20.5,3);
+  \draw[kldim,dashed] (axis cs:0.5,2)--(axis cs:20.5,2) node[right,text=kldim]{$a$};
+  \draw[kldim,dashed] (axis cs:0.5,5.4)--(axis cs:20.5,5.4) node[right,text=kldim]{$M$};
+  \draw[kldim,dashed] (axis cs:6.5,-1.4)--(axis cs:6.5,6.4);
+  \node[text=kldim,anchor=south west] at (axis cs:6.6,-1.4) {$N$};
+  \node[text=kldim,font=\fell\itshape\small] at (axis cs:3.5,6.0) {head: take the max};
+  \node[text=kldim,font=\fell\itshape\small] at (axis cs:13.5,3.5) {tail: within $1$ of $a$};
+  \addplot[only marks,mark=*,mark size=1.4pt,klhi] coordinates {
+    (1,5.4)(2,-0.6)(3,4.3)(4,0.4)(5,3.6)(6,1.1)(7,1.05)(8,2.83)(9,1.26)(10,2.67)(11,1.4)(12,2.55)
+    (13,1.49)(14,2.48)(15,1.56)(16,2.42)(17,1.61)(18,2.37)(19,1.65)(20,2.33)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{The head is six points: their maximum exists. The tail lives in the band, whose height
+$\varepsilon=1$ fixed. $M$ covers both.}
+
+\subsection{Generalize it}
+\begin{itemize}
+  \item \textbf{Weaken convergence to Cauchy:} still bounded, by the same proof. Pick
+        $\varepsilon=1$ and compare every tail term with $a_N$ instead of $a$.
+  \item \textbf{Ask for the converse:} false. $(-1)^n$ is bounded and does not converge (Problem 02).
+        Bounded \emph{and monotone} does converge, but that is the monotone convergence theorem,
+        and it needs the completeness of $\mathbb{R}$.
+  \item \textbf{Change the setting:} the split works for functions too. If $f$ is continuous on
+        $[0,\infty)$ and $f(x)\to L$ as $x\to\infty$, then $f$ is bounded: $\varepsilon=1$ tames
+        the tail $[R,\infty)$, and the head $[0,R]$ is compact, so $f$ has a maximum there.
+\end{itemize}
+
+\subsection{Same structure, elsewhere}
+Every ``eventually'' statement in analysis has this shape: a property that holds from some $N$ on,
+plus finitely many exceptions that a maximum or a minimum absorbs. You will meet it again when you
+prove that Cauchy sequences are bounded, that a sequence with a nonzero limit stays away from $0$
+(the variant at the end), and the product rule for limits, whose proof needs exactly this lemma.
+
+\why{Why are you allowed to pick $\varepsilon=1$?}{Because convergence is your hypothesis here.
+``For every $\varepsilon>0$ there is an $N$'' holds for every $\varepsilon$, so you may cash it in at
+whatever value you like, and $1$ is the laziest choice. If you were \emph{proving} convergence, the
+roles would flip: someone else picks $\varepsilon$, and you answer with an $N$.}
+
+\why{Why is the head never the problem?}{A finite set of real numbers always has a largest element,
+so $\max\{|a_1|,\dots,|a_{N-1}|\}$ exists. The argument needs the head to be finite. Without
+convergence there may be no $N$ past which the terms stay in a band, and then the head is the whole
+sequence: $a_n=n$.}
+
+\subsection{The solution, idea first}
+\emph{Idea:} tame the tail with $\varepsilon=1$, take the maximum over the head.
+\begin{proof}
+Apply the definition of $a_n\to a$ with $\varepsilon=1$: there is an $N$ with $|a_n-a|<1$ for all
+$n\ge N$. For those $n$, the triangle inequality gives $|a_n|\le|a_n-a|+|a|<1+|a|$. The remaining
+terms $a_1,\dots,a_{N-1}$ are finitely many, so
+\[M=\max\{|a_1|,\dots,|a_{N-1}|,\,1+|a|\}\]
+exists, and $|a_n|\le M$ for every $n$.
+\end{proof}
+
+\section{Divergence by Negation}
+
+\begin{panel}[unbreakable]{The problem}{Specimen 2}{}
+Show that the sequence $a_n=(-1)^n$ does not converge.
+\end{panel}
+
+\subsection{Your path}
+You knew it diverges and first argued that it ``keeps jumping'', which is a picture, not a proof.
+Your first negation of convergence read ``for every $N$ there is an $\varepsilon$'': the quantifiers
+were swapped. Once they were in order, rung 3 gave the sub-goal: \emph{for any candidate limit $a$,
+find one $\varepsilon$ that the sequence escapes infinitely often.} You chose $\varepsilon=1$ and
+finished it.
+
+\begin{panel}[unbreakable]{Weak points}{named exactly}{}
+\begin{enumerate}
+  \item \textbf{Negating nested quantifiers.} You swapped $\forall N$ and $\exists\varepsilon$.
+        \emph{Fix:} negate mechanically from the left: every $\forall$ becomes $\exists$, every
+        $\exists$ becomes $\forall$, the inequality flips, and the order stays.
+  \item \textbf{Waiting for $\varepsilon$, again.} In the negation, ``there is an $\varepsilon$'' means
+        you choose it. Same blind spot as Problem 01.
+  \item \textbf{``Obviously'' as an argument.} \emph{Fix:} when something is obvious, write the
+        definition it is obvious about, then say it in that language.
+\end{enumerate}
+\end{panel}
+
+\begin{panel}[unbreakable]{The deep idea}{half the gap}{}
+To show that a sequence diverges, find two values it visits infinitely often. Any candidate limit is
+at least half their distance away from one of them, so $\varepsilon$ = half the gap defeats every
+candidate at once.
+\end{panel}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,width=.88\linewidth,height=40mm,xmin=0.5,xmax=14.5,ymin=-1.6,ymax=2,
+  xtick={1,5,10},ytick={-1,0,1},xlabel={$n$},ylabel={$a_n$}]
+  \fill[pattern={dither25},pattern color=kllow] (axis cs:0.5,-0.5) rectangle (axis cs:14.5,1.5);
+  \draw[kldim,dashed] (axis cs:0.5,0.5)--(axis cs:14.5,0.5) node[right,text=kldim]{candidate $a$};
+  \node[text=kldim,anchor=west] at (axis cs:14.5,1.5) {$a+\varepsilon$};
+  \node[text=kldim,anchor=west] at (axis cs:14.5,-0.5) {$a-\varepsilon$};
+  \addplot[only marks,mark=*,mark size=1.4pt,klhi] coordinates {(2,1)(4,1)(6,1)(8,1)(10,1)(12,1)(14,1)};
+  \addplot[only marks,mark=o,mark size=1.6pt,klink] coordinates {(1,-1)(3,-1)(5,-1)(7,-1)(9,-1)(11,-1)(13,-1)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{Wherever you centre a band of half-width $\varepsilon=1$, it holds one of the two values,
+never both. The other value (open dots here) escapes it infinitely often.}
+
+\subsection{Generalize it}
+\begin{itemize}
+  \item \textbf{Two subsequences with different limits:} the sequence diverges, with
+        $\varepsilon$ = half the distance between the limits.
+  \item \textbf{No exact values needed:} if $a_n\ge c$ infinitely often and $a_n\le d$ infinitely
+        often with $c>d$, the same proof works with $\varepsilon=(c-d)/2$.
+  \item \textbf{Unbounded implies divergent:} the contrapositive of Problem 01, a second route to
+        divergence.
+\end{itemize}
+
+\subsection{Same structure, elsewhere}
+Problem 01 used convergence; this one proved its negation. In both, the move was choosing
+$\varepsilon$ yourself. The uniqueness of limits runs on the same choice: two limits $a\neq b$, and
+$\varepsilon=|a-b|/2$ makes the sequence sit in two disjoint bands at once.
+
+\why{Why half the gap?}{A band of half-width $\varepsilon$ is $2\varepsilon$ wide. If $2\varepsilon$
+is at most the distance between the two values, no band of that size holds both, wherever you
+centre it. So whatever limit someone proposes, one value sits outside its band, and the sequence
+returns to that value infinitely often.}
+
+\why{Why does the order of the quantifiers matter?}{Swapped, $\varepsilon$ may depend on $N$ and
+shrink as $N$ grows. Then $1/n$, which converges to $0$, satisfies the statement too: for each $N$
+take $n=N$ and $\varepsilon=1/N$. A statement that convergent sequences also satisfy cannot prove
+divergence.}
+
+\subsection{The solution, idea first}
+\emph{Idea:} every candidate is at least $1$ away from $1$ or from $-1$, and both are visited
+infinitely often.
+\begin{proof}
+Let $a\in\mathbb{R}$. Since $2=|1-(-1)|\le|1-a|+|a-(-1)|$, one of the values $v\in\{1,-1\}$ has
+$|v-a|\ge1$. Set $\varepsilon=1$. For every $N$ there is an $n\ge N$ with $a_n=v$ (an even or an odd
+one), and for it $|a_n-a|\ge\varepsilon$. So $a$ is not a limit of $(a_n)$, and since $a$ was
+arbitrary, $(a_n)$ diverges.
+\end{proof}
+
+\begin{triggers}
+\trigger{A convergence hypothesis, and you need a bound}{choose $\varepsilon$ yourself;
+  $\varepsilon=1$ if any will do}
+\trigger{A claim about all terms of a convergent sequence}{split: the tail by one fixed
+  $\varepsilon$, the finite head by a maximum}
+\trigger{Show that something does not converge}{negate mechanically; two values visited infinitely
+  often; $\varepsilon$ = half the gap}
+\end{triggers}
+
+\begin{deck}
+\card{Trigger}{A convergence hypothesis, and you need a bound.}{Choose $\varepsilon$ yourself
+  ($\varepsilon=1$ will do), then a maximum over the finite head.}
+\card{Why}{Why may you choose $\varepsilon$ when convergence is given?}{``For every
+  $\varepsilon$'' is a promise; you cash it in at any value you like.}
+\card{Def}{$(a_n)$ does \emph{not} converge to $a$: $\exists\,\varepsilon>0\ \forall N\
+  \exists\,n\ge N:$ \dots}{$|a_n-a|\ge\varepsilon$. Order kept, quantifiers and inequality flipped.}
+\end{deck}
+
+\clearpage
+\section*{Again, in a week}
+Due 23 October 2026. No notes. Write on the grid, then bring it to your weekly review. The solutions
+are not in this file.
+
+\problem[Variant of Specimen 1] Let $a_n\to a$ with $a\neq0$ and $a_n\neq0$ for all $n$. Show that
+there is a $c>0$ with $|a_n|\ge c$ for all $n$.
+\answerspace{85mm}
+
+\problem[Variant of Specimen 2] Show that $b_n=\sin(n\pi/2)$ does not converge.
+\answerspace{80mm}
+
+\end{document}

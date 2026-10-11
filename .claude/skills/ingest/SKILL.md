@@ -8,7 +8,7 @@ description: Process the student's handwritten Notability exports from the vault
 Inbox: `D:\le vault\Kaelearn\Inbox\`. Names and note formats: `system/vault.md`.
 
 1. **List and route.** For each PDF, read the name (`ANA 2026-10-14`, `... blurt`, `... attempt`,
-   `REVIEW 2026-W42`, `TEACH ...`). Pair a lecture with its blurt. Route attempts to `/stuck`,
+   `REVIEW 2026-W42`, `TEACH ...`). Pair a lecture with its blurt. Route attempts to `/exercise`,
    review answers to `/review` (grading) and teach-backs to `/teach`. The rest of this skill
    covers lecture notes.
 2. **Read the handwriting.** Read the PDF pages directly. If the writing is small or dense,

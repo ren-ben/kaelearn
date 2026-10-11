@@ -61,12 +61,14 @@ dithered plates for scenery, and Kael'thos as a phosphor hologram. All of it liv
 \begin{keystone}{Name}{German name} ... \end{keystone}   % once per folio, gets the wax seal
 \begin{example}{Name} ... \end{example}
 \begin{panel}{Kind}{name}{German name} ... \end{panel}   % any other framed block
+\begin{panel}[unbreakable]{Kind}{name}{} ... \end{panel}  % [options]: keeps a short panel whole
 \begin{proof} ... \end{proof}
 \why{The question?}{The answer, two to five sentences.}
 \begin{triggers} \trigger{You see this}{reach for that} \end{triggers}
 \marginkael{delighted}               % a pose in the margin, at most one per folio
 \begin{deck} \card{Def}{front}{back} \card{Why}{..}{..} \card{Trigger}{..}{..} \end{deck}
 \problem[Cummings 4.12] Statement.  \answerspace{60mm}   % sheets: an LED-dot grid to write on
+\problemparts                        % before \begin{document}: sections read "Problem 01" (debriefs)
 \end{document}
 ```
 
@@ -110,8 +112,17 @@ Register it in `SCENES` and keep it scenery only, without text or a cat.
 7. `triggers` for the topic
 8. `deck`: at most five cards, of the types Def, Why and Trigger (see `system/method.md`)
 
-Aim for 4 to 8 pages. Sheets (reviews, exams, problem sets) use `\makeheader`, `\problem` and
-`\answerspace`, with no cover.
+Aim for 4 to 8 pages. Sheets (reviews, exams, problem sets, debriefs) use `\makeheader`, `\problem`
+and `\answerspace`, with no cover.
+
+## Debrief anatomy
+
+The record of an `/exercise` session; the reference is `engine/specimen/debrief.tex` and the
+full order is in the skill. `\problemparts`, `\folio{Debrief}`, `\makeheader`, then the
+session panel, one section per problem, the triggers and the deck. The variants come last, on
+a page of their own with answer grids that fill it, so the student can redo them in Notability.
+Short panels (the problem, weak points, the deep idea) take `[unbreakable]` so they never split
+across a page break. About 2 pages per problem, plus the redo page.
 
 ## Check every render
 

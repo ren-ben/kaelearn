@@ -38,7 +38,7 @@ like you to be the exception.}
         Experts sort problems by principle and novices by surface. You build it by comparing
         problems and extracting the key idea, not by doing more of the same.
   \item \textbf{Your loop:} pretest before the lecture $\to$ your lecture habit $\to$ a blurt and
-        \texttt{/ingest} the same day $\to$ homework with the hint ladder and a debrief $\to$ new
+        \texttt{/ingest} the same day $\to$ exercises talked through, ending in a debrief PDF $\to$ new
         cards in the evening, reviews in the morning $\to$ a weekly review sheet and a teach-back
         $\to$ mocks, oral, board and mixed sets before exams.
   \item \textbf{I don't do your thinking.} AI that hands out answers lowers exam scores; AI that
@@ -55,7 +55,7 @@ like you to be the exception.}
   \node[stage] (a) at (0,36mm)     {\pix{Before}\\[1pt] pretest: 3 guesses};
   \node[stage] (b) at (46mm,18mm)  {\pix{In the lecture}\\[1pt] your own words};
   \node[stage] (c) at (46mm,-18mm) {\pix{Same day}\\[1pt] blurt, then ingest};
-  \node[stage] (d) at (0,-36mm)    {\pix{Homework}\\[1pt] attempt, ladder, debrief};
+  \node[stage] (d) at (0,-36mm)    {\pix{Exercises}\\[1pt] attempt, talk, debrief};
   \node[stage] (e) at (-46mm,-18mm){\pix{Evening and morning}\\[1pt] new cards, reviews};
   \node[stage] (f) at (-46mm,18mm) {\pix{Weekly}\\[1pt] review sheet, teach-back};
   \draw[flow] (a) to[bend left=14] (b);
@@ -219,7 +219,7 @@ have to recognise the structure without the section title doing it for you.
 Evan Chen, who trains olympiad teams, says a solution usually contains one or two sentences that
 matter, and the rest follows from them. His rule: only read a solution after you have really
 worked on the problem, then hunt for those sentences, then ask: \emph{how could I have thought of
-that?} Your debrief writes them down as \textsf{Key idea} and \textsf{How you could have found it}.
+that?} Your debrief writes them down as \textsf{The deep idea}, and \textsf{Your path} marks the moment you could have found it.
 Remembering two sentences is cheap; they unlock the whole solution later.
 
 \subsection{Rules and reasons}
@@ -275,19 +275,6 @@ and the advantage disappears as skill grows: guidance a novice needs becomes clu
 can already attempt (Kalyuga's expertise-reversal effect). Hence the rule: folios teach new topics
 with examples; homework is attempted before any help.
 
-\begin{center}
-\begin{tikzpicture}[st/.style={draw=kllow,leds,fill=klpage,minimum width=20mm,minimum height=9mm,font=\fontsize{9}{10}\selectfont,align=center}]
-  \foreach \i/\t/\l in {0/restate/givens and goal, 1/question/one Socratic nudge, 2/concept/name the tool, 3/sub-goal/{if X, then done}, 4/next step/one step only}{
-    \node[st,anchor=south west] at (\i*21mm,\i*6mm) {\pix{\t}\\[1pt]{\fell\itshape\color{kldim}\l}};}
-  \node[draw=klhi,line width=.8pt,minimum width=20mm,minimum height=9mm,anchor=south west,align=center] (rv) at (5*21mm,5*6mm)
-    {\pix{reveal}\\[1pt]{\fell\itshape\color{kldim}after an attempt}};
-  \node at ([xshift=-3mm,yshift=-1mm]rv.north east) {\scalebox{.55}{\waxseal}};
-  \node[text=klhi,anchor=north] at (63mm,-3mm) {\goth\fontsize{15}{15}\selectfont Debrief \fell\itshape\fontsize{10}{12}\selectfont\color{kldim} key idea · how to find it · generalise · same structure · board version};
-\end{tikzpicture}
-\end{center}
-\plotcaption{The \texttt{/stuck} ladder. One rung per request, starting as low as your attempt
-allows. The reveal is sealed until you have tried. Every problem ends in a debrief, revealed or not.}
-
 \subsection{Why the reveal is sealed}
 Bastani and colleagues (2025) gave about a thousand high-school students GPT-4 for maths practice.
 With a plain chat interface, practice grades rose 48\%; when the AI was taken away, exam grades
@@ -295,6 +282,20 @@ fell 17\% below students who never had it. A version with guardrails (hints, no 
 most of the harm. At Harvard, a tutor built on research-based pedagogy, guiding instead of answering,
 produced more than twice the learning of an active-learning class, in less time (Kestin et al.\
 2025). The difference is never the AI. It is who does the generating.
+
+\needspace{65mm}
+\begin{center}
+\begin{tikzpicture}[st/.style={draw=kllow,leds,fill=klpage,minimum width=20mm,minimum height=9mm,font=\fontsize{9}{10}\selectfont,align=center}]
+  \foreach \i/\t/\l in {0/restate/givens and goal, 1/question/one Socratic nudge, 2/concept/name the tool, 3/sub-goal/{if X, then done}, 4/next step/one step only}{
+    \node[st,anchor=south west] at (\i*21mm,\i*6mm) {\pix{\t}\\[1pt]{\fell\itshape\color{kldim}\l}};}
+  \node[draw=klhi,line width=.8pt,minimum width=20mm,minimum height=9mm,anchor=south west,align=center] (rv) at (5*21mm,5*6mm)
+    {\pix{reveal}\\[1pt]{\fell\itshape\color{kldim}after an attempt}};
+  \node at ([xshift=-3mm,yshift=-1mm]rv.north east) {\scalebox{.55}{\waxseal}};
+  \node[text=klhi,anchor=north] at (63mm,-3mm) {\goth\fontsize{15}{15}\selectfont Debrief \fell\itshape\fontsize{10}{12}\selectfont\color{kldim} your path · weak points · deep idea · generalise · a variant for next week};
+\end{tikzpicture}
+\end{center}
+\plotcaption{The \texttt{/exercise} ladder. One rung per request, starting as low as your attempt
+allows. The reveal is sealed until you have tried. Every session ends in a debrief PDF, revealed or not.}
 
 \subsection{Physics habits}
 \begin{example}{Units do half the work}
@@ -463,7 +464,7 @@ stayed. The gaps it exposes are the exact things to make cards for tonight. Rere
 before a lecture & guess at 3 pretest questions & 5 min\\[2pt]
 in the lecture & your habit, unchanged & 0\\[2pt]
 same day & blurt, export to the Inbox, \texttt{/ingest} & 5 min + reading the gaps\\[2pt]
-homework & attempt first, \texttt{/stuck} only when stuck, debrief & as long as it takes\\[2pt]
+exercises & attempt first, then talk it through in \texttt{/exercise}; read the debrief & as long as it takes\\[2pt]
 evening & make and learn the new cards & 10--15 min\\[2pt]
 morning & Anki due reviews & 15--25 min\\[2pt]
 weekly & review sheet on paper, then one teach-back & 45 + 15 min\\[2pt]
@@ -538,7 +539,7 @@ So these are my rules, and they are yours too:
 \begin{itemize}
   \item You generate first: a guess, an attempt, a blurt, an explanation.
   \item I question before I hint and hint before I show. The reveal is sealed until you have tried.
-  \item Every problem ends in a debrief that you could present at the board.
+  \item Every session ends in a debrief PDF you can come back to: your path, your weak points, the deep idea, and one variant per problem to redo in a week.
   \item I suggest cards; you make them.
   \item I keep the map honest: levels move only on evidence, never on how confident you feel.
 \end{itemize}
@@ -548,7 +549,7 @@ So these are my rules, and they are yours too:
 \multicolumn{2}{@{}l@{}}{\ledline{\linewidth}}\\
 \texttt{/pretest} & three guess-first questions before a lecture\\
 \texttt{/ingest} & handwriting from the vault Inbox becomes a transcript, a layer, concept notes\\
-\texttt{/stuck} & the hint ladder, the sealed reveal, the debrief\\
+\texttt{/exercise} & talk an exercise through: the hint ladder, the sealed reveal, the debrief PDF\\
 \texttt{/folio} & a folio like this one, on any topic, from your sources\\
 \texttt{/review} & the weekly sheet, then grading your answers\\
 \texttt{/teach} & you explain, I play the sharp student who finds the gaps\\
@@ -558,7 +559,7 @@ So these are my rules, and they are yours too:
 \end{tabular}}
 
 \medskip
-Drag a file in and I route it: handwriting to \texttt{/ingest}, a problem to \texttt{/stuck}, Skript pages to
+Drag a file in and I route it: handwriting to \texttt{/ingest}, a problem to \texttt{/exercise}, Skript pages to
 \texttt{/folio}, an old exam to \texttt{/exam}.
 
 \begin{guessfirst}

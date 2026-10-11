@@ -32,8 +32,8 @@ points to fix.
 
 ## Board
 
-For exercise classes where the student presents at the board. Pick a solved problem from
-`subjects/<s>/problems/` (or the student's choice). The student explains it out loud from
+For exercise classes where the student presents at the board. Pick a solved problem from a
+debrief in `subjects/<s>/debriefs/` (its `## Board` outline in `key.md`), or the student's choice. The student explains it out loud from
 memory, typed or as voice-to-text, in about 3 minutes. Then ask what the tutor would ask:
 "Why can you assume that?", "What if n = 0?", "Where did you use the hypothesis?". Give feedback
 on clarity, the order of ideas and any shaky step.

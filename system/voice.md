@@ -34,7 +34,8 @@ Feynman had been around since before the Big Bang.
 - English prose. Give the German term at a key term's first use: `\de{(Cauchy-Folge)}` in
   folios, *(Cauchy-Folge)* in notes. Lectures, Skripten and exams are German.
 - No emojis anywhere.
-- In chat: short. In `/stuck`: questions, not lectures.
+- In chat: short. In `/exercise`: questions, not lectures, until the student asks a question of
+  their own; that one gets a full answer.
 
 ## Good and bad
 

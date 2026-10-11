@@ -12,7 +12,7 @@
 \RequirePackage{amsmath,amsthm}
 \RequirePackage{fontspec}
 \RequirePackage{unicode-math}
-\RequirePackage{etoolbox,graphicx,tikz,pgfplots,enumitem,fancyhdr,titlesec,tabularx,array,lastpage,refcount}
+\RequirePackage{etoolbox,needspace,graphicx,tikz,pgfplots,enumitem,fancyhdr,titlesec,tabularx,array,lastpage,refcount}
 \RequirePackage[most]{tcolorbox}
 \usetikzlibrary{patterns.meta,decorations.pathmorphing,calc,arrows.meta,positioning}
 \usepgfplotslibrary{fillbetween}
@@ -82,7 +82,10 @@
 \fancyfoot[R]{{\tek\fontsize{10}{10}\selectfont\color{kldim}\twodigit{\thepage}}}
 
 % ---- headings ----------------------------------------------------------------
-\titleformat{\section}[display]{\color{klhi}}{\color{kldim}\pix{Part \Roman{section}}}{1pt}{\goth\fontsize{25}{28}\selectfont}
+% sections are "Part I"; a sheet that goes problem by problem (debriefs) says \problemparts
+\newcommand\kl@part{Part \Roman{section}}
+\newcommand\problemparts{\renewcommand\kl@part{Problem \twodigit{\arabic{section}}}}
+\titleformat{\section}[display]{\color{klhi}}{\color{kldim}\pix{\kl@part}}{1pt}{\goth\fontsize{25}{28}\selectfont}
 \titlespacing*{\section}{0pt}{16pt}{9pt}
 \titleformat{\subsection}{\fell\fontsize{14}{16}\selectfont\color{klhi}}{}{0pt}{}
 \titlespacing*{\subsection}{0pt}{11pt}{4pt}
@@ -100,8 +103,9 @@
   frame code={\draw[kllow,leds]([shift={(.6pt,.6pt)}]frame.south west) rectangle ([shift={(-.6pt,-.6pt)}]frame.north east);},
   overlay unbroken and first={\draw[kllow,leds]([xshift=.6pt]title.south west)--([xshift=-.6pt]title.south east);
     \fill[kldim]([xshift=-9pt]title.east) ++(-2.6pt,-2.6pt) rectangle ++(5.2pt,5.2pt);}}}
-% #1 kind, #2 name, #3 German name; either name may be empty
-\newtcolorbox{panel}[3]{klframe,title={\kl@title{#1}{#2}{#3}}}
+% [tcolorbox options], #2 kind, #3 name, #4 German name; either name may be empty.
+% [unbreakable] keeps a short panel in one piece.
+\newtcolorbox{panel}[4][]{klframe,title={\kl@title{#2}{#3}{#4}},#1}
 \newtcolorbox{twominute}{klframe,title={\kl@title{The two-minute view}{read this first}{}}}
 \newtcolorbox{guessfirst}{klframe,title={\kl@title{Guess first}{wrong is fine, guessing is the point}{}}}
 \newcounter{klitem}
@@ -115,7 +119,7 @@
 \renewcommand\proofname{\textsc{Proof}}
 
 % Why: the question in the open, the word in the margin
-\newcommand\why[2]{\par\medskip\noindent\marginpar{\vspace{-3pt}\goth\fontsize{19}{19}\selectfont\color{klhi}Why?}%
+\newcommand\why[2]{\par\medskip\needspace{5\baselineskip}\noindent\marginpar{\vspace{-3pt}\goth\fontsize{19}{19}\selectfont\color{klhi}Why?}%
   {\fell\itshape\fontsize{12.5}{15}\selectfont\color{klhi}#1}\par\smallskip\noindent\hangindent=1.1em\hangafter=0 #2\par\medskip}
 
 \setlist{nosep,leftmargin=1.2em}
