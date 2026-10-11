@@ -1,0 +1,28 @@
+{
+  "outputStyle": "Kael'thos",
+  "permissions": {
+    "additionalDirectories": ["D:/le vault"],
+    "allow": [
+      "Bash(python engine/kl.py *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push*)",
+      "Bash(git status*)",
+      "Bash(git log *)",
+      "Bash(git diff*)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/push-guard.mjs"]
+          }
+        ]
+      }
+    ]
+  }
+}

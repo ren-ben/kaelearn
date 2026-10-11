@@ -1,0 +1,633 @@
+% The Kaelearn Codex: the research, and the system the student chose from it.
+% Build: python engine/kl.py build codex/codex.tex
+\documentclass{kaelearn}
+\subject{Codex}
+\folio{00}
+\title{The Kaelearn\\Codex}
+\shorttitle{The Codex}
+\subtitle{How to learn physics and mathematics at the edge\\of what a brain can do. Your system, and why it works.}
+\sources{Part XIII, the studies behind every claim}
+\readtime{2 min view · 60 min codex}
+\filed{2026-10-11}
+\plate{plate.png}{The event horizon}
+\kael{reading}
+\urlstyle{same}
+\newcommand\src[1]{\url{#1}}
+
+\begin{document}
+\makecover
+
+% ============================================================================
+\section{The two-minute view}
+
+\opening{Y}{ou asked} for the system that teaches you the most in the least time. I looked
+through a century of experiments on how memory and understanding are built, kept what survived
+replication, threw out what didn't, and then let you choose how the pieces fit. This Codex is
+both: the evidence, and the machine you built from it. Read the box. If you read nothing else,
+the box is enough to start.
+\aside{I have watched every student who ever lived. Most of them reread their notes. I would
+like you to be the exception.}
+
+\begin{twominute}
+\begin{itemize}
+  \item \textbf{Learning is retrieval, not exposure.} A memory grows when you pull it out with
+        effort, not when you look at it again. Rereading feels productive and is close to useless.
+  \item \textbf{Four engines carry the evidence:} retrieval practice, spacing, interleaving, and
+        explaining (self-explanation and \emph{why}).
+  \item \textbf{Deep understanding is seeing the deep structure}: which principle a problem runs on.
+        Experts sort problems by principle and novices by surface. You build it by comparing
+        problems and extracting the key idea, not by doing more of the same.
+  \item \textbf{Your loop:} pretest before the lecture $\to$ your lecture habit $\to$ a blurt and
+        \texttt{/ingest} the same day $\to$ homework with the hint ladder and a debrief $\to$ new
+        cards in the evening, reviews in the morning $\to$ a weekly review sheet and a teach-back
+        $\to$ mocks, oral, board and mixed sets before exams.
+  \item \textbf{I don't do your thinking.} AI that hands out answers lowers exam scores; AI that
+        withholds them and makes you generate doubles learning.
+  \item \textbf{Trust tests, not feelings.} The methods that work feel worse while you use them.
+        That is how you know they are working.
+\end{itemize}
+\end{twominute}
+
+\begin{center}
+\begin{tikzpicture}[
+  stage/.style={draw=kllow,leds,fill=klpage,minimum width=34mm,minimum height=14mm,align=center,inner sep=3pt},
+  flow/.style={-{Stealth[length=5pt]},kldim,line width=.7pt}]
+  \node[stage] (a) at (0,36mm)     {\pix{Before}\\[1pt] pretest: 3 guesses};
+  \node[stage] (b) at (46mm,18mm)  {\pix{In the lecture}\\[1pt] your own words};
+  \node[stage] (c) at (46mm,-18mm) {\pix{Same day}\\[1pt] blurt, then ingest};
+  \node[stage] (d) at (0,-36mm)    {\pix{Homework}\\[1pt] attempt, ladder, debrief};
+  \node[stage] (e) at (-46mm,-18mm){\pix{Evening and morning}\\[1pt] new cards, reviews};
+  \node[stage] (f) at (-46mm,18mm) {\pix{Weekly}\\[1pt] review sheet, teach-back};
+  \draw[flow] (a) to[bend left=14] (b);
+  \draw[flow] (b) to[bend left=14] (c);
+  \draw[flow] (c) to[bend left=14] (d);
+  \draw[flow] (d) to[bend left=14] (e);
+  \draw[flow] (e) to[bend left=14] (f);
+  \draw[flow] (f) to[bend left=14] (a);
+  \node[align=center] at (0,0) {\goth\fontsize{22}{22}\selectfont\color{klhi}Atlas\\[2pt]
+    \fell\itshape\fontsize{10}{12}\selectfont\color{kldim}every step feeds the map};
+\end{tikzpicture}
+\end{center}
+\plotcaption{The weekly loop. Exam season adds mock exams, oral drills, board drills and mixed
+sets on top. Everything you do moves a concept up or down in the Atlas.}
+
+% ============================================================================
+\section{How learning actually works}
+
+\opening{E}{very memory} has two strengths, and confusing them is the root of almost every bad
+study habit. Robert and Elizabeth Bjork call them \emph{storage strength}, how deeply something
+is learned and connected, and \emph{retrieval strength}, how easily it comes to mind right now.
+Storage only grows. Retrieval rises and decays. The surprise is in how storage grows: it grows
+most when you retrieve something while retrieval strength is \emph{low}, when pulling it out
+costs effort. Easy retrieval teaches almost nothing.
+
+That single fact explains the whole field. Rereading raises retrieval strength for an hour and
+feels like knowing, but adds little storage. Spacing works because by the next session retrieval
+has decayed, so the retrieval costs effort. Interleaving works because the right method no longer
+sits in the section title, so choosing it costs effort. Testing works because a test \emph{is}
+effortful retrieval. Bjork's name for this is \emph{desirable difficulties}: difficulties that
+slow you down now and make you stronger later.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,height=52mm,xmin=0,xmax=31,ymin=0,ymax=1.08,xlabel={days},ylabel={recall},
+  xtick={0,1,3,7,16,30},ytick={0,0.5,1},ylabel style={rotate=-90}]
+  \addplot[kldim,dashed,domain=0:30,samples=80] {exp(-x/1.2)};
+  \addplot[klhi,domain=0:1,samples=20] {exp(-x/1.2)};
+  \addplot[klhi,domain=1:3,samples=20] {exp(-(x-1)/3)};
+  \addplot[klhi,domain=3:7,samples=20] {exp(-(x-3)/7)};
+  \addplot[klhi,domain=7:16,samples=30] {exp(-(x-7)/15)};
+  \addplot[klhi,domain=16:30,samples=30] {exp(-(x-16)/34)};
+  \foreach \t in {1,3,7,16}{\edef\tmp{\noexpand\draw[kllow,leds] (axis cs:\t,0) -- (axis cs:\t,1);}\tmp}
+  \node[anchor=west,text=kldim] at (axis cs:3.2,0.08) {\fell\itshape\fontsize{9}{10}\selectfont no review};
+  \node[anchor=west,text=klhi] at (axis cs:20,0.82) {\fell\itshape\fontsize{9}{10}\selectfont spaced retrieval};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{A schematic of the forgetting curve (shape after Ebbinghaus, not data). Each
+effortful retrieval at the dotted lines resets recall and flattens the next decline. The gaps
+can grow because the memory is stronger each time.}
+
+\subsection{Your working memory is small. Experts cheat.}
+You can hold roughly four new things in mind at once (Cowan 2001). A novice reading a proof spends all four
+slots on symbols. An expert spends one slot on ``this is the $\varepsilon/2$ argument'' and has
+three left to think with. That compressed unit is a \emph{schema}. Building schemas is what deep
+understanding means in the head, and every method in this Codex is a way of building them faster.
+
+\subsection{Feelings lie, systematically}
+In a Harvard physics course, students taught by active learning learned more than students in
+polished lectures, and \emph{believed they had learned less} (Deslauriers et al.\ 2019). Physics
+students given interleaved homework solved 50\% and 125\% more of the hard novel problems on two
+surprise tests, and rated the method worse (Samani \& Pan 2021). Students predicted that
+retrieval practice would work worst; it beat concept mapping by about half a week later (Karpicke
+\& Blunt 2011). The effort you feel is the learning happening. The ease you feel when rereading
+is the illusion. Feynman put it best: ``The first principle is that you must not fool yourself, and
+you are the easiest person to fool.''
+
+\why{Why does rereading feel so productive?}{Because the second reading is fluent: the words are
+familiar, so they go in easily, and the brain mistakes ease for knowing. Fluency measures how
+recently you saw something, not whether you can produce it. The only honest test is to close the
+page and produce it.}
+
+% ============================================================================
+\section{The evidence ledger}
+
+\opening{H}{ere is} what holds up, how strongly, and what it became in your system. Effect sizes
+are standardised differences ($d$ or $g$): 0.2 is small, 0.5 medium, 0.8 large. In education a
+reliable 0.4 is worth reorganising your life around.
+
+\medskip
+\noindent{\small\begin{tabular}{@{}>{\raggedright}p{28mm}>{\raggedright}p{54mm}>{\raggedright\arraybackslash}p{38mm}@{}}
+{\color{kldim}\pix{Technique}} & {\color{kldim}\pix{Evidence}} & {\color{kldim}\pix{In your system}}\\\noalign{\vskip2pt}
+\multicolumn{3}{@{}l@{}}{\ledline{\linewidth}}\\
+Retrieval practice & $g\approx0.5$--$0.6$ in meta-analyses; beat concept mapping (Karpicke \& Blunt 2011) & blurts, review sheets, cards\\[3pt]
+Spacing, successive relearning & ``among the most robust effects in learning'' (Carpenter, Pan \& Butler 2022); recall to criterion, then relearn three times spaced (Rawson \& Dunlosky 2022) & Atlas schedule, Anki\\[3pt]
+Interleaving & $g=0.42$ overall (Brunmair \& Richter 2019); maths RCT $d=0.83$ (Rohrer et al.\ 2020); physics homework +50\%/+125\% (Samani \& Pan 2021) & review sheets, mixed sets\\[3pt]
+Self-explanation & $g=0.55$ (Bisra et al.\ 2018); proof comprehension $d\approx0.95$ after a 15-minute training (Hodds, Alcock \& Inglis 2014) & proofs, teach-back\\[3pt]
+Why-questions & moderate utility (Dunlosky et al.\ 2013) & \texttt{\textbackslash why} in every folio\\[3pt]
+Productive failure & beats instruction-first on concepts and transfer, 53 studies (Sinha \& Kapur 2021) & attempt before the ladder\\[3pt]
+Pretesting & guessing first improves learning from the lesson (Pan \& Carpenter 2023) & \texttt{/pretest}, guess-first boxes\\[3pt]
+Worked examples & $g=0.48$ in maths (Barbieri et al.\ 2023), fading as skill grows (Kalyuga 2007) & brand-new topics only\\[3pt]
+Generation & producing beats reading, $d\approx0.40$ (Bertsch et al.\ 2007) & you make the cards\\[3pt]
+Handwritten notes & $g=0.25$ on achievement over typed (Flanigan et al.\ 2024) & Notability stays\\[3pt]
+Sleep & learn in the evening, relearn the next morning: half the trials, better retention at six months (Mazza et al.\ 2016) & evening new, morning review\\[3pt]
+Exercise & before encoding $d=0.23$, after $d=0.33$ (Qazi et al.\ 2024) & train after a study block\\[3pt]
+Rereading, highlighting, summarising & low utility (Dunlosky et al.\ 2013) & never as review\\
+\multicolumn{3}{@{}l@{}}{\ledline{\linewidth}}\\
+\end{tabular}}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,ybar,height=48mm,width=.62\linewidth,bar width=16mm,ymin=0,ymax=75,
+  symbolic x coords={blocked,interleaved},xtick=data,enlarge x limits=.6,ylabel={score \%},
+  ylabel style={rotate=-90},nodes near coords,every node near coord/.append style={font=\tek\fontsize{8}{9}\selectfont,text=klhi},
+  every tick label/.append style={font=\pixf\fontsize{6.8}{8}\selectfont,text=kldim}]
+  \addplot[draw=klhi,pattern={dither50},pattern color=klink] coordinates {(blocked,38) (interleaved,61)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{787 seventh-graders, the same practice problems, only the order changed. Scores on an
+unannounced later test, interleaved against blocked (Rohrer et al.\ 2020, a cluster-randomised trial).}
+
+\why{Why trust meta-analyses over the famous single study?}{A single study can be lucky, small,
+or tuned until it worked. A meta-analysis pools dozens and shows how big an effect is on average
+and where it vanishes. The famous handwriting study (Mueller \& Oppenheimer 2014) partly failed to
+replicate; the 2024 meta-analysis still finds a handwriting advantage, just a smaller one. That is
+the number to believe.}
+
+% ============================================================================
+\section{Deep understanding}
+
+\opening{T}{he medalists} told you the secret: understand the problem so deeply that you see the
+pattern behind different problems. Cognitive science has a name for that pattern, \emph{deep
+structure}, and a well-replicated picture of how it forms.
+
+\subsection{What experts see}
+Chi, Feltovich and Glaser (1981) gave physics problems to novices and to physics PhDs and asked
+them to sort the problems into groups. Novices sorted by what the problem \emph{looked like}:
+inclined planes here, springs there. Experts sorted by the \emph{principle} that solves it:
+energy conservation here, Newton's second law there. The expert has, in effect, a trigger that
+fires on structure rather than on scenery.
+
+\begin{center}
+\begin{tikzpicture}[chip/.style={draw=kllow,leds,fill=klpage,minimum width=27mm,minimum height=8mm,font=\fontsize{9}{10}\selectfont,align=center},
+  grp/.style={font=\pixf\fontsize{6.8}{8}\selectfont,text=kldim}]
+  \node[grp] at (-33mm,25mm) {Novice: by surface};
+  \node[grp] at (33mm,25mm) {Expert: by principle};
+  \node[grp] at (-50mm,15mm) {incline};  \node[grp] at (-16mm,15mm) {spring};
+  \node[chip] (n1) at (-50mm,6mm) {block slides\\down a ramp};   \node[chip] (n2) at (-50mm,-6mm) {ramp with friction:\\acceleration?};
+  \node[chip] (n3) at (-16mm,6mm) {spring launches\\a ball};       \node[chip] (n4) at (-16mm,-6mm) {spring and mass:\\force at release?};
+  \node[grp] at (16mm,15mm) {energy};  \node[grp] at (50mm,15mm) {Newton II};
+  \node[chip] (e1) at (16mm,6mm) {block slides\\down a ramp};     \node[chip] (e2) at (16mm,-6mm) {spring launches\\a ball};
+  \node[chip] (e3) at (50mm,6mm) {ramp with friction:\\acceleration?}; \node[chip] (e4) at (50mm,-6mm) {spring and mass:\\force at release?};
+  \draw[kllow,line width=.5pt] (0,20mm) -- (0,-14mm);
+\end{tikzpicture}
+\end{center}
+\plotcaption{The same four problems, sorted twice. The surface tells you what the problem is about.
+The principle tells you how to solve it (after Chi, Feltovich \& Glaser 1981).}
+
+\subsection{How deep structure forms}
+Not from one example, however well explained. Gick and Holyoak (1983) tried to teach the
+structure of a solution from a single story, with summaries, stated principles, even diagrams.
+Almost nothing transferred. Then they gave \emph{two} analogous stories and asked people to
+compare them, and transfer jumped; the same diagrams that failed with one story worked with two.
+Structure is what survives a comparison. So every debrief in your system asks for a problem with
+\emph{the same structure and a different surface}, and every review sheet mixes topics so you
+have to recognise the structure without the section title doing it for you.
+
+\subsection{Extract the key idea}
+Evan Chen, who trains olympiad teams, says a solution usually contains one or two sentences that
+matter, and the rest follows from them. His rule: only read a solution after you have really
+worked on the problem, then hunt for those sentences, then ask: \emph{how could I have thought of
+that?} Your debrief writes them down as \textsf{Key idea} and \textsf{How you could have found it}.
+Remembering two sentences is cheap; they unlock the whole solution later.
+
+\subsection{Rules and reasons}
+You asked for both, and you were right. Triggers (``you see a sup in a limit proof: reach for the
+$\varepsilon$-characterisation'') are compressed experience: they tell you which next step is
+likely. Experts lean on them constantly. When Price, Wieman and colleagues (2021) interviewed 52
+working scientists and engineers, they found the problem-solving process came down to the same 29
+decisions, each made with predictive models built from deep domain knowledge. But a trigger
+without its reason is brittle: it fires on the wrong surface. So every trigger in a folio sits
+next to the \emph{why} that justifies it.
+
+\subsection{Rigour is a stage, not the destination}
+Terence Tao describes three stages: pre-rigorous (intuition, computation, hand-waving), rigorous
+(epsilons, everything precise) and post-rigorous (intuition again, but now trustworthy because
+rigour has trained it). ``The point of rigour is not to destroy all intuition; instead, it should
+be used to destroy bad intuition while clarifying and elevating good intuition.'' You are entering
+the rigorous stage now. Every folio gives you the intuition \emph{and} the proof, so the two grow
+up together.
+
+\subsection{Feynman's two tools}
+``What I cannot create, I do not understand'' was on his blackboard when he died. Hence the
+teach-back: if you can rebuild an idea in plain words, with every hypothesis in place, you own it.
+And, via Rota, his habit of keeping a dozen favourite problems always in mind and testing every
+new trick against them. Every so often one lands, and people call it genius. Your Atlas keeps
+your Dozen.
+
+\why{Why doesn't doing many problems of the same type build deep understanding?}{Because blocked
+practice hands you the method in advance: the section title does the recognising for you. The
+skill exams actually test, deciding which principle applies to a problem you have never seen,
+never gets practised. Interleaving and mixed sets put that decision back, which is exactly why
+they feel harder.}
+
+% ============================================================================
+\section{Solving problems}
+
+\opening{P}{ólya} split problem solving into four phases in 1945, and nobody has improved on it:
+\emph{understand} the problem, make a \emph{plan}, \emph{carry it out}, \emph{look back}. The
+fourth is the one everybody skips and the one that teaches the most.
+
+\subsection{The silent killer: no checkpoints}
+Alan Schoenfeld videotaped students working unfamiliar problems. About 60\% of attempts went:
+read, pick an approach in seconds, pursue it ``come hell or high water''. That first quick choice,
+if never reconsidered, guaranteed failure. Mathematicians on the same problems explored, monitored
+and abandoned dead ends. The difference wasn't knowledge; it was asking, every few lines,
+\emph{is this working?}
+
+\subsection{Struggle first, then instruction}
+Across 53 studies, students who first attempted a problem and then got instruction understood the
+concepts better and transferred them further than students taught first (Sinha \& Kapur 2021).
+The failure is productive only when the problem is within reach and the attempt is real. Worked
+examples, meanwhile, help most when a topic is brand new ($g=0.48$ in maths; Barbieri et al.\ 2023),
+and the advantage disappears as skill grows: guidance a novice needs becomes clutter for someone who
+can already attempt (Kalyuga's expertise-reversal effect). Hence the rule: folios teach new topics
+with examples; homework is attempted before any help.
+
+\begin{center}
+\begin{tikzpicture}[st/.style={draw=kllow,leds,fill=klpage,minimum width=20mm,minimum height=9mm,font=\fontsize{9}{10}\selectfont,align=center}]
+  \foreach \i/\t/\l in {0/restate/givens and goal, 1/question/one Socratic nudge, 2/concept/name the tool, 3/sub-goal/{if X, then done}, 4/next step/one step only}{
+    \node[st,anchor=south west] at (\i*21mm,\i*6mm) {\pix{\t}\\[1pt]{\fell\itshape\color{kldim}\l}};}
+  \node[draw=klhi,line width=.8pt,minimum width=20mm,minimum height=9mm,anchor=south west,align=center] (rv) at (5*21mm,5*6mm)
+    {\pix{reveal}\\[1pt]{\fell\itshape\color{kldim}after an attempt}};
+  \node at ([xshift=-3mm,yshift=-1mm]rv.north east) {\scalebox{.55}{\waxseal}};
+  \node[text=klhi,anchor=north] at (63mm,-3mm) {\goth\fontsize{15}{15}\selectfont Debrief \fell\itshape\fontsize{10}{12}\selectfont\color{kldim} key idea · how to find it · generalise · same structure · board version};
+\end{tikzpicture}
+\end{center}
+\plotcaption{The \texttt{/stuck} ladder. One rung per request, starting as low as your attempt
+allows. The reveal is sealed until you have tried. Every problem ends in a debrief, revealed or not.}
+
+\subsection{Why the reveal is sealed}
+Bastani and colleagues (2025) gave about a thousand high-school students GPT-4 for maths practice.
+With a plain chat interface, practice grades rose 48\%; when the AI was taken away, exam grades
+fell 17\% below students who never had it. A version with guardrails (hints, no answers) removed
+most of the harm. At Harvard, a tutor built on research-based pedagogy, guiding instead of answering,
+produced more than twice the learning of an active-learning class, in less time (Kestin et al.\
+2025). The difference is never the AI. It is who does the generating.
+
+\subsection{Physics habits}
+\begin{example}{Units do half the work}
+How does a pendulum's period $T$ depend on its length $\ell$, mass $m$ and $g$? Units only:
+$[T]=\mathrm{s}$, $[\ell]=\mathrm{m}$, $[g]=\mathrm{m\,s^{-2}}$, $[m]=\mathrm{kg}$. No other quantity
+carries kilograms, so $m$ cannot appear. The only combination of $\ell$ and $g$ with units of time
+is $\sqrt{\ell/g}$. So $T=C\sqrt{\ell/g}$, and the full solution only has to find $C$ (it is $2\pi$
+for small swings). Then check the limits: a longer pendulum swings more slowly, and stronger gravity
+swings it faster. Both are right.
+\end{example}
+Before any physics calculation: sketch, name the principle and why it applies, check units, estimate
+the answer, push the result to its limits ($m\to0$, $t\to\infty$, $\theta\to0$), and use symmetry
+before algebra.
+
+\subsection{The grimoire}
+Every mistake goes into \texttt{GRIMOIRE.md} with its type and how sure you were. Sure-and-wrong
+errors are the gold: once corrected, high-confidence errors are \emph{more} likely to be fixed than
+low-confidence ones (the hypercorrection effect; Butterfield \& Metcalfe 2001). They come back at
++3, +10 and +30 days until they stay dead.
+
+% ============================================================================
+\section{Proofs}
+
+\opening{P}{roofs feel} impossible at first because you are learning two things at once: a language
+(quantifiers, implications, negations) and a craft (which strategy, when). Separate them and both
+get easier.
+
+\subsection{Reading a proof}
+Hodds, Alcock and Inglis (2014) gave undergraduates a short booklet that trained one habit:
+\emph{explain each line of a proof to yourself, using the lines before it and the definitions}.
+Proof comprehension rose by $d\approx0.95$, a huge effect; a 15-minute version worked inside a
+lecture and the effect lasted. The protocol:
+\begin{enumerate}
+  \item Find the main idea first. Skim for the one move the proof hangs on.
+  \item Justify every line: which earlier line, definition or theorem makes it true?
+  \item Find where each hypothesis is used. A hypothesis that is never used is a red flag: either the
+        proof is wrong, or you misread it.
+  \item Run the proof on an example and watch every step happen.
+\end{enumerate}
+
+\subsection{Writing a proof}
+Scratch work goes backwards from the goal; the written proof goes forwards. Name the template before
+you start: direct, contrapositive, contradiction, induction, $\varepsilon$--$N$ or
+$\varepsilon$--$\delta$, construction.
+
+\begin{example}{Backwards in scratch, forwards on the page}
+Claim: $1/n\to0$. \emph{Scratch:} we need $|1/n-0|<\varepsilon$, that is $n>1/\varepsilon$, so any
+$N>1/\varepsilon$ will do, and one exists by the Archimedean property. \emph{Proof:} Let
+$\varepsilon>0$. Choose $N\in\mathbb N$ with $N>1/\varepsilon$. For all $n\ge N$,
+$|1/n-0|=1/n\le1/N<\varepsilon$. \hfill\qedsymbol
+\end{example}
+
+For every new definition, build four things: an example, a non-example, an edge case, and the
+\emph{negation}, with the quantifiers flipped. The negation of convergence,
+$\exists\varepsilon>0\ \forall N\ \exists n\ge N: |a_n-L|\ge\varepsilon$, is what you prove whenever
+you show that something does \emph{not} converge, and most errors in analysis are quantifier errors.
+To test a theorem, delete a hypothesis and hunt for the counterexample; this is half of all
+understanding in analysis.
+
+\why{Why does analysis insist on $\varepsilon$ when the picture is obvious?}{Because the picture lies
+exactly where it matters: at infinity, at a point, near a boundary. There are continuous functions that
+are nowhere differentiable, and sequences of continuous functions whose limit isn't continuous. The
+$\varepsilon$ is how you check a picture against those monsters. Once your pictures pass, you are
+post-rigorous.}
+
+Worth owning alongside Cummings: Lara Alcock, \emph{How to Think About Analysis} (2014), written by one
+of the authors of the self-explanation study for exactly the stage you are in, and Daniel Velleman,
+\emph{How to Prove It}, for the language of proof.
+
+% ============================================================================
+\section{Memory: spaced repetition done right}
+
+\opening{F}{orgetting} is not a failure; it is the condition that makes the next retrieval valuable.
+The right gap between reviews grows with how long you want to remember. For exam-length horizons the
+best gap is roughly a tenth to a fifth of the time you want the memory to last (Cepeda et al.\ 2008).
+Anki computes this for you, card by card.
+
+\subsection{Anki, configured}
+Turn on FSRS in the deck options (Anki's modern scheduler, fitted to large sets of real reviews;
+Ye et al.\ 2022), keep desired retention at 0.90, and press Optimize about once a month. Do your due
+reviews in the morning, as you already do, and make and learn the day's new cards in the evening. Mazza
+and colleagues (2016) found that learning in the evening and relearning after sleep halved the practice
+needed and improved retention six months later.
+\aside{About the theta waves: there is no study showing that reviewing right after waking works better
+because of them. Your morning reviews work for a better reason: they are relearning after sleep.}
+
+\subsection{Your three card types}
+Make them yourself. Michael Nielsen, who uses cards to ``see through'' pieces of mathematics, found most
+of the value lies in writing them: picking an idea apart until each piece is atomic. Other people's
+cards teach far less. And bias toward ideas over details: students mostly write detail cards, and
+conceptual cards are the ones that help when understanding is shaky (Lin, McDaniel \& Miyatsu 2018).
+
+\begin{deck}
+\card{Def}{In \{\{c1::$\mathbb R$\}\}, a sequence converges iff it is \{\{c2::Cauchy\}\}.}{Every hypothesis gets its own gap; the first is what fails in $\mathbb Q$.}
+\card{Why}{Why does the Bolzano--Weierstrass theorem need boundedness? Counterexample?}{$a_n=n$ has no convergent subsequence.}
+\card{Trigger}{You must show convergence and cannot guess the limit. Reach for?}{The Cauchy criterion.}
+\end{deck}
+
+Rules (Wozniak, Matuschak): understand before you memorise; one idea per card; precise enough that only
+one answer fits; never a list to recite; and if a card keeps failing, rewrite it rather than drilling it.
+
+\subsection{Bigger than a card}
+Proof ideas, problem types and whole topics are too big for cards. They get \emph{successive relearning}:
+retrieve until correct, then come back to them spaced (Rawson \& Dunlosky 2022). That is your weekly review
+sheet, run on the mastery levels in the Atlas:
+
+\medskip
+\noindent{\small\begin{tabular}{@{}>{\raggedright}p{8mm}>{\raggedright}p{20mm}>{\raggedright}p{62mm}>{\raggedright\arraybackslash}p{22mm}@{}}
+{\color{kldim}\pix{Lvl}} & {\color{kldim}\pix{Name}} & {\color{kldim}\pix{Evidence to reach it}} & {\color{kldim}\pix{Next review}}\\\noalign{\vskip2pt}
+\multicolumn{4}{@{}l@{}}{\ledline{\linewidth}}\\
+1 & met & seen in a lecture, folio or book & +7 days\\
+2 & understood & teach-back passed or a clean self-explanation & +14 days\\
+3 & retrieved & correct blank-page recall in two spaced reviews & +30 days\\
+4 & owned & used unprompted on a new problem & +60 days\\
+\multicolumn{4}{@{}l@{}}{\ledline{\linewidth}}\\
+\end{tabular}}
+\par\smallskip\noindent A miss drops a concept one level and brings it back in three days.
+
+% ============================================================================
+\section{Your notes}
+
+\opening{Y}{our lecture} habit is already the best one known: you skip what is obvious, rewrite in your
+own words, write down your own ideas and try to predict the next step. That is generative note-taking.
+And the medium is right: across 24 studies, taking and reviewing handwritten notes led to higher
+achievement than typed notes ($g=0.25$), even though typists write far more ($g=0.92$; Flanigan et al.\
+2024). Volume is not learning.
+
+The weak point is what happens next. Notes you never retrieve from are a diary, and rereading them is
+the low-utility habit from Part III. So the handwriting stays the source, and Obsidian becomes something
+else: the index and the retrieval layer on top of it.
+
+\begin{center}
+\begin{tikzpicture}[nd/.style={draw=kllow,leds,fill=klpage,minimum width=24mm,minimum height=11mm,align=center,font=\fontsize{9}{10}\selectfont},
+  flow/.style={-{Stealth[length=5pt]},kldim,line width=.7pt}]
+  \node[nd] (a) at (0,0) {\pix{iPad}\\Notability};
+  \node[nd] (b) at (30mm,0) {\pix{Same day}\\blurt, 5 min};
+  \node[nd] (c) at (60mm,0) {\pix{Files}\\vault Inbox};
+  \node[nd] (d) at (90mm,0) {\pix{/ingest}\\lecture note};
+  \node[nd] (e) at (90mm,-20mm) {\pix{Layer}\\gaps, questions};
+  \node[nd] (f) at (60mm,-20mm) {\pix{Vault}\\concepts, hubs};
+  \node[nd] (g) at (30mm,-20mm) {\pix{Tonight}\\your cards};
+  \node[nd] (h) at (0,-20mm) {\pix{Weekly}\\review sheet};
+  \draw[flow] (a)--(b); \draw[flow] (b)--(c); \draw[flow] (c)--(d); \draw[flow] (d)--(e);
+  \draw[flow] (e)--(f); \draw[flow] (f)--(g); \draw[flow] (g)--(h);
+\end{tikzpicture}
+\end{center}
+\plotcaption{The notes pipeline. The transcript makes your handwriting searchable. The original pages stay
+embedded beside it. The layer turns the notes into retrieval.}
+
+What \texttt{/ingest} does with a lecture: a faithful LaTeX transcript of your handwriting, the original page
+beside each section, your own ideas pulled out, anything that looks wrong flagged under \emph{Check} (never
+silently corrected), and then the layer: the gaps between your notes and your blurt, review questions, and
+card suggestions. Every concept gets an atomic note, every topic a hub, and Obsidian's graph view becomes the
+map you asked for: what connects to what, drawn from your own notes.
+
+\why{Why blurt before you look at the notes?}{Because the blurt is a free test. Five minutes of recall on a
+blank page is the most effective review you can do on the day of the lecture, and it measures what actually
+stayed. The gaps it exposes are the exact things to make cards for tonight. Rereading would have hidden them.}
+
+% ============================================================================
+\section{The week}
+
+\noindent{\small\begin{tabular}{@{}>{\raggedright}p{26mm}>{\raggedright}p{58mm}>{\raggedright\arraybackslash}p{36mm}@{}}
+{\color{kldim}\pix{When}} & {\color{kldim}\pix{You}} & {\color{kldim}\pix{Cost}}\\\noalign{\vskip2pt}
+\multicolumn{3}{@{}l@{}}{\ledline{\linewidth}}\\
+before a lecture & guess at 3 pretest questions & 5 min\\[2pt]
+in the lecture & your habit, unchanged & 0\\[2pt]
+same day & blurt, export to the Inbox, \texttt{/ingest} & 5 min + reading the gaps\\[2pt]
+homework & attempt first, \texttt{/stuck} only when stuck, debrief & as long as it takes\\[2pt]
+evening & make and learn the new cards & 10--15 min\\[2pt]
+morning & Anki due reviews & 15--25 min\\[2pt]
+weekly & review sheet on paper, then one teach-back & 45 + 15 min\\[2pt]
+new topic & read the folio: 2-minute view, guesses, then the rest & 15--30 min\\[2pt]
+exam season & mocks weekly, oral and board drills, mixed sets & from 4 weeks out\\
+\multicolumn{3}{@{}l@{}}{\ledline{\linewidth}}\\
+\end{tabular}}
+
+\medskip
+AURA-1 counts your hours. Hours are not insight; the Atlas counts what the hours bought. Look at both.
+
+\subsection{Exam season}
+Four weeks out, the balance shifts from new material to retrieval under exam conditions. \textbf{Mock
+exams}: timed, in the real format, graded strictly against a key you don't see first. \textbf{Oral drills}:
+I examine in chat (state, prove, why, what if) and give you an Austrian mark with reasons. \textbf{Board
+drills}: you explain a solved homework problem out loud in three minutes, and I ask what the tutor will
+ask. \textbf{Mixed sets}: everything so far, no labels, weighted toward what is weakest.
+
+% ============================================================================
+\section{The body and the clock}
+
+\opening{T}{he brain} that learns is an organ, and you already treat it better than most students do. What
+the evidence says about your habits, honestly:
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,ybar,height=44mm,width=.62\linewidth,bar width=14mm,ymin=-0.1,ymax=0.42,
+  symbolic x coords={before,during,after},xtick=data,enlarge x limits=.35,ylabel={$d$},ylabel style={rotate=-90},
+  nodes near coords,every node near coord/.append style={font=\tek\fontsize{8}{9}\selectfont,text=klhi},
+  every tick label/.append style={font=\pixf\fontsize{6.8}{8}\selectfont,text=kldim},
+  ytick={0,0.2,0.4},yticklabel style={font=\tek\fontsize{7}{8}\selectfont,/pgf/number format/fixed},
+  extra y ticks={0},extra y tick labels={},extra y tick style={grid=major,major grid style={kldim,line width=.5pt}},
+  nodes near coords style={/pgf/number format/.cd,fixed,precision=2,fixed zerofill}]
+  \addplot[draw=klhi,pattern={dither50},pattern color=klink] coordinates {(before,0.23) (during,-0.04) (after,0.33)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{A single bout of exercise and memory for what you learn, by when it happens relative to learning
+(42 experiments; Qazi et al.\ 2024). Train before or after a study block, not instead of it.}
+
+\noindent{\small\begin{tabular}{@{}>{\raggedright}p{28mm}>{\raggedright}p{58mm}>{\raggedright\arraybackslash}p{35mm}@{}}
+{\color{kldim}\pix{Habit}} & {\color{kldim}\pix{What the evidence says}} & {\color{kldim}\pix{Verdict}}\\\noalign{\vskip2pt}
+\multicolumn{3}{@{}l@{}}{\ledline{\linewidth}}\\
+Anki on waking & works as relearning after sleep; the theta-wave reason has no support & keep, new cards at night\\[2pt]
+your lecture method & generative and selective, with prediction: textbook-perfect & keep\\[2pt]
+gym, running & acute exercise helps consolidation, modestly & keep; after study blocks\\[2pt]
+major system & strong for arbitrary digits & digits only; derive formulas\\[2pt]
+meditation & modest benefits for attention & keep\\[2pt]
+cold showers & no evidence for learning either way & harmless\\[2pt]
+no short-form video & protects sustained attention; sensible & keep\\[2pt]
+25 pages a day & reading builds vocabulary and background knowledge & keep\\[2pt]
+Maxima to by hand & fluency comes from repetitions; it frees working memory & we add drills if exams show it\\
+\multicolumn{3}{@{}l@{}}{\ledline{\linewidth}}\\
+\end{tabular}}
+
+\medskip
+Sleep deserves its own line: consolidation happens there, and the evening-learn, morning-relearn pattern only
+works if the night in between is real. Trading sleep for study is a bad trade.
+
+% ============================================================================
+\section{Kael'thos as a tutor}
+
+\opening{A}{n AI} can make you better or make you dependent, and the evidence on which is now clear. Without
+guardrails, students use it as a crutch: practice looks great and exams collapse (Bastani et al.\ 2025). With
+pedagogy built in, guiding, questioning and withholding, it beats a good classroom (Kestin et al.\ 2025).
+Anthropic's own analysis of a million student conversations found nearly half were direct: asking for answers or finished work, with little back-and-forth.
+An early, small EEG study found that people who wrote essays with an LLM showed the weakest brain
+connectivity, and most could not quote their own essays afterwards (Kosmyna et al.\ 2025, a preprint; treat
+it as a warning, not a law).
+
+So these are my rules, and they are yours too:
+\begin{itemize}
+  \item You generate first: a guess, an attempt, a blurt, an explanation.
+  \item I question before I hint and hint before I show. The reveal is sealed until you have tried.
+  \item Every problem ends in a debrief that you could present at the board.
+  \item I suggest cards; you make them.
+  \item I keep the map honest: levels move only on evidence, never on how confident you feel.
+\end{itemize}
+
+\noindent{\small\begin{tabular}{@{}>{\raggedright}p{22mm}>{\raggedright\arraybackslash}p{100mm}@{}}
+{\color{kldim}\pix{Command}} & {\color{kldim}\pix{Does}}\\\noalign{\vskip2pt}
+\multicolumn{2}{@{}l@{}}{\ledline{\linewidth}}\\
+\texttt{/pretest} & three guess-first questions before a lecture\\
+\texttt{/ingest} & handwriting from the vault Inbox becomes a transcript, a layer, concept notes\\
+\texttt{/stuck} & the hint ladder, the sealed reveal, the debrief\\
+\texttt{/folio} & a folio like this one, on any topic, from your sources\\
+\texttt{/review} & the weekly sheet, then grading your answers\\
+\texttt{/teach} & you explain, I play the sharp student who finds the gaps\\
+\texttt{/exam} & mock, oral, board or mixed\\
+\texttt{/atlas} & the map, what is due, your Dozen\\
+\multicolumn{2}{@{}l@{}}{\ledline{\linewidth}}\\
+\end{tabular}}
+
+\medskip
+Drag a file in and I route it: handwriting to \texttt{/ingest}, a problem to \texttt{/stuck}, Skript pages to
+\texttt{/folio}, an old exam to \texttt{/exam}.
+
+\begin{guessfirst}
+Before your first week, decide your Dozen: twelve questions you want answered by the end of your degree. Why
+does quantum mechanics use complex numbers? Why is $e^{i\pi}=-1$ more than a coincidence? What exactly is
+temperature? Write them down. I will ask.
+\end{guessfirst}
+\marginkael{proud}
+
+% ============================================================================
+\section{Further reading}
+\begin{itemize}
+  \item Lara Alcock, \emph{How to Think About Analysis} (2014) and \emph{How to Study for a Mathematics Degree} (2013).
+  \item Daniel Velleman, \emph{How to Prove It} (3rd ed.\ 2019). Jay Cummings, \emph{Real Analysis}, your book.
+  \item George Pólya, \emph{How to Solve It} (1945). Paul Zeitz, \emph{The Art and Craft of Problem Solving}.
+  \item Terence Tao, \emph{Solving Mathematical Problems: A Personal Perspective} (2006), and his career-advice essays.
+  \item Brown, Roediger \& McDaniel, \emph{Make It Stick} (2014): the science of learning, readable in a weekend.
+  \item Michael Nielsen, ``Augmenting long-term memory'' (2018); Andy Matuschak, ``How to write good prompts'' (2020).
+  \item Justin Skycak, \emph{The Math Academy Way} (2024): the same science, engineered into a curriculum.
+\end{itemize}
+
+% ============================================================================
+\section{Sources}
+{\fontsize{9.5}{11.5}\selectfont\setlist[itemize]{label={},leftmargin=0pt,itemsep=3pt}
+\begin{itemize}
+\item Adesope, Trevisan \& Sundararajan (2017). Rethinking the use of tests: a meta-analysis of practice testing. \emph{Review of Educational Research} 87(3).
+\item Anthropic (2025). Anthropic Education Report: how university students use Claude. \src{anthropic.com/news/anthropic-education-report-how-university-students-use-claude}
+\item Barbieri, Miller-Cotto, Clerjuste \& Chawla (2023). A meta-analysis of the worked examples effect on mathematics performance. \emph{Educational Psychology Review} 35.
+\item Bastani et al.\ (2025). Generative AI without guardrails can harm learning: evidence from high school mathematics. \emph{PNAS} 122(26).
+\item Bertsch, Pesta, Wiscott \& McDaniel (2007). The generation effect: a meta-analytic review. \emph{Memory \& Cognition} 35(2).
+\item Bisra, Liu, Nesbit, Salimi \& Winne (2018). Inducing self-explanation: a meta-analysis. \emph{Educational Psychology Review} 30.
+\item Bjork \& Bjork (1992). A new theory of disuse and an old theory of stimulus fluctuation. In \emph{From Learning Processes to Cognitive Processes}.
+\item Bjork (1994). Memory and metamemory considerations in the training of human beings. In \emph{Metacognition: Knowing about Knowing}.
+\item Brunmair \& Richter (2019). Similarity matters: a meta-analysis of interleaved learning and its moderators. \emph{Psychological Bulletin} 145(11).
+\item Butterfield \& Metcalfe (2001). Errors committed with high confidence are hypercorrected. \emph{J.\ Exp.\ Psych.: Learning, Memory, and Cognition} 27(6).
+\item Carpenter, Pan \& Butler (2022). The science of effective learning with spacing and retrieval practice. \emph{Nature Reviews Psychology} 1, 496--511.
+\item Cepeda, Vul, Rohrer, Wixted \& Pashler (2008). Spacing effects in learning: a temporal ridgeline of optimal retention. \emph{Psychological Science} 19(11).
+\item Cowan (2001). The magical number 4 in short-term memory: a reconsideration of mental storage capacity. \emph{Behavioral and Brain Sciences} 24(1).
+\item Chen, E.\ (2017). On reading solutions. \src{blog.evanchen.cc/2017/03/06/on-reading-solutions}
+\item Chi, Feltovich \& Glaser (1981). Categorization and representation of physics problems by experts and novices. \emph{Cognitive Science} 5.
+\item Deslauriers, McCarty, Miller, Callaghan \& Kestin (2019). Measuring actual learning versus feeling of learning in response to being actively engaged in the classroom. \emph{PNAS} 116(39).
+\item Dunlosky, Rawson, Marsh, Nathan \& Willingham (2013). Improving students' learning with effective learning techniques. \emph{Psychological Science in the Public Interest} 14(1).
+\item Feynman (1974). Cargo cult science (Caltech commencement address).
+\item Flanigan, Wheeler, Colliot, Lu \& Kiewra (2024). Typed versus handwritten lecture notes and college student achievement: a meta-analysis. \emph{Educational Psychology Review} 36.
+\item Gick \& Holyoak (1983). Schema induction and analogical transfer. \emph{Cognitive Psychology} 15.
+\item Hodds, Alcock \& Inglis (2014). Self-explanation training improves proof comprehension. \emph{Journal for Research in Mathematics Education} 45(1).
+\item Kalyuga (2007). Expertise reversal effect and its implications for learner-tailored instruction. \emph{Educational Psychology Review} 19.
+\item Karpicke \& Blunt (2011). Retrieval practice produces more learning than elaborative studying with concept mapping. \emph{Science} 331.
+\item Kestin, Miller, Klales, Milbourne \& Ponti (2025). AI tutoring outperforms in-class active learning. \emph{Scientific Reports} 15, 17458.
+\item Kosmyna et al.\ (2025). Your brain on ChatGPT: accumulation of cognitive debt when using an AI assistant for essay writing. arXiv:2506.08872 (preprint).
+\item Lin, McDaniel \& Miyatsu (2018). Effects of flashcards on learning authentic materials. \emph{J.\ Applied Research in Memory and Cognition} 7(4).
+\item Matuschak (2020). How to write good prompts. \src{andymatuschak.org/prompts}
+\item Mazza et al.\ (2016). Relearn faster and retain longer: along with practice, sleep makes perfect. \emph{Psychological Science} 27(10).
+\item Mueller \& Oppenheimer (2014). The pen is mightier than the keyboard. \emph{Psychological Science} 25(6).
+\item Nielsen (2019). Using spaced repetition systems to see through a piece of mathematics. \src{cognitivemedium.com/srs-mathematics}
+\item Pan \& Carpenter (2023). Prequestioning and pretesting effects: a review of empirical research, theoretical perspectives, and implications for educational practice. \emph{Educational Psychology Review} 35.
+\item Pólya (1945). \emph{How to Solve It}. Princeton University Press.
+\item Price, Kim, Burkholder, Fritz \& Wieman (2021). A detailed characterization of the expert problem-solving process in science and engineering. \emph{CBE: Life Sciences Education} 20(3).
+\item Qazi et al.\ (2024). The temporal effects of acute exercise on episodic memory function: systematic review with meta-analysis. \emph{Frontiers in Cognition} 3.
+\item Rawson \& Dunlosky (2022). Successive relearning: an underexplored but potent technique for obtaining and maintaining knowledge. \emph{Current Directions in Psychological Science} 31(4).
+\item Rohrer, Dedrick, Hartwig \& Cheung (2020). A randomized controlled trial of interleaved mathematics practice. \emph{Journal of Educational Psychology} 112(1).
+\item Rota (1997). Ten lessons I wish I had been taught. \emph{Notices of the AMS} 44(1).
+\item Rowland (2014). The effect of testing versus restudy on retention: a meta-analytic review of the testing effect. \emph{Psychological Bulletin} 140(6).
+\item Samani \& Pan (2021). Interleaved practice enhances memory and problem-solving ability in undergraduate physics. \emph{npj Science of Learning} 6.
+\item Schoenfeld (1985). \emph{Mathematical Problem Solving}. Academic Press.
+\item Sinha \& Kapur (2021). When problem solving followed by instruction works: evidence for productive failure. \emph{Review of Educational Research} 91(5).
+\item Tao (2009). There's more to mathematics than rigour and proofs. \src{terrytao.wordpress.com/career-advice}
+\item Wozniak (1999). Effective learning: twenty rules of formulating knowledge. \src{supermemo.com/en/blog/twenty-rules-of-formulating-knowledge}
+\item Ye, Su \& Cao (2022). A stochastic shortest path algorithm for optimizing spaced repetition scheduling. \emph{Proc.\ KDD '22}.
+\end{itemize}}
+
+\end{document}

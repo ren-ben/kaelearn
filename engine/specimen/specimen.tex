@@ -1,0 +1,123 @@
+% The specimen folio: every component in use. Copy patterns from here.
+% Build: python engine/kl.py build engine/specimen/specimen.tex
+\documentclass{kaelearn}
+\subject{Analysis I}
+\folio{03}
+\title{Cauchy\\Sequences}
+\shorttitle{Cauchy sequences}
+\subtitle{How to prove a sequence arrives\\without knowing where it is going.}
+\sources{Specimen: no real sources}
+\readtime{2 min view · 14 min folio}
+\filed{2026-10-11}
+\plate{plate.png}{Zeno's nave}
+\kael{reading}
+
+\begin{document}
+\makecover
+
+\section{The trouble with limits}
+
+\opening{T}{o prove} that a sequence converges, the definition you were given makes a strange demand: name the limit first. In
+\[
+  \forall \varepsilon > 0\ \exists N \in \mathbb{N}\ \forall n \ge N:\ |a_n - L| < \varepsilon
+\]
+the $L$ sits right in the middle, and you are expected to bring it. For $a_n = 1/n$ that costs nothing. For
+$a_n = \sum_{k=1}^{n} 1/k^2$ you would need to know the answer is $\pi^2/6$, which took Euler years. Most sequences do not arrive with
+their limit printed on the box.
+
+Cauchy's move: stop asking \emph{where} the terms are going. Ask only whether they are getting close to \emph{each other}. That you can
+check with nothing but the terms themselves.
+\aside{Cauchy wrote it down in 1821. Bolzano had it four years earlier, in Prague, and nobody read him. I read him.}
+
+\begin{twominute}
+\begin{itemize}
+  \item \textbf{The problem.} The $\varepsilon$--$N$ definition needs the limit $L$ in advance.
+  \item \textbf{The fix.} A Cauchy sequence \de{(Cauchy-Folge)}: past some point, all terms huddle,
+        $\forall\varepsilon>0\ \exists N\ \forall m,n\ge N: |a_m-a_n|<\varepsilon$.
+  \item \textbf{Convergent $\Rightarrow$ Cauchy}, always, by one triangle inequality.
+  \item \textbf{Cauchy $\Rightarrow$ convergent} holds in $\mathbb{R}$ and fails in $\mathbb{Q}$. This \emph{is} completeness \de{(Vollständigkeit)}.
+  \item \textbf{The proof} runs Cauchy $\Rightarrow$ bounded $\Rightarrow$ a convergent subsequence (Bolzano--Weierstrass) $\Rightarrow$ the whole sequence follows it.
+  \item \textbf{The trap.} $|a_{n+1}-a_n|\to 0$ is not enough: the harmonic sums take ever smaller steps and still walk to infinity.
+\end{itemize}
+\end{twominute}
+
+\begin{guessfirst}
+\begin{enumerate}
+  \item If consecutive terms get arbitrarily close, $|a_{n+1}-a_n| \to 0$, must the sequence converge?
+  \item The decimal truncations of $\sqrt2$, namely $1,\ 1.4,\ 1.41,\ 1.414,\dots$, all live in $\mathbb{Q}$. Do they converge \emph{in} $\mathbb{Q}$?
+  \item Can you prove $\sum 1/k^2$ converges without knowing its value? How would you even start?
+\end{enumerate}
+\end{guessfirst}
+
+\begin{terms}
+\term{Cauchy sequence}{Cauchy-Folge}{all terms past $N$ within $\varepsilon$ of each other}
+\term{complete}{vollständig}{every Cauchy sequence converges}
+\term{subsequence}{Teilfolge}{$(a_{n_k})$ with $n_1<n_2<\cdots$}
+\term{bounded}{beschränkt}{$|a_n|\le M$ for all $n$}
+\term{accumulation point}{Häufungspunkt}{the limit of some subsequence}
+\term{triangle inequality}{Dreiecksungleichung}{$|x+y|\le|x|+|y|$}
+\end{terms}
+
+\section{The definition}
+
+\begin{definition}{Cauchy sequence}{Cauchy-Folge}
+A sequence $(a_n)$ of real numbers is a \emph{Cauchy sequence} if
+\[
+  \forall \varepsilon > 0\ \ \exists N \in \mathbb{N}\ \ \forall m, n \ge N:\quad |a_m - a_n| < \varepsilon .
+\]
+\end{definition}
+
+Read the quantifiers in order, because the order is the content. First someone hands you an $\varepsilon$, as small as they like.
+Then you choose $N$, and $N$ may depend on $\varepsilon$. Then \emph{every} pair of terms past $N$ must sit within $\varepsilon$ of
+each other. Not neighbours. Every pair: the thousandth and the $10^{100}$th.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,width=.88\linewidth,xmin=0,xmax=31,ymin=0.35,ymax=1.75,xlabel={$n$},ylabel={$a_n$},xtick={1,10,20,30},ytick={0.5,1,1.5},
+  ylabel style={rotate=-90}]
+  \fill[pattern={dither25},pattern color=klink] (axis cs:12,1.0-0.17) rectangle (axis cs:31,1.0+0.17);
+  \draw[klink,line width=.5pt] (axis cs:12,0.83)--(axis cs:31,0.83) (axis cs:12,1.17)--(axis cs:31,1.17);
+  \draw[kldim,dashed,line width=.5pt] (axis cs:12,0.35)--(axis cs:12,1.75) node[above,text=klink]{$N$};
+  \addplot[only marks,mark=square*,mark size=1.6pt,color=klhi,samples at={12,...,30}] {1+(-1)^x*0.85/x^0.75};
+  \addplot[only marks,mark=square,mark size=1.6pt,color=kldim,samples at={1,...,11}] {1+(-1)^x*0.85/x^0.75};
+  \node[anchor=west,text=klink] at (axis cs:31.3,1.17){$a_N+\varepsilon$};
+  \node[anchor=west,text=klink] at (axis cs:31.3,0.83){$a_N-\varepsilon$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{Past $N$ every term stays within $\varepsilon$ of $a_N$, so any two are within $2\varepsilon$ of each other. The band is
+centred on a term, not on the limit. You never needed $L$.}
+
+\begin{keystone}{The Cauchy criterion}{Cauchy-Kriterium}
+A sequence of real numbers converges if and only if it is a Cauchy sequence.
+
+\smallskip\noindent{\color{kldim}\pix{Proof in one breath}}\quad $\Rightarrow$: two terms near $L$ are near each other,
+$|a_m-a_n|\le|a_m-L|+|L-a_n|<\tfrac\varepsilon2+\tfrac\varepsilon2$. \ $\Leftarrow$: Cauchy $\Rightarrow$ bounded $\Rightarrow$
+Bolzano--Weierstrass hands you a subsequence with a limit $L$ $\Rightarrow$ the huddle drags every term to $L$.
+\end{keystone}
+
+\why{Why does the $\Leftarrow$ direction need Bolzano--Weierstrass?}{Being Cauchy says nothing about \emph{where} the terms are, only
+that they huddle. Something has to produce a candidate $L$, a point to huddle around. Bolzano--Weierstrass is that something, and it
+is exactly where the completeness of $\mathbb{R}$ enters. In $\mathbb{Q}$ the huddle can form around a hole: the decimals of $\sqrt2$
+huddle, and $\mathbb{Q}$ has nothing at the centre.}
+
+\why{Why is $|a_{n+1}-a_n|\to0$ not enough?}{It controls neighbours, not distant pairs. The harmonic sums
+$H_n = 1+\tfrac12+\dots+\tfrac1n$ move by $\tfrac1{n+1}\to0$ per step, yet $H_{2n}-H_n\ge\tfrac12$ forever. Tiny steps, infinite walk.}
+\aside{If you keep one sentence: Cauchy trades a destination for a crowd.}
+
+\begin{triggers}
+\trigger{Convergence to prove, no candidate limit}{the Cauchy criterion}
+\trigger{$|a_m-a_n|$ with both indices free}{let $m>n$, telescope: $\sum_{k=n}^{m-1}|a_{k+1}-a_k|$}
+\trigger{$|a_{n+1}-a_n|\le q\,|a_n-a_{n-1}|$, $q<1$}{a geometric tail, $\le \frac{q^{n}}{1-q}|a_1-a_0|$}
+\trigger{A series $\sum b_k$}{Cauchy for partial sums: $\bigl|\sum_{k=n+1}^{m} b_k\bigr|<\varepsilon$}
+\end{triggers}
+
+\marginkael{delighted}
+\begin{deck}
+\card{Def}{Cauchy sequence: the definition, quantifiers in order.}{$\forall\varepsilon>0\ \exists N\ \forall m,n\ge N:\ |a_m-a_n|<\varepsilon$}
+\card{Cloze}{In \{\{$\mathbb{R}$\}\}, a sequence converges iff it is \{\{Cauchy\}\}.}{The first gap is the hypothesis that fails in $\mathbb{Q}$.}
+\card{Why}{Why does Cauchy $\Rightarrow$ convergent fail in $\mathbb{Q}$?}{The decimals of $\sqrt2$ are Cauchy in $\mathbb{Q}$; the point they huddle round is missing.}
+\card{Trigger}{Convergence to prove, limit unknown. Reach for?}{The Cauchy criterion, usually via a telescoping or contraction bound.}
+\end{deck}
+
+\end{document}
