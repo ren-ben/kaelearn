@@ -59,9 +59,12 @@ subclass `KLScene3D`. The model is `engine/specimen/anims/uphill.py`.
   goes through `self.pin(...)`.
 - Set the camera with `set_camera_orientation(phi=60-70°, theta=...)`. A slow
   `begin_ambient_camera_rotation(rate=0.05)` gives depth; stop it before the idea card.
-- To show a field under a surface, put it on a floor plane well below the surface and lower the
-  surface's opacity while the floor is being explained.
-- 3D renders slowly (about 5 minutes for 45 s at 1080p), so get the draft right first.
+- **One layer at a time.** Flat objects (arrows, rings, curves) always draw on top of every 3D
+  face, so a map stacked under a surface ends up over it. For a map or a field, move the camera
+  straight above (`move_camera(phi=0, theta=-90°, zoom≈0.8)`), fade the surface to about 0.3,
+  and draw the field there. Fade the field out before tilting back to the side.
+- 3D renders slowly (about 6 minutes for a minute of video at 1080p). Get the draft right first,
+  and for videos over 30 s, check a denser contact sheet as well.
 
 ## Render, check, publish
 
@@ -91,4 +94,5 @@ subclass `KLScene3D`. The model is `engine/specimen/anims/uphill.py`.
   before fading out.
 - Give dots a `z_index` so lines drawn later don't cut through them.
 - In 3D, never `Transform` a pinned text into another: the new letters come out unpinned and
-  vanish. Crossfade instead (`say` does).
+  vanish. Never crossfade two captions either, because the overlap reads as ghost letters. Fade
+  the old one out, then the new one in (`say` does this).

@@ -109,14 +109,16 @@ class _Cards:
         self.card('The idea', tex, hold)
 
     def say(self, tex):
-        """The caption line at the top. Returns the animation that writes or replaces it."""
+        """The caption line at the top. Clears the old line, returns the animation that writes the new one."""
         new = Tex(tex, font_size=32)
         if new.width > 13:
             new.scale_to_fit_width(13)
         new.to_edge(UP, buff=0.45)
-        self.pin(new)  # a crossfade, not a Transform: in 3D, Transform leaves new letters unpinned
-        old, self.line = self.line, new
-        return FadeIn(new) if old is None else AnimationGroup(FadeOut(old), FadeIn(new))
+        if self.line is not None:  # out first, then in: overlapping lines read as ghosts
+            self.play(FadeOut(self.line), run_time=0.4)
+        self.pin(new)  # not a Transform: in 3D, Transform leaves new letters unpinned
+        self.line = new
+        return FadeIn(new)
 
 
 class KLScene(_Cards, Scene):
