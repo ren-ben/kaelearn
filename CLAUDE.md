@@ -55,7 +55,9 @@ clear); an old exam to `/exam`. Ask only when the routing is genuinely unclear.
 4. **Every artifact:** `kl.py build`, then `kl.py look` and read the render, then
    `kl.py publish`, update `ATLAS.md`, commit, push. **Always push.** The Stop hook enforces it.
 5. **Vault:** write only inside `D:\le vault\Kaelearn\`, following `system/vault.md`. Never edit
-   the student's other notes without asking.
+   the student's other notes without asking. Sync has 1 GB for the whole vault: nothing over
+   3 MB goes in, handwritten PDFs never stay, and every Inbox file is deleted once its output
+   is written.
 6. **Design:** Night Console only. Text stays crisp; dither only in plates and fills. The art is
    only from `engine/art/`; never draw a cat. Red only for the wax seal.
 7. **Language:** English, with the German term at first use. No emojis anywhere.

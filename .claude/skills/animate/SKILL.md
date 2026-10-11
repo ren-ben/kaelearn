@@ -54,7 +54,7 @@ Write one scene class per file: `from klmanim import *`, then subclass `KLScene`
    video that shows the most telling frame.
 3. Publish the video: `kl.py publish <slug>.mp4` puts it beside its PDF in the vault, or under
    `Anims/<s>/` for standalone videos. Rebuild and publish the PDF that shows it. Keep each video
-   under 5 MB, the per-file limit of Obsidian Sync Standard; the render prints the size.
+   under 3 MB (`publish` refuses bigger: the vault has 1 GB in total); the render prints the size.
 4. Embed it in the concept note it explains as `![[<slug>.mp4]]`.
 5. Commit and push.
 

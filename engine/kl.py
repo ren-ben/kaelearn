@@ -12,6 +12,7 @@
   python engine/kl.py mirror                  copy ATLAS.md and GRIMOIRE.md into the vault
 """
 import argparse
+import filecmp
 import json
 import os
 import re
@@ -107,12 +108,21 @@ def obsidian_url(folder: Path) -> str:
     return url.replace('%', r'\%')
 
 
+MAX_MB = 3  # Obsidian Sync has 1 GB for the whole vault; nothing big goes in
+
+
 def publish(f: Path):
     """Copy a PDF or MP4 into the vault (it lands where vault_path says), then mirror the md files."""
+    mb = f.stat().st_size / 1e6
+    if mb > MAX_MB:
+        sys.exit(f'{f.name} is {mb:.1f} MB; the vault takes at most {MAX_MB} MB per file. Shrink it first.')
     dest = vault_path(f)
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(f, dest)
-    print(dest)
+    if dest.exists() and filecmp.cmp(f, dest, shallow=False):
+        print(f'{dest} unchanged')  # every copy is a new version in Sync's history
+    else:
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(f, dest)
+        print(dest)
     mirror()
 
 
@@ -169,6 +179,12 @@ def mirror():
         if (ROOT / src).exists():
             shutil.copyfile(ROOT / src, VAULT / name)
             print(VAULT / name)
+    # what Sync uploads: everything outside dot folders
+    root = next((p for p in [VAULT, *VAULT.parents] if (p / '.obsidian').is_dir()), VAULT.parent)
+    size = lambda top: sum(f.stat().st_size for f in top.rglob('*')
+                           if f.is_file() and not any(p.startswith('.') for p in f.relative_to(root).parts))
+    total, ours = size(root) / 1e6, size(VAULT) / 1e6
+    print(f'vault {total:.0f} MB of 1000 (Kaelearn {ours:.1f} MB)' + ('  WARNING: near the Sync limit' if total > 800 else ''))
 
 
 # ---- plates: a scene in grey, thresholded to the two inks -------------------

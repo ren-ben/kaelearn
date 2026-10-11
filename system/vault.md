@@ -5,15 +5,31 @@ inside `D:\le vault\Kaelearn\`. Read anything else in the vault when it helps (t
 keeps `formula sheets/` and `Literature Notes/` there) and link to it, but never edit outside
 `Kaelearn/` without asking.
 
-Principle: the handwriting stays the source. Obsidian is the index and the retrieval layer on
-top of it, not a typed copy to reread.
+Principle: the handwriting stays the source, in Notability. Obsidian is the index and the
+retrieval layer on top of it, not a typed copy to reread.
+
+## Storage
+
+Obsidian Sync has 1 GB for the whole vault, and about 300 to 400 MB is already used. So:
+
+- **Handwritten PDFs never stay.** They land in the Inbox, get converted, and get deleted. The
+  originals live in Notability.
+- **Empty the Inbox of what you used.** Every skill that consumes an Inbox file (`/ingest`,
+  `/exercise`, `/review`, `/teach`, `/exam`) deletes it once its output is written. Delete only
+  what was converted. Keep `_Inbox.md`, which keeps the folder syncing.
+- **Small files only.** At most 3 MB per published file (`kl.py publish` refuses bigger ones),
+  and JPGs under 100 KB for the rare kept sketch.
+- **No needless versions.** Sync keeps a version of every change, so `kl.py publish` skips
+  files that haven't changed.
+- `kl.py publish` and `kl.py mirror` print the vault size. Above 800 MB, stop adding files and
+  tell the student.
 
 ## Layout
 
 ```
 Kaelearn/
   Inbox/                       Notability exports land here (from the iPad: Save to Files)
-  Lectures/<Course>/           2026-10-14 ANA.md, plus pdf/2026-10-14 ANA.pdf
+  Lectures/<Course>/           2026-10-14 ANA.md (img/ for the rare sketch worth keeping)
   Concepts/                    one atomic note per concept: Cauchy sequence.md
   Hubs/                        one per topic: Sequences.md
   Folios/<subject>/            published folio PDFs
@@ -41,7 +57,8 @@ only when it's still unclear.
 
 ## Lecture note
 
-File `Lectures/<Course>/2026-10-14 ANA.md`; the original goes to `Lectures/<Course>/pdf/`.
+File `Lectures/<Course>/2026-10-14 ANA.md`. The original stays in Notability; the Inbox copy
+is deleted after ingest.
 
 ```markdown
 ---
@@ -50,16 +67,13 @@ date: 2026-10-14
 lecture: 4
 topics: [Sequences]
 concepts: ["[[Cauchy sequence]]", "[[Bolzano-Weierstrass]]"]
-source: "[[2026-10-14 ANA.pdf]]"
+source: Notability, "ANA 2026-10-14"
 ---
 # Analysis 1 · Lecture 4 · 2026-10-14
 
 ## Transcript
-### Cauchy sequences
+### Cauchy sequences *(p. 2)*
 (the student's words, faithfully, in Markdown with $...$ and $$...$$; unreadable bits as [?])
-
-> [!page]- Original, p. 1
-> ![[2026-10-14 ANA.pdf#page=1]]
 
 > [!idea] Your idea
 > (anything the student wrote that goes beyond the lecture, pulled out verbatim)
@@ -115,6 +129,6 @@ what the graph view clusters around.
 ## Obsidian specifics
 
 - Math: `$...$` and `$$...$$`
-- PDF pages: `![[file.pdf#page=3]]` (the student has pdf-plus installed)
-- Callouts: `> [!idea]`, `> [!page]-`, `> [!answer]-` (the `-` collapses)
+- Folio pages: `![[03-cauchy-sequences.pdf#page=3]]` (the student has pdf-plus installed)
+- Callouts: `> [!idea]`, `> [!answer]-` (the `-` collapses)
 - Links use file names without paths; keep names unique across the vault
