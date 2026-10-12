@@ -18,12 +18,12 @@ giving away answers, and keeps the map of everything you've learned. Start with
 4. Videos live in Cloudflare R2, never in the vault (10 GB free, about 5000 videos). In the
    Cloudflare dashboard: open R2 and enable it (a card is needed, the free tier costs $0), create
    the bucket `kaelearn-anims`, connect the custom domain `anims.amygdala-inc.org` under its
-   Settings, and make an API token with Object Read & Write on that bucket. Put the token in
-   `.env` in the repo root (gitignored):
+   Settings, and make an API token with Object Read & Write on that bucket. Copy
+   `.env.example` to `.env` and fill it in. With your own bucket and domain, change them in
+   `kaelearn.json`.
+   The repo is public, so turn on the hook that refuses to commit `.env`:
    ```
-   R2_ACCOUNT_ID=...
-   R2_ACCESS_KEY_ID=...
-   R2_SECRET_ACCESS_KEY=...
+   git config core.hooksPath .githooks
    ```
 5. Open Claude Code in this folder. The Kael'thos output style and the push hook load from
    `.claude/`.

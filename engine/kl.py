@@ -115,7 +115,8 @@ def upload(f: Path):
     env_file = ROOT / '.env'
     if not env_file.exists():
         sys.exit('no .env with the R2 keys (R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY): see the README')
-    env = dict(ln.strip().split('=', 1) for ln in env_file.read_text(encoding='utf8').splitlines() if '=' in ln)
+    env = dict(ln.strip().split('=', 1) for ln in env_file.read_text(encoding='utf8').splitlines()
+               if '=' in ln and not ln.lstrip().startswith('#'))
     s3 = boto3.client('s3', endpoint_url=f"https://{env['R2_ACCOUNT_ID']}.r2.cloudflarestorage.com", region_name='auto',
                       aws_access_key_id=env['R2_ACCESS_KEY_ID'], aws_secret_access_key=env['R2_SECRET_ACCESS_KEY'])
     s3.upload_file(str(f), CONFIG['bucket'], anim_key(f), ExtraArgs={'ContentType': 'video/mp4'})
