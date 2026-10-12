@@ -15,7 +15,7 @@ kaelearn/
   subjects/<subject>/
     folios/NN-slug/       NN-slug.tex, NN-slug.pdf, plate.png, figs/, anims/
     debriefs/DATE-slug/   DATE-slug.tex, .pdf, key.md   session debriefs from /exercise
-    anims/                <slug>.py, .mp4, .png   standalone videos (inside a folio or debrief: its anims/)
+    anims/                <slug>.py, .png (.mp4 is gitignored)   standalone videos (inside a folio or debrief: its anims/)
     exams/<slug>/         mock exams and cumulative sets (.tex, .pdf, key.md)
     triggers.md           every trigger of the subject, grown by folios and debriefs
     pretests.md           pretest questions, newest first
@@ -46,14 +46,18 @@ when a body of material doesn't fit any of these, and record it in `student.md` 
 |---|---|
 | `subjects/<s>/folios/.../x.pdf` | `Folios/<s>/x.pdf` |
 | `subjects/<s>/debriefs/.../x.pdf` | `Debriefs/<s>/x.pdf` |
-| `subjects/<s>/anims/x.mp4` | `Anims/<s>/x.mp4` (a video inside a folio or debrief lands beside its PDF) |
 | `subjects/<s>/exams/.../x.pdf` | `Exams/<s>/x.pdf` |
 | `review/.../review-2026-W42.pdf` | `Reviews/review-2026-W42.pdf` |
 | `codex/codex.pdf` | `codex.pdf` |
-| `engine/specimen/x` | `Specimens/x` (reference debrief and videos, plus a hand-made `Videos.md`) |
+| `engine/specimen/x.pdf` | `Specimens/x.pdf` (beside a hand-made `Videos.md`) |
 | `ATLAS.md`, `GRIMOIRE.md` | `Atlas.md`, `Grimoire.md` (every publish, or `kl.py mirror`) |
 
 Give every PDF that goes to the vault a unique, readable name.
+
+`kl.py publish <mp4>` uploads to the R2 bucket instead, never the vault. The key is the repo
+path without `subjects/`, so `subjects/analysis/anims/x.mp4` streams from
+`https://anims.amygdala-inc.org/analysis/anims/x.mp4`. The `\anim` link in a PDF points there
+by itself. Videos stay out of git as well; the `.py` re-renders them.
 
 ## Git
 

@@ -72,7 +72,7 @@ python engine/kl.py build <file.tex>     compile; the PDF lands beside the sourc
 python engine/kl.py look <file.pdf>      render pages + a contact sheet to .kl-cache/look/ (read them)
 python engine/kl.py plate <scene> <out>  dithered plate: nave horizon orrery field lattice
 python engine/kl.py anim <file.py>       manim video + poster + frame sheet (--draft first)
-python engine/kl.py publish <file>       copy a PDF or MP4 into the vault, mirror ATLAS.md and GRIMOIRE.md
+python engine/kl.py publish <file>       PDF into the vault (mirrors ATLAS.md, GRIMOIRE.md); MP4 to the R2 bucket
 python engine/kl.py mirror               mirror the md files only
 ```
 

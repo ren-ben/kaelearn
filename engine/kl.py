@@ -8,7 +8,7 @@
   python engine/kl.py anim <scene.py> [--draft] [--poster 0.66]
                                               render a manim scene (engine/klmanim.py) to <scene>.mp4 + poster,
                                               and a contact sheet of frames to check it
-  python engine/kl.py publish <file>          copy a PDF or MP4 into the vault, then mirror the md files
+  python engine/kl.py publish <file>          a PDF goes into the vault (then mirror the md files), an MP4 to R2
   python engine/kl.py mirror                  copy ATLAS.md and GRIMOIRE.md into the vault
 """
 import argparse
@@ -21,7 +21,6 @@ import subprocess
 import sys
 import time
 from pathlib import Path
-from urllib.parse import quote
 
 import numpy as np
 from PIL import Image
@@ -29,7 +28,8 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parent.parent
 ENGINE = ROOT / 'engine'
 CACHE = ROOT / '.kl-cache'
-VAULT = Path(json.loads((ROOT / 'kaelearn.json').read_text(encoding='utf8'))['vault'])
+CONFIG = json.loads((ROOT / 'kaelearn.json').read_text(encoding='utf8'))
+VAULT = Path(CONFIG['vault'])
 MIRRORS = {'ATLAS.md': 'Atlas.md', 'GRIMOIRE.md': 'Grimoire.md'}
 
 
@@ -50,7 +50,7 @@ def build(tex: Path):
     cmd = ['xelatex', '-interaction=nonstopmode', '-halt-on-error', f'-output-directory={out}', f'-jobname={tex.stem}']
     if miktex:
         cmd.append(f'-include-directory={ENGINE}')
-    cmd.append(r'\def\KLROOT{%s/}\def\KLVAULT{%s}\input{%s}' % (ENGINE.as_posix(), obsidian_url(vault_path(tex).parent), tex.name))
+    cmd.append(r'\def\KLROOT{%s/}\def\KLANIMS{%s/%s/anims/}\input{%s}' % (ENGINE.as_posix(), CONFIG['anims'], anim_key(tex.parent), tex.name))
     for _ in range(2):  # twice: the page meter and the cover need the page count
         r = subprocess.run(cmd, cwd=tex.parent, capture_output=True, text=True, env=env, encoding='utf8', errors='replace')
         if r.returncode:
@@ -94,27 +94,41 @@ def look(pdf: Path, pages: str | None, dpi: int):
 
 def vault_path(f: Path) -> Path:
     parts = f.resolve().relative_to(ROOT).parts
-    if parts[0] == 'subjects':      # subjects/<s>/<kind>/.../x -> Folios|Debriefs|Exams|Anims/<s>/x
+    if parts[0] == 'subjects':      # subjects/<s>/<kind>/.../x -> Folios|Debriefs|Exams/<s>/x
         return VAULT / parts[2].capitalize() / parts[1] / f.name
     if parts[0] == 'review':
         return VAULT / 'Reviews' / f.name
-    if parts[:2] == ('engine', 'specimen'):  # the reference debrief and its videos, to try on the iPad
+    if parts[:2] == ('engine', 'specimen'):  # the reference debrief, to try on the iPad
         return VAULT / 'Specimens' / f.name
     return VAULT / f.name           # codex and anything else at the top
 
 
-def obsidian_url(folder: Path) -> str:
-    # obsidian://open?vault=...&file=... for a folder in the vault, escaped for TeX
-    root = next((p for p in [VAULT, *VAULT.parents] if (p / '.obsidian').is_dir()), VAULT.parent)
-    url = f'obsidian://open?vault={quote(root.name)}&file={quote(folder.relative_to(root).as_posix() + "/", safe="")}'
-    return url.replace('%', r'\%')
+def anim_key(p: Path) -> str:
+    # a video's address in the bucket: its repo path without subjects/
+    parts = p.resolve().relative_to(ROOT).parts
+    return '/'.join(parts[1:] if parts[0] == 'subjects' else parts)
 
 
-MAX_MB = 3  # Obsidian Sync has 1 GB for the whole vault; nothing big goes in
+def upload(f: Path):
+    """Put a video in the R2 bucket. Videos never go in the vault (1 GB); notes and PDFs link to them."""
+    import boto3
+    env_file = ROOT / '.env'
+    if not env_file.exists():
+        sys.exit('no .env with the R2 keys (R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY): see the README')
+    env = dict(ln.strip().split('=', 1) for ln in env_file.read_text(encoding='utf8').splitlines() if '=' in ln)
+    s3 = boto3.client('s3', endpoint_url=f"https://{env['R2_ACCOUNT_ID']}.r2.cloudflarestorage.com", region_name='auto',
+                      aws_access_key_id=env['R2_ACCESS_KEY_ID'], aws_secret_access_key=env['R2_SECRET_ACCESS_KEY'])
+    s3.upload_file(str(f), CONFIG['bucket'], anim_key(f), ExtraArgs={'ContentType': 'video/mp4'})
+    print(f"{CONFIG['anims']}/{anim_key(f)}")
+
+
+MAX_MB = 3  # Obsidian Sync has 1 GB for the whole vault; nothing big goes in. Videos stay this small too.
 
 
 def publish(f: Path):
-    """Copy a PDF or MP4 into the vault (it lands where vault_path says), then mirror the md files."""
+    """Copy a PDF into the vault (it lands where vault_path says), then mirror the md files. An MP4 goes to R2."""
+    if f.suffix == '.mp4':
+        return upload(f)
     mb = f.stat().st_size / 1e6
     if mb > MAX_MB:
         sys.exit(f'{f.name} is {mb:.1f} MB; the vault takes at most {MAX_MB} MB per file. Shrink it first.')
@@ -149,7 +163,7 @@ def anim(py: Path, draft: bool, poster: float):
         if not draft:
             dest = py.with_name(stem + '.mp4')
             shutil.copyfile(v, dest)
-            for crf in (28, 32, 36):  # too big for the vault: re-encode until it fits
+            for crf in (28, 32, 36):  # too big to stream quickly: re-encode until it fits
                 if dest.stat().st_size / 1e6 <= MAX_MB:
                     break
                 subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', str(v), '-c:v', 'libx264', '-crf', str(crf),

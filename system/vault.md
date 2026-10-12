@@ -19,6 +19,9 @@ Obsidian Sync has 1 GB for the whole vault, and about 300 to 400 MB is already u
   what was converted. Keep `_Inbox.md`, which keeps the folder syncing.
 - **Small files only.** At most 3 MB per published file (`kl.py publish` refuses bigger ones),
   and JPGs under 100 KB for the rare kept sketch.
+- **No videos.** They live in the Cloudflare R2 bucket (10 GB free) and stream from
+  `anims.amygdala-inc.org`. Notes embed them by URL:
+  `<video src="https://anims.amygdala-inc.org/..." controls playsinline></video>`.
 - **No needless versions.** Sync keeps a version of every change, so `kl.py publish` skips
   files that haven't changed.
 - `kl.py publish` and `kl.py mirror` print the vault size. Above 800 MB, stop adding files and
@@ -34,7 +37,7 @@ Kaelearn/
   Hubs/                        one per topic: Sequences.md
   Folios/<subject>/            published folio PDFs
   Debriefs/<subject>/          one PDF per exercise session: path, weak points, deep idea, variants
-  Anims/<subject>/             standalone manim videos (videos of a folio or debrief sit beside it)
+  Specimens/                   the reference debrief and Videos.md, to try things on the iPad
   Reviews/  Exams/<subject>/   published sheets
   Atlas.md  Grimoire.md        mirrors of the repo files (never edit these here)
   codex.pdf

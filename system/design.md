@@ -95,7 +95,7 @@ the PDF. The order, the files and
 the render loop are in `/animate`; the models are `engine/specimen/anims/heads-and-tails.py`
 (2D) and `uphill.py` (3D).
 In a PDF, `\anim{slug}{what to watch for}` shows the poster frame, and a tap plays the video
-in Obsidian.
+from the R2 bucket (anims.amygdala-inc.org).
 
 ## Plates
 

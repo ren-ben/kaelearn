@@ -7,14 +7,25 @@ giving away answers, and keeps the map of everything you've learned. Start with
 
 ## Setup
 
-1. Install XeLaTeX (MiKTeX or TeX Live), Python 3.11+ with `pip install numpy pillow manim`, and Node.
+1. Install XeLaTeX (MiKTeX or TeX Live), Python 3.11+ with `pip install numpy pillow manim boto3`,
+   and Node.
 2. Check `kaelearn.json` points at your vault folder (`D:/le vault/Kaelearn`).
 3. Connect GitHub:
    ```
    git remote add origin https://github.com/<you>/kaelearn.git
    git push -u origin main
    ```
-4. Open Claude Code in this folder. The Kael'thos output style and the push hook load from
+4. Videos live in Cloudflare R2, never in the vault (10 GB free, about 5000 videos). In the
+   Cloudflare dashboard: open R2 and enable it (a card is needed, the free tier costs $0), create
+   the bucket `kaelearn-anims`, connect the custom domain `anims.amygdala-inc.org` under its
+   Settings, and make an API token with Object Read & Write on that bucket. Put the token in
+   `.env` in the repo root (gitignored):
+   ```
+   R2_ACCOUNT_ID=...
+   R2_ACCESS_KEY_ID=...
+   R2_SECRET_ACCESS_KEY=...
+   ```
+5. Open Claude Code in this folder. The Kael'thos output style and the push hook load from
    `.claude/`.
 
 ## Course codes
@@ -47,9 +58,9 @@ Add new courses in `system/student.md` and here.
 - **Exercises:** attempt it, then `/exercise` with the problem and your attempt. Talk it
   through; say "debrief" at the end and the session becomes a short PDF in the vault.
 - **Videos:** Kael'thos makes short manim videos when motion helps, or on request with
-  `/animate <idea>`. Watch them in Obsidian on the iPad: embedded in the concept note, or tap
-  the frame in a PDF (opened in Obsidian). The GitHub app can't play videos stored in a repo.
-  To try it, open `Kaelearn/Specimens/Videos.md`.
+  `/animate <idea>`. They stream from `anims.amygdala-inc.org`. On the iPad, watch them
+  embedded in the concept note in Obsidian, or tap the frame in a PDF. To try it, open
+  `Kaelearn/Specimens/Videos.md`.
 - **New topic:** `/folio analysis uniform convergence`, or drag in Skript pages.
 - **Weekly:** `/review`, then `/teach <concept>`.
 - **Exams:** `/exam mock ANA`, `/exam oral LA`, `/exam board EP1`, `/exam mixed`.

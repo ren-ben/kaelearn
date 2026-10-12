@@ -48,8 +48,8 @@ Kael'thos appears only in the title card.
 ## Files
 
 - **Belongs to a folio or debrief:** `<artifact-dir>/anims/<slug>.py`. In the `.tex`, write
-  `\anim{<slug>}{what to watch for}`, which shows the poster frame; a tap plays the video in
-  Obsidian.
+  `\anim{<slug>}{what to watch for}`, which shows the poster frame; a tap plays the video from
+  the R2 bucket.
 - **Standalone** (from chat): `subjects/<s>/anims/<slug>.py`.
 
 Write one scene class per file: `from klmanim import *`, then subclass `KLScene`. The model is
@@ -90,11 +90,12 @@ subclass `KLScene3D`. The model is `engine/specimen/anims/uphill.py`.
 2. `python engine/kl.py anim <file.py> --poster 0.6` renders the final 1080p30 video. It writes
    `<slug>.mp4` and the poster `<slug>.png` beside the file. Set `--poster` to the fraction of the
    video that shows the most telling frame.
-3. Publish the video: `kl.py publish <slug>.mp4` puts it beside its PDF in the vault, or under
-   `Anims/<s>/` for standalone videos. Rebuild and publish the PDF that shows it. Keep each video
-   under 3 MB (`publish` refuses bigger: the vault has 1 GB in total). `kl.py anim` re-encodes a
-   render that comes out too big, and prints the final size.
-4. Embed it in the concept note it explains as `![[<slug>.mp4]]`.
+3. Publish the video: `kl.py publish <slug>.mp4` uploads it to the R2 bucket and prints its URL.
+   Videos never go in the vault (1 GB in total) or in git (`*.mp4` is ignored; the `.py`
+   re-renders it). Rebuild and publish the PDF that shows it. `kl.py anim` re-encodes a render
+   over 3 MB so it streams quickly, and prints the final size.
+4. Embed it in the concept note it explains, by URL:
+   `<video src="<url>" controls playsinline></video>`.
 5. Commit and push.
 
 ## Manim traps
