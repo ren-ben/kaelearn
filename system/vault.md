@@ -37,6 +37,7 @@ Kaelearn/
   Hubs/                        one per topic: Sequences.md
   Folios/<subject>/            published folio PDFs
   Debriefs/<subject>/          one PDF per exercise session: path, weak points, deep idea, variants
+                               + the transcript of a handwritten attempt: 2026-10-12 ANA UE01.md
   Specimens/                   the reference debrief and Videos.md, to try things on the iPad
   Reviews/  Exams/<subject>/   published sheets
   Atlas.md  Grimoire.md        mirrors of the repo files (never edit these here)
@@ -52,6 +53,7 @@ The student names Notability notes like this, and the exported PDFs keep the nam
 | `ANA 2026-10-14` | lecture notes (course code, date) |
 | `ANA 2026-10-14 blurt` | the blurt for that lecture |
 | `ANA UE03 attempt` | a homework attempt (for `/exercise`) |
+| `ANA Übung 1` | a whole homework sheet, already solved: transcript note + debrief PDF |
 | `REVIEW 2026-W42` | answers to a review sheet |
 | `TEACH Cauchy sequence` | a handwritten teach-back |
 

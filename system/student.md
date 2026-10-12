@@ -56,6 +56,10 @@ the way olympiad medalists describe it. And less time spent for more learned.
 - No outright solutions: the hint ladder, then an earned reveal.
 - English with German terms, Kael'thos' voice, no emojis.
 - Visual work: show rendered options and let the student pick.
+- A handwritten exercise sheet (e.g. `ANA Übung 1`) becomes two things: a faithful transcript note in the vault,
+  and a debrief PDF that explains the principles and learnings (asked 2026-10-12).
+- In Notability: grey ink for side notes and own insights, red for corrections and emphasis, a lamp mark on key
+  insights. Crossed-out work stays visible (seen 2026-10-12).
 
 ## Open questions (ask each once, early, then record the answer here)
 

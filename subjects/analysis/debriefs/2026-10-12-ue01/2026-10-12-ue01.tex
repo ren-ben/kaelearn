@@ -1,0 +1,723 @@
+% Debrief: ANA UE01 (Analysis 1, exercise sheet 1), from the handwritten attempt "ANA Übung 1".
+% No conversation this time: every problem came in solved, so "Your path" is read off the pages.
+\documentclass{kaelearn}
+\subject{Analysis I}  \folio{Debrief}  \title{Arrows and Reasons}
+\shorttitle{ANA UE01 · 2026-10-12}
+\subtitle{Eight problems, one habit: every arrow joins two statements and carries the reason that makes it true.}
+\problemparts
+\begin{document}
+\makeheader
+\marginkael{proud}
+
+\begin{panel}{The session}{read this first}{}
+\begin{itemize}
+  \item \textbf{Ex.\ 1}, $\mathbb{Z}_2$ is a field \de{(Körper)}: solved yourself; one case argued by a single instance.
+  \item \textbf{Ex.\ 2}, $|xy|\le\frac{x^2+y^2}{2}$ and $x^2\le y^2$: (a) clean; (b) right answer, but the
+        key step has no reason.
+  \item \textbf{Ex.\ 3}, three unit balls: sketches and $A_1\subset A_2\subset A_\infty$ right, read off the picture.
+  \item \textbf{Ex.\ 4}, preimages \de{(Urbilder)}: (a) right idea, the arrows join the wrong things; (b) all eight right.
+  \item \textbf{Ex.\ 5}, injective, surjective, bijective: all verdicts right; one inequality the wrong way round.
+  \item \textbf{Ex.\ 6}, strictly monotone means invertible: right structure, wrong reason in one bracket.
+  \item \textbf{Ex.\ 7}, $A\Rightarrow B$ and solution sets: right answers; $B\Rightarrow A$ refuted with half of $A$.
+  \item \textbf{Ex.\ 8}, $\sum i^3$ by induction \de{(vollständige Induktion)}: correct; the step opens with the goal.
+  \item \textbf{The pattern:} the mathematics is right almost everywhere. What slips is the grammar between the lines:
+        $\Rightarrow$ between numbers, $\Leftrightarrow$ between a statement and a set equation, a bracket that names
+        the wrong hypothesis, the one step that \emph{is} the exercise written without a reason. You found the cure
+        yourself in Ex.\ 4: ``NOT $\cup$, because this is a logical statement.'' Apply it to every arrow.
+  \item \textbf{Again on 19 October:} one variant per problem on the last pages.
+  \item The sheet was not in the Inbox. The problem statements below are reconstructed from your answers; check them
+        against the sheet.
+\end{itemize}
+\end{panel}
+
+\section{Two Elements, Nine Axioms}
+
+\begin{panel}[unbreakable]{The problem}{Ex.\ 1 · reconstructed}{}
+$\mathbb{Z}_2=\{0,1\}$ with $1+1=0$ and otherwise the usual rules: $0+0=0$, $0+1=1+0=1$, $0\cdot0=0\cdot1=1\cdot0=0$,
+$1\cdot1=1$. Show that $(\mathbb{Z}_2,+,\cdot)$ satisfies the field axioms.
+\end{panel}
+
+\subsection{Your path}
+You took the axioms one at a time and split each into cases: commutativity by $a\neq b$ and $a=b$, the neutral
+elements by trying both values, the inverses by listing them. For associativity you found the right split: ``some
+entry is $0$'' and ``all are $1$''. In the multiplication version you argued the first case in general ($c=0$, with
+$a,b$ arbitrary). In the addition version you computed one triple, $(1,0,0)$, and wrote ``analog''.
+
+\begin{panel}[unbreakable]{Weak points}{named exactly}{}
+\begin{enumerate}
+  \item \textbf{One instance standing in for a case.} ``With $0$'' covers seven triples; $(1+0)+0=1+(0+0)$ is one of
+        them. \emph{Fix:} inside a case, keep the other letters free. ``Let $c=0$. Then $(a+b)+0=a+b=a+(b+0)$.''
+  \item \textbf{One letter, two jobs.} In (Distr.) you set $a=0$ and then wrote $0(a+b)$, with $a$ now a summand.
+        \emph{Fix:} write the law with three letters, $a(b+c)=ab+ac$, then split on $a$.
+\end{enumerate}
+\end{panel}
+
+\begin{panel}[unbreakable]{The deep idea}{exhaustion, shortened by the neutral elements}{}
+A finite structure can be checked case by case, and the neutral elements do most of the work: any case that contains
+a $0$ collapses in one line, so only the all-ones case needs a computation. A case split is a proof when the cases
+cover everything \emph{and} each case is argued for every one of its members.
+\end{panel}
+
+\subsection{Generalize it}
+\begin{itemize}
+  \item \textbf{$\mathbb{Z}_p$ for a prime $p$} is a field: addition and multiplication mod $p$. The one hard axiom is
+        the multiplicative inverse, and it needs $p$ prime. In $\mathbb{Z}_4$, $2\cdot2=0$, and $2$ has no inverse:
+        $2\cdot1=2$, $2\cdot2=0$, $2\cdot3=2$.
+  \item \textbf{$\mathbb{Z}_2$ cannot be ordered.} In an ordered field \de{(angeordneter Körper)}, $1=1^2>0$, so
+        $1+1>1>0$. In $\mathbb{Z}_2$, $1+1=0$. This is why $\mathbb{R}$ needs order axioms on top of the field
+        axioms, and why Analysis starts with them.
+\end{itemize}
+
+\subsection{Same structure, elsewhere}
+Case exhaustion is a truth table: Ex.\ 7 lives on one. Your three-case injectivity proof in Ex.\ 5b (both $\le0$,
+both $>0$, mixed) is the same move on infinite sets: the cases must cover every pair.
+
+\why{Why must $1+1$ be $0$ and not $1$?}{If $1+1=1$, then $1$ has no additive inverse: $1+0=1$ and $1+1=1$, so
+nothing added to $1$ gives $0$. Equivalently, $1+1=1=1+0$ and cancelling the first $1$ would give $1=0$, which a field
+forbids.}
+
+\why{Why is the case $a=b$ in commutativity ``trivial''?}{Because both sides are the same expression: $a+a=a+a$.
+Nothing about $\mathbb{Z}_2$ is used, only that $=$ is reflexive. That is also why the case $a\neq b$ is the only
+one that needs the table.}
+
+\subsection{The solution, idea first}
+\emph{Idea:} two elements, so every axiom is a finite check; the neutral elements dispose of every case with a $0$.
+\begin{proof}
+\emph{Neutral elements:} $0+0=0$, $1+0=1$, so $a+0=a$; $0\cdot1=0$, $1\cdot1=1$, so $a\cdot1=a$; and $0\neq1$.
+\emph{Commutativity:} for $a=b$ both sides agree; for $a\neq b$ the table gives $1+0=1=0+1$ and $1\cdot0=0=0\cdot1$.
+\emph{Inverses:} $0+0=0$ and $1+1=0$, so $-0=0$, $-1=1$; $1\cdot1=1$, so $1^{-1}=1$.
+\emph{Associativity of $+$:} if one of $a,b,c$ is $0$, both sides equal the sum of the other two, by $x+0=0+x=x$.
+Otherwise $a=b=c=1$, and $(1+1)+1=0+1=1=1+0=1+(1+1)$.
+\emph{Associativity of $\cdot$:} if one factor is $0$, both sides are $0$; otherwise both sides are $1$.
+\emph{Distributivity:} $a(b+c)=ab+ac$. For $a=0$ both sides are $0$; for $a=1$ both sides are $b+c$.
+\end{proof}
+
+\section{Never Negative}
+
+\begin{panel}[unbreakable]{The problem}{Ex.\ 2 · reconstructed}{}
+Let $x,y\in\mathbb{R}$. (a) Show $|xy|\le\frac{x^2+y^2}{2}$. (b) Show that $x^2\le y^2$ holds exactly when
+$|x|\le|y|$, and describe it in the cases $y\ge0$ and $y<0$.
+\end{panel}
+
+\subsection{Your path}
+(a) is clean: you replaced $x^2$ by $|x|^2$, completed the square in $|x|$ and $|y|$, and dropped a square that is
+$\ge0$. In (b) your first instinct was $x\le y$, and you struck it out in red yourself, which is the right reflex.
+Then the parabola picture, ``closer or same distance to zero'', which \emph{is} $|x|\le|y|$, and your note on the two
+methods for squares. The step $|x|^2\le|y|^2\Rightarrow|x|\le|y|$ is written down without a reason, and it is the
+whole of (b).
+
+\begin{panel}[unbreakable]{Weak points}{named exactly}{}
+\begin{enumerate}
+  \item \textbf{The crux asserted.} $|x|^2\le|y|^2\Rightarrow|x|\le|y|$ is true, and it is what (b) asks you to show.
+        \emph{Fix:} when one step carries the problem, prove it as a lemma: for $u,v\ge0$, $u^2\le v^2\Leftrightarrow u\le v$.
+  \item \textbf{Only one direction.} ``Exactly when'' asks for $\Leftrightarrow$; the page shows $\Rightarrow$.
+        \emph{Fix:} the lemma gives both at once.
+\end{enumerate}
+\end{panel}
+
+\begin{panel}[unbreakable]{The deep idea}{squares are safe on one side of zero}{}
+$t\mapsto t^2$ is strictly increasing on $[0,\infty)$, and a strictly increasing map preserves \emph{and} reflects order
+(Problem 06). The absolute value moves $x$ and $y$ into $[0,\infty)$, where squaring is safe. For (a): to prove
+$A\le B$, write $B-A$ as a square:
+\[\tfrac{x^2+y^2}{2}-|xy|=\tfrac{(|x|-|y|)^2}{2}\ge0.\]
+\end{panel}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,axis lines=middle,axis on top,width=.56\linewidth,height=.56\linewidth,xmin=-2,xmax=2,ymin=-2,ymax=2,
+  xtick=\empty,ytick=\empty,xlabel={$x$},ylabel={$y$},clip=false]
+  \fill[pattern={dither25},pattern color=klink] (axis cs:0,0)--(axis cs:-2,2)--(axis cs:2,2)--cycle;
+  \fill[pattern={dither25},pattern color=klink] (axis cs:0,0)--(axis cs:-2,-2)--(axis cs:2,-2)--cycle;
+  \draw[kldim,dashed] (axis cs:-2,-2)--(axis cs:2,2) node[right,text=kldim]{$y=x$};
+  \draw[kldim,dashed] (axis cs:-2,2)--(axis cs:2,-2) node[right,text=kldim]{$y=-x$};
+  \node[text=kldim,anchor=west] at (axis cs:2.15,1.1) {$y\ge|x|$ \ (case $y\ge0$)};
+  \node[text=kldim,anchor=west] at (axis cs:2.15,-1.1) {$y\le-|x|$ \ (case $y<0$)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{$x^2\le y^2$ is the double wedge around the $y$-axis. Your two cases are its two halves. $x\le y$ would
+be everything above the dashed line $y=x$, a different set.}
+
+\subsection{Generalize it}
+\begin{itemize}
+  \item \textbf{(a) is the mean inequality} \de{(AM-GM-Ungleichung)} for two numbers: $\sqrt{ab}\le\frac{a+b}{2}$
+        for $a,b\ge0$ (set $a=x^2$, $b=y^2$). Equality exactly when $|x|=|y|$.
+  \item \textbf{With a weight:} $|xy|\le\frac12\bigl(\varepsilon x^2+\frac{y^2}{\varepsilon}\bigr)$ for every
+        $\varepsilon>0$: apply (a) to $\sqrt{\varepsilon}\,x$ and $y/\sqrt{\varepsilon}$. Analysis uses this
+        constantly, to shift weight between two terms.
+  \item \textbf{Other powers:} $t\mapsto t^3$ is strictly increasing on all of $\mathbb{R}$, so $x^3\le y^3
+        \Leftrightarrow x\le y$, with no absolute values. Even powers need $|\cdot|$; odd ones don't.
+\end{itemize}
+
+\subsection{Same structure, elsewhere}
+Problem 03 uses $t^2\le t$ on $[0,1]$. Problem 05c needs $a^2=b^2\Rightarrow a=b$ for $a,b\ge0$: the same lemma with
+$=$ in place of $\le$. Problem 06 proves the general fact behind it: strictly monotone maps reflect order.
+
+\why{Why does $x^2\le y^2$ not give $x\le y$?}{Squaring forgets the sign. $x=1$, $y=-2$: $1\le4$, but $1>-2$. Only
+the distance to $0$ survives, which is $|x|$ and $|y|$.}
+
+\why{Why do you write $|x|$ instead of $x$ before completing the square in (a)?}{The target has $|xy|=|x||y|$. In
+$(|x|-|y|)^2=|x|^2-2|x||y|+|y|^2$ the cross term is exactly $2|xy|$. With $(x-y)^2$ you would get $2xy$, which proves
+$xy\le\frac{x^2+y^2}{2}$, a weaker statement when $xy<0$.}
+
+\subsection{The solution, idea first}
+\emph{Idea:} (a) the difference is a square; (b) squaring is strictly increasing on $[0,\infty)$.
+\begin{proof}
+(a) $\frac{x^2+y^2}{2}-|xy|=\frac{|x|^2-2|x||y|+|y|^2}{2}=\frac{(|x|-|y|)^2}{2}\ge0$.
+
+(b) \emph{Lemma.} For $u,v\ge0$: $u\le v\Leftrightarrow u^2\le v^2$. If $u\le v$, then $u^2=u\cdot u\le u\cdot v\le
+v\cdot v=v^2$ (multiplying $u\le v$ by $u\ge0$, then by $v\ge0$). If $u>v$, then $u>0$ and $u^2=u\cdot u>u\cdot v\ge
+v\cdot v=v^2$; this is the contrapositive of ``$\Leftarrow$''.
+
+Since $x^2=|x|^2$ and $y^2=|y|^2$, the lemma with $u=|x|$, $v=|y|$ gives $x^2\le y^2\Leftrightarrow|x|\le|y|$. If
+$y\ge0$, this reads $|x|\le y$, that is $-y\le x\le y$. If $y<0$, it reads $|x|\le-y$, that is $y\le x\le-y$.
+\end{proof}
+
+\section{Diamond, Disc, Square}
+
+\begin{panel}[unbreakable]{The problem}{Ex.\ 3 · reconstructed}{}
+Sketch $A_1=\{(x,y)\in\mathbb{R}^2: |x|+|y|\le1\}$, $A_2=\{(x,y): |x|^2+|y|^2\le1\}$ and
+$A_\infty=\{(x,y): \max(|x|,|y|)\le1\}$, and compare them.
+\end{panel}
+
+\subsection{Your path}
+You turned $\le$ into $=$ to get the boundary, then went quadrant by quadrant to get rid of the absolute values:
+four segments for $A_1$, two half-circles for $A_2$. For $A_\infty$ you saw the key fact, ``$x$ and $y$ are
+independent'': $|x|\le1$ and $|y|\le1$ separately. Sketches right, $A_1\subset A_2\subset A_\infty$ right, and read off
+the picture.
+
+\begin{panel}[unbreakable]{Weak points}{named exactly}{}
+\begin{enumerate}
+  \item \textbf{The inclusions are seen, not shown.} A sketch finds the claim; it does not prove it. \emph{Fix:} for
+        every $\subset$ you draw, write the inequality that proves it. Here they are two lines.
+  \item \textbf{$\subset$ hides a claim.} If you mean \emph{proper} inclusion, name a point in the difference.
+        \emph{Fix:} $(\frac{1}{\sqrt2},\frac{1}{\sqrt2})\in A_2\setminus A_1$ and $(1,1)\in A_\infty\setminus A_2$.
+\end{enumerate}
+\end{panel}
+
+\begin{panel}[unbreakable]{The deep idea}{on $[0,1]$, squaring shrinks}{}
+For $0\le t\le1$, $t^2\le t$. So $|x|+|y|\le1$ forces $x^2+y^2\le|x|+|y|\le1$, and $x^2+y^2\le1$ forces each
+$|x|,|y|\le1$. These are the unit balls \de{(Einheitskugeln)} of three norms, $\|(x,y)\|_p=(|x|^p+|y|^p)^{1/p}$
+and $\|(x,y)\|_\infty=\max(|x|,|y|)$. As $p$ grows, the ball grows.
+\end{panel}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,axis lines=middle,axis on top,width=.56\linewidth,height=.56\linewidth,xmin=-1.3,xmax=1.3,
+  ymin=-1.3,ymax=1.3,xtick={-1,1},ytick={-1,1},clip=false]
+  \fill[pattern={dither50},pattern color=klink] (axis cs:1,0)--(axis cs:0,1)--(axis cs:-1,0)--(axis cs:0,-1)--cycle;
+  \draw[klhi,line width=.8pt] (axis cs:1,0)--(axis cs:0,1)--(axis cs:-1,0)--(axis cs:0,-1)--cycle;
+  \addplot[klink,line width=.8pt,domain=0:360,samples=120] ({cos(x)},{sin(x)});
+  \draw[kldim,dashed,line width=.7pt] (axis cs:-1,-1) rectangle (axis cs:1,1);
+  \addplot[only marks,mark=*,mark size=1.7pt,klhi] coordinates {(0.7071,0.7071)(1,1)};
+  \draw[kldim] (axis cs:1,0.45)--(axis cs:1.45,0.45) node[right,text=kldim]{$A_\infty$, square};
+  \draw[kldim] (axis cs:0.866,-0.5)--(axis cs:1.45,-0.5) node[right,text=kldim]{$A_2$, disc};
+  \draw[kldim] (axis cs:0.55,-0.45)--(axis cs:1.45,-1.05) node[right,text=kldim]{$A_1$, diamond};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{The diamond sits in the disc, the disc in the square. The two dots are the witnesses that the inclusions
+are strict: $(\frac{1}{\sqrt2},\frac{1}{\sqrt2})$ on the circle, outside the diamond; $(1,1)$ at the corner, outside
+the disc.}
+
+\anim{unit-balls}{Watch $p$ run from $1$ to $\infty$: the diamond swells through the disc into the square, and never
+shrinks anywhere. 56 seconds.}
+
+\subsection{Generalize it}
+\begin{itemize}
+  \item \textbf{Every $p\ge1$:} $A_p=\{|x|^p+|y|^p\le1\}$, and $p\le q\Rightarrow A_p\subseteq A_q$. If
+        $|x|^p+|y|^p\le1$, then $|x|,|y|\le1$, and for $t\in[0,1]$, $t^q\le t^p$.
+  \item \textbf{Below $p=1$} the set is no longer convex (a four-pointed star), and $\|\cdot\|_p$ fails the triangle
+        inequality: it is not a norm.
+  \item \textbf{The other way round, after scaling:} $A_\infty\subseteq\sqrt2\,A_2\subseteq2A_1$. So the three norms
+        agree on what ``small'' means, up to a constant. In $\mathbb{R}^n$ all norms do: norm equivalence
+        \de{(Äquivalenz der Normen)}, and the reason a limit in the plane doesn't care which ball you use.
+\end{itemize}
+
+\subsection{Same structure, elsewhere}
+Problem 02's lemma is the step $x^2\le1\Rightarrow|x|\le1$. Your boundary method (turn $\le$ into $=$, then remove
+absolute values quadrant by quadrant) is case analysis again, as in Problem 01: four cases that cover the plane.
+
+\why{Why does the ball grow with $p$?}{Points of the ball have $|x|,|y|\le1$, and on $[0,1]$ higher powers are
+smaller: $0.5^1=0.5$, $0.5^2=0.25$. Smaller left-hand side, easier to stay $\le1$, more points qualify.}
+
+\why{Why is $A_\infty$ a square?}{$\max(|x|,|y|)\le1$ holds exactly when $|x|\le1$ \emph{and} $|y|\le1$: one
+condition per coordinate, independent of each other, as you wrote. Independent conditions on $x$ and $y$ give a
+product of intervals, $[-1,1]\times[-1,1]$.}
+
+\subsection{The solution, idea first}
+\emph{Idea:} on $[0,1]$, $t^2\le t$.
+\begin{proof}
+$A_1\subseteq A_2$: let $|x|+|y|\le1$. Then $|x|\le1$, so $x^2=|x|\cdot|x|\le|x|$, and likewise $y^2\le|y|$. Hence
+$x^2+y^2\le|x|+|y|\le1$.
+$A_2\subseteq A_\infty$: let $x^2+y^2\le1$. Then $x^2\le1$, so $|x|\le1$ by Problem 02's lemma; likewise $|y|\le1$.
+Both inclusions are proper: $(\frac{1}{\sqrt2},\frac{1}{\sqrt2})$ has $x^2+y^2=1$ but $|x|+|y|=\sqrt2>1$, and $(1,1)$
+has $\max=1$ but $x^2+y^2=2>1$.
+\end{proof}
+
+\section{Preimages Follow Logic}
+
+\begin{panel}[unbreakable]{The problem}{Ex.\ 4 · reconstructed}{}
+(a) Let $f:M\to N$ and $C,D\subseteq N$. Show $f^{-1}(C\cup D)=f^{-1}(C)\cup f^{-1}(D)$.
+(b) For $g:\mathbb{R}\to\mathbb{R}$, $g(x)=x^2$, find $g(\mathbb{R}\setminus\{0\})$, $g^{-1}([0,\infty))$,
+$g^{-1}(\{-2\})$, $g^{-1}(\{4\})$, $g^{-1}([-1,1])$, $g([-1,1])$, $g([0,1])$, $g^{-1}([0,1])$.
+\end{panel}
+
+\subsection{Your path}
+(a) A chain of equivalences through the definition, with your grey note at the middle step: $\vee$, ``NOT $\cup$,
+because this is a logical statement''. That distinction is the whole problem, and you saw it. (b) You began to
+write the image like a function, $g(\mathbb{R}\setminus\{0\}):\mathbb{R}\setminus\{0\}\to\dots$, struck it out
+(``the image is just a set''), and then got all eight right. You wrote $g^{-1}([-1,1])=[1]$ at first, and
+$\pm\sqrt{x}$ caught it.
+
+\begin{panel}[unbreakable]{Weak points}{named exactly}{}
+\begin{enumerate}
+  \item \textbf{``Let $x\in f^{-1}(C\cup D)\Leftrightarrow\dots$''} Once you assume $x$ is in the left set, the
+        backward direction runs on an assumption you no longer have. \emph{Fix:} ``Let $x\in M$. Then
+        $x\in f^{-1}(C\cup D)\Leftrightarrow\dots$''
+  \item \textbf{The last $\Leftrightarrow$ changes type.} It joins a statement about one $x$ to an equation between
+        sets. \emph{Fix:} end the chain at $x\in f^{-1}(C)\cup f^{-1}(D)$. Then: ``Since $x\in M$ was arbitrary, both
+        sets have the same elements, so they are equal.''
+\end{enumerate}
+\end{panel}
+
+\begin{panel}[unbreakable]{The deep idea}{a set operation is a logical one in disguise}{}
+$f^{-1}(C)$ is defined by a condition on $x$: $f(x)\in C$. So every operation on $C$ turns into an operation on that
+condition, $\cup$ into $\vee$, $\cap$ into $\wedge$, complement into $\neg$, and preimages respect all of them.
+Images do not: $f(A)=\{f(x):x\in A\}$ hides a ``there is an $x$'', and $\exists$ does not distribute over $\wedge$.
+\end{panel}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,axis lines=middle,axis on top,width=.72\linewidth,height=58mm,xmin=-2.2,xmax=2.2,ymin=-2.6,ymax=4.4,
+  xtick=\empty,ytick={4},clip=false]
+  \fill[pattern={dither25},pattern color=klink] (axis cs:-2.2,-1) rectangle (axis cs:2.2,1);
+  \addplot[klhi,line width=.9pt,domain=-2.1:2.1,samples=80]{x^2};
+  \draw[klhi,line width=2.4pt] (axis cs:-1,0)--(axis cs:1,0);
+  \draw[kldim,dashed] (axis cs:-1,-1)--(axis cs:-1,1);
+  \draw[kldim,dashed] (axis cs:1,-1)--(axis cs:1,1);
+  \node[text=kldim,anchor=north] at (axis cs:-1,-1) {$-1$};
+  \node[text=kldim,anchor=north] at (axis cs:1,-1) {$1$};
+  \draw[kldim,dashed] (axis cs:-2.2,-2)--(axis cs:2.2,-2) node[right,text=kldim]{$y=-2$: never hit};
+  \node[text=kldim,anchor=west] at (axis cs:2.25,0) {band $-1\le y\le1$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{$g^{-1}([-1,1])$ is every $x$ whose height lands in the band: the thick segment $[-1,1]$. Only the top
+half of the band is ever reached, so $g([-1,1])=[0,1]$. The line $y=-2$ is never hit: $g^{-1}(\{-2\})=\emptyset$.}
+
+\subsection{Generalize it}
+\begin{itemize}
+  \item \textbf{$\cap$ and complement:} $f^{-1}(C\cap D)=f^{-1}(C)\cap f^{-1}(D)$ and $f^{-1}(N\setminus C)=
+        M\setminus f^{-1}(C)$, by the same chain with $\wedge$ and $\neg$.
+  \item \textbf{Images:} $f(A\cup B)=f(A)\cup f(B)$ holds, but only $f(A\cap B)\subseteq f(A)\cap f(B)$. With $g$:
+        $A=\{-1\}$, $B=\{1\}$, $g(A\cap B)=\emptyset$ but $g(A)\cap g(B)=\{1\}$. Equality for all $A,B$ holds exactly
+        when $f$ is injective.
+  \item \textbf{There and back:} $g^{-1}(g(A))\supseteq A$, and can be bigger: $g^{-1}(g([0,1]))=[-1,1]$.
+\end{itemize}
+
+\subsection{Same structure, elsewhere}
+Problems 01 and 07 also translate between sets and statements. Later in the course, continuity will be defined
+through preimages (preimages of open sets are open) for exactly this reason: preimages respect every set operation.
+
+\why{Why is $g^{-1}(\{4\})=\{2,-2\}$ allowed when $g$ has no inverse?}{$g^{-1}(C)$ is the name of a set,
+$\{x: g(x)\in C\}$, and it exists for every function and every $C$. It is not an inverse function; it only shares
+the symbol. When $g$ is bijective the two meet: $g^{-1}(\{y\})$ is the one-point set containing the inverse's value.}
+
+\why{Why $\vee$ and not $\cup$ in the middle of the chain?}{``$f(x)\in C$ or $f(x)\in D$'' is a statement: it is
+true or false. $C\cup D$ is a set. $\cup$ joins sets, $\vee$ joins statements, and the definition $y\in C\cup D
+:\Leftrightarrow y\in C\vee y\in D$ is the bridge between them. Your note was exactly right.}
+
+\subsection{The solution, idea first}
+\emph{Idea:} unfold the definitions; $\cup$ becomes $\vee$.
+\begin{proof}
+(a) Let $x\in M$. Then $x\in f^{-1}(C\cup D)\Leftrightarrow f(x)\in C\cup D\Leftrightarrow f(x)\in C\vee f(x)\in D
+\Leftrightarrow x\in f^{-1}(C)\vee x\in f^{-1}(D)\Leftrightarrow x\in f^{-1}(C)\cup f^{-1}(D)$. Since $x$ was
+arbitrary, the two sets are equal.
+
+(b) $g(\mathbb{R}\setminus\{0\})=(0,\infty)$: if $x\neq0$ then $x^2>0$; and every $t>0$ is $g(\sqrt t)$ with
+$\sqrt t\neq0$. Then $g^{-1}([0,\infty))=\mathbb{R}$ since $x^2\ge0$ always; $g^{-1}(\{-2\})=\emptyset$;
+$g^{-1}(\{4\})=\{-2,2\}$; $g^{-1}([-1,1])=\{x: x^2\le1\}=[-1,1]$; $g([-1,1])=[0,1]$, since $x^2\in[0,1]$ there and
+$t=g(\sqrt t)$ for $t\in[0,1]$; $g([0,1])=[0,1]$ by the same argument; $g^{-1}([0,1])=[-1,1]$.
+\end{proof}
+
+\section{The Codomain Is Part of the Function}
+
+\begin{panel}[unbreakable]{The problem}{Ex.\ 5 · reconstructed}{}
+Decide whether each map is injective, surjective, bijective, and give the inverse where it exists.
+$f_1:\mathbb{R}\to\mathbb{R}$, $f_1(x)=|x|$. \quad
+$f_2:\mathbb{R}\to\mathbb{R}$, $f_2(x)=x$ for $x\le0$ and $f_2(x)=\frac1x$ for $x>0$. \quad
+$f_3:[0,\infty)\to[0,\infty)$, $f_3(x)=\frac{1}{1+x^2}$.
+\end{panel}
+
+\subsection{Your path}
+Every verdict is right. For $f_1$, $|-1|=|1|$ settles injectivity. For $f_2$ you solved $f(a)=b$ branch by branch,
+proved injectivity in three cases including the mixed one (the branches live on opposite sides of $0$), and saw
+$f_2^{-1}=f_2$, with the grey warning that $f^{-1}\neq\frac1f$. For $f_3$ you solved $(1+a^2)^{-1}=b$ for $a$ and saw
+that $b$ cannot exceed $1$.
+
+\begin{panel}[unbreakable]{Weak points}{named exactly}{}
+\begin{enumerate}
+  \item \textbf{5a: no named witness.} ``If $b=-c\Rightarrow-c=|a|$'' never says which $b$ fails or why.
+        \emph{Fix:} one concrete value. $b=-1$: $|a|\ge0>-1$ for every $a$.
+  \item \textbf{5b: the $\exists$ is missing.} ``$\forall b\le0$ s.t.\ $f(a)=b$'' drops the quantifier that
+        \emph{is} surjectivity. \emph{Fix:} write the pattern in full, $\forall b\ \exists a: f(a)=b$, and name the $a$.
+  \item \textbf{5c: reversed inequality.} ``For $a$ to be real, $\frac1b\le1$'': the root needs $\frac1b-1\ge0$, so
+        $\frac1b\ge1$, so $b\le1$. And $b=0$ fails as well. \emph{Fix:} when you solve for $a$, list every condition
+        the formula needs ($b\neq0$, radicand $\ge0$) and translate each into a condition on $b$.
+\end{enumerate}
+\end{panel}
+
+\begin{panel}[unbreakable]{The deep idea}{one equation, two questions}{}
+Surjective: $f(a)=b$ has a solution $a$ \emph{in the domain} for every $b$ \emph{in the codomain}. Injective: it never
+has two. Both are questions about one equation, and the answers depend on where $a$ and $b$ may live. Change the
+codomain and the verdict changes: $f_3$ is not onto $[0,\infty)$, but $f_3:[0,\infty)\to(0,1]$ is a bijection.
+\end{panel}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,axis lines=middle,width=.52\linewidth,height=.52\linewidth,xmin=-3,xmax=3,ymin=-3,ymax=3,
+  xtick={-2,2},ytick={-2,2},clip=false]
+  \draw[kldim,dashed] (axis cs:-3,-3)--(axis cs:3,3) node[right,text=kldim]{$y=x$};
+  \addplot[klhi,line width=1pt,domain=-3:0]{x};
+  \addplot[klhi,line width=1pt,domain=0.34:3,samples=80]{1/x};
+  \draw[kldim,dotted,line width=.7pt] (axis cs:0.5,2)--(axis cs:2,0.5);
+  \addplot[only marks,mark=*,mark size=1.6pt,klhi] coordinates {(0.5,2)(2,0.5)};
+  \node[text=kldim,anchor=south west] at (axis cs:0.5,2) {$(\frac12,2)$};
+  \node[text=kldim,anchor=south west] at (axis cs:2,0.5) {$(2,\frac12)$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{The graph of $f_2$ is its own mirror image in $y=x$: the ray lies on the mirror, and the branch of
+$\frac1x$ swaps $(\frac12,2)$ with $(2,\frac12)$. Mirroring a graph in $y=x$ draws the inverse, so $f_2^{-1}=f_2$.}
+
+\subsection{Generalize it}
+\begin{itemize}
+  \item \textbf{Restrict to repair:} $|x|$ on $[0,\infty)\to[0,\infty)$ is the identity, bijective.
+        $f_3:[0,\infty)\to(0,1]$ is bijective with inverse $b\mapsto\sqrt{\frac1b-1}$.
+  \item \textbf{Self-inverse maps} \de{(Involutionen)}: $f\circ f=\mathrm{id}$, graph symmetric in $y=x$. Others:
+        $x\mapsto-x$, $x\mapsto c-x$, $x\mapsto\frac1x$ on $(0,\infty)$.
+  \item \textbf{Finite versus infinite:} between finite sets of the same size, injective $\Leftrightarrow$
+        surjective. On $\mathbb{N}$ this fails: $n\mapsto2n$ is injective and misses every odd number.
+\end{itemize}
+
+\subsection{Same structure, elsewhere}
+Surjective means $f(M)=N$: an image computation as in Problem 04. Problem 06 gives the shortcut for 5c: $f_3$ is
+strictly decreasing on $[0,\infty)$, hence injective at once. Problem 02's lemma is the step $a^2=b^2\Rightarrow a=b$
+for $a,b\ge0$.
+
+\why{Why is $f_2^{-1}$ not $\frac{1}{f_2}$?}{$f^{-1}$ undoes $f$: $f^{-1}(f(x))=x$. $\frac1f$ is the reciprocal of the
+value. For $f_2$: $\frac{1}{f_2(-2)}=-\frac12$, but $f_2^{-1}(-2)=-2$. Same symbol $^{-1}$, two different
+operations, as your grey note says.}
+
+\why{Why does ``not bijective'' rule out an inverse?}{An inverse $h:N\to M$ must satisfy $h(f(x))=x$ and $f(h(y))=y$.
+If $f(a)=f(b)$ with $a\neq b$, then $h$ would have to send one value to both $a$ and $b$. If some $y$ has no preimage,
+$f(h(y))=y$ is impossible. So an inverse needs both properties.}
+
+\subsection{The solution, idea first}
+\emph{Idea:} for each $b$, solve $f(a)=b$, then check that $a$ is allowed.
+\begin{proof}
+$f_1$: $f_1(-1)=f_1(1)$ with $-1\neq1$, so not injective; $|a|\ge0$, so $-1$ has no preimage and $f_1$ is not
+surjective. Not bijective, no inverse.
+
+$f_2$: for $b\le0$ take $a=b$; then $a\le0$ and $f_2(a)=a=b$. For $b>0$ take $a=\frac1b>0$; then $f_2(a)=\frac1a=b$.
+So $f_2$ is surjective. On $(-\infty,0]$, $f_2(x)=x$ is injective; on $(0,\infty)$, $\frac1a=\frac1b\Rightarrow a=b$;
+and a value from the first branch is $\le0$, from the second $>0$, so they never coincide. So $f_2$ is bijective. For
+$x\le0$, $f_2(f_2(x))=f_2(x)=x$; for $x>0$, $\frac1x>0$ and $f_2(f_2(x))=x$. Hence $f_2^{-1}=f_2$.
+
+$f_3$: $f_3(a)=f_3(b)\Rightarrow1+a^2=1+b^2\Rightarrow a^2=b^2\Rightarrow a=b$, as $a,b\ge0$. So injective. But
+$0<f_3(a)\le1$ for all $a$, so $b=2$ has no preimage: not surjective, not bijective, no inverse
+$[0,\infty)\to[0,\infty)$.
+\end{proof}
+
+\section{Order Reflected}
+
+\begin{panel}[unbreakable]{The problem}{Ex.\ 6 · reconstructed}{}
+(a) Show that every strictly monotone $f:\mathbb{R}\to\mathbb{R}$ is injective. (b) Let $I,J\subseteq\mathbb{R}$ be
+intervals and $f:I\to J$ strictly monotone and surjective. Show that $f$ has an inverse $f^{-1}:J\to I$ and that
+$f^{-1}$ is strictly monotone in the same sense as $f$.
+\end{panel}
+
+\subsection{Your path}
+(a) Both cases, increasing and decreasing, straight from the definition, with the red ``$x_1\neq x_2$'' added so it
+is clear what injectivity needs. (b) Bijective from (a) plus surjective, then a contradiction: suppose $x_1\ge x_2$,
+push it through $f$, collide with $y_1<y_2$. The structure is right. The bracket names the wrong hypothesis, and only
+the increasing case is done.
+
+\begin{panel}[unbreakable]{Weak points}{named exactly}{}
+\begin{enumerate}
+  \item \textbf{``$f(x_1)\ge f(x_2)$ (since $f$ is injective)''.} Injectivity says $f(x_1)\neq f(x_2)$ for
+        $x_1\neq x_2$; it says nothing about which is larger. The step uses that $f$ is \emph{increasing}.
+        \emph{Fix:} after every step, name the hypothesis it uses, then check that the hypothesis really says that.
+  \item \textbf{Half the theorem, no conclusion.} Only increasing $f$ is treated, and ``so $f^{-1}$ is strictly
+        increasing'' is never written. \emph{Fix:} end with the sentence you proved; do the decreasing case by the
+        same argument with the inequalities flipped.
+  \item \textbf{(a): from $x_1\neq x_2$ to $x_1<x_2$.} \emph{Fix:} one phrase, ``without loss of generality
+        \de{(o.B.d.A.)} $x_1<x_2$, otherwise swap the names''.
+\end{enumerate}
+\end{panel}
+
+\begin{panel}[unbreakable]{The deep idea}{preserving order is reflecting it}{}
+A strictly increasing $f$ preserves order, and therefore also reflects it: $f(x_1)<f(x_2)\Rightarrow x_1<x_2$. The
+reason is that $\mathbb{R}$ is totally ordered: if not $x_1<x_2$, then $x_1\ge x_2$, and preservation gives
+$f(x_1)\ge f(x_2)$. Reflecting order is the same thing as ``$f^{-1}$ is increasing''. Strict monotonicity is
+injectivity with a direction attached.
+\end{panel}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,axis lines=middle,width=.66\linewidth,height=56mm,xmin=-2.3,xmax=2.3,ymin=-3.6,ymax=3.6,
+  xtick=\empty,ytick=\empty,clip=false]
+  \addplot[klhi,line width=1pt,domain=-2.2:2.2,samples=80]{x+x^3/8} node[right,text=kldim]{$f$};
+  \draw[kldim,dashed] (axis cs:0,-1.125)--(axis cs:-1,-1.125)--(axis cs:-1,0);
+  \draw[kldim,dashed] (axis cs:0,1.921875)--(axis cs:1.5,1.921875)--(axis cs:1.5,0);
+  \node[text=kldim,anchor=south] at (axis cs:-1,0) {$x_1$};
+  \node[text=kldim,anchor=north] at (axis cs:1.5,0) {$x_2$};
+  \node[text=kldim,anchor=west] at (axis cs:0,-1.125) {$y_1$};
+  \node[text=kldim,anchor=east] at (axis cs:0,1.921875) {$y_2$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{Read the graph backwards, from heights to positions: that is $f^{-1}$. Heights in order force positions in
+order, because if $x_1\ge x_2$ an increasing $f$ would give $y_1\ge y_2$.}
+
+\subsection{Generalize it}
+\begin{itemize}
+  \item \textbf{Drop ``strictly'':} a monotone function need not be injective. Constant functions are monotone.
+  \item \textbf{Drop ``surjective'':} $f:I\to\mathbb{R}$ strictly monotone is still injective, so it is a bijection
+        onto its image $f(I)$, and the inverse lives there.
+  \item \textbf{The converse needs continuity.} Your $f_2$ from Problem 05 is injective and not monotone: it rises on
+        $(-\infty,0]$, falls on $(0,\infty)$, and jumps at $0$. For a \emph{continuous} injective function on an
+        interval, strict monotonicity does follow, by the intermediate value theorem
+        \de{(Zwischenwertsatz)}. Later in the course.
+\end{itemize}
+
+\subsection{Same structure, elsewhere}
+Problem 02 is this theorem for $t\mapsto t^2$ on $[0,\infty)$: $u^2\le v^2\Leftrightarrow u\le v$ is reflection of
+order. Problem 05c's injectivity follows from $f_3$ being strictly decreasing. $\sqrt{\ }$, $\ln$ and $\arcsin$ will
+all be defined as inverses of strictly monotone functions, and this is why they are monotone too.
+
+\why{Why does preserving order give reflecting order?}{Any two reals compare: $x_1<x_2$, $x_1=x_2$ or $x_1>x_2$.
+If $f(x_1)<f(x_2)$, the second option would give $f(x_1)=f(x_2)$, and the third $f(x_1)>f(x_2)$. Only the first is
+left. This needs a total order on the domain.}
+
+\why{Why can't injectivity give $f(x_1)\ge f(x_2)$?}{Injectivity is about equality only. $f_2$ from Problem 05 is
+injective, and $-1<1$ gives $f_2(-1)<f_2(1)$, while $1<2$ gives $f_2(1)>f_2(2)$. Injective functions can do either.}
+
+\subsection{The solution, idea first}
+\emph{Idea:} strictly increasing maps reflect order; reflecting order is ``$f^{-1}$ increasing''.
+\begin{proof}
+(a) Let $x_1\neq x_2$, without loss of generality $x_1<x_2$. If $f$ is strictly increasing, $f(x_1)<f(x_2)$; if
+strictly decreasing, $f(x_1)>f(x_2)$. Either way $f(x_1)\neq f(x_2)$.
+
+(b) By (a), $f$ is injective, and it is surjective by hypothesis, so it is bijective and has an inverse
+$f^{-1}:J\to I$. Let $f$ be strictly increasing, let $y_1<y_2$ in $J$ and $x_i=f^{-1}(y_i)$, so $f(x_i)=y_i$. Suppose
+$x_1\ge x_2$. If $x_1=x_2$, then $y_1=y_2$. If $x_1>x_2$, then $y_1=f(x_1)>f(x_2)=y_2$, because $f$ is increasing.
+Both contradict $y_1<y_2$, so $x_1<x_2$: $f^{-1}$ is strictly increasing. For strictly decreasing $f$, the same
+argument with the inequalities flipped shows that $f^{-1}$ is strictly decreasing.
+\end{proof}
+
+\section{Only Candidates}
+
+\begin{panel}[unbreakable]{The problem}{Ex.\ 7 · reconstructed, check against the sheet}{}
+For $(x,y)\in\mathbb{R}^2$ let $A$ be the statement ``$y=1-x$ and $y^2=x^2-9$'' and $B$ the statement ``$x=5$''.
+Show $A\Rightarrow B$. Does $B\Rightarrow A$ hold? Find the solution set of the system on $M_1=\mathbb{R}^2$ and on
+$M_2=\{(x,y)\in\mathbb{R}^2: y\ge0\}$.
+\end{panel}
+
+\subsection{Your path}
+$A\Rightarrow B$ by substitution: the squares cancel and $x=5$. For $B\Rightarrow A$ you computed $y=1-5=-4$ and
+called it a contradiction with $y\ge0$. Solution sets $L_1=\{(5,-4)\}$ and $L_2=\emptyset$, both right.
+
+\begin{panel}[unbreakable]{Weak points}{named exactly}{}
+\begin{enumerate}
+  \item \textbf{$B\Rightarrow A$ refuted with $A$'s own equation.} $y=1-x$ is half of $A$. From $B$ alone, $y$ can
+        be anything. \emph{Fix:} to refute an implication, give one point where the premise holds and the conclusion
+        fails: $(5,0)$. It works in $M_2$ too.
+  \item \textbf{$L_1$ from one direction only.} Solving showed ``solution $\Rightarrow(x,y)=(5,-4)$'', that is
+        $L_1\subseteq\{(5,-4)\}$. That $(5,-4)$ really solves both equations is the converse, and it was never
+        checked. \emph{Fix:} plug candidates back in, or make every step $\Leftrightarrow$.
+\end{enumerate}
+\end{panel}
+
+\begin{panel}[unbreakable]{The deep idea}{solving narrows down, it never confirms}{}
+Solving an equation is a chain of implications from ``$(x,y)$ is a solution'' to ``$(x,y)$ is one of these
+candidates''. That is $A\Rightarrow B$: it narrows down. The converse, $B\Rightarrow A$, is what turns candidates into
+solutions, and steps such as squaring can break it. This exercise is that distinction in miniature.
+\end{panel}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,axis lines=middle,axis on top,width=.74\linewidth,height=62mm,xmin=-7,xmax=8,ymin=-6.5,ymax=6.5,
+  xtick={5},ytick={-4},clip=false]
+  \fill[klfaint] (axis cs:-7,0) rectangle (axis cs:8,6.5);
+  \draw[kldim,dashed] (axis cs:-6.5,-6.5)--(axis cs:6.5,6.5);
+  \draw[kldim,dashed] (axis cs:-6.5,6.5)--(axis cs:6.5,-6.5);
+  \addplot[klink,line width=.9pt,domain=-6.2:6.2,samples=80] ({sqrt(x^2+9)},{x});
+  \addplot[klink,line width=.9pt,domain=-6.2:6.2,samples=80] ({-sqrt(x^2+9)},{x});
+  \addplot[klhi,line width=1pt,domain=-5.4:7.4]{1-x};
+  \addplot[only marks,mark=*,mark size=1.9pt,klhi] coordinates {(5,-4)};
+  \node[text=kldim,anchor=west] at (axis cs:5.3,-3.6) {$(5,-4)$};
+  \node[text=kldim,anchor=west] at (axis cs:7.5,-6.4) {$y=1-x$};
+  \node[text=kldim,anchor=west] at (axis cs:7.0,5.2) {$x^2-y^2=9$};
+  \node[text=kldim,font=\fell\itshape\small] at (axis cs:2.3,5.4) {$M_2$: $y\ge0$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{The line meets the hyperbola once, at $(5,-4)$, below the shaded half-plane $M_2$. It is parallel to the
+dashed asymptote $y=-x$, which is why the $x^2$ cancelled and a single linear equation was left.}
+
+\subsection{Generalize it}
+\begin{itemize}
+  \item \textbf{Squaring makes false candidates.} $\sqrt{x+6}=x$: squaring gives $x^2-x-6=0$, so $x=3$ or $x=-2$.
+        Check: $\sqrt9=3$ works, $\sqrt4=2\neq-2$ does not. The solution set is $\{3\}$.
+  \item \textbf{Why only one point here:} a line parallel to an asymptote meets a hyperbola at most once. A line
+        with any other slope can meet it twice, and then you would solve a quadratic.
+  \item \textbf{The base set is part of the problem,} like the codomain in Problem 05: same equations, and on $M_2$
+        the solution set is empty. Formally $L_2=L_1\cap M_2$.
+\end{itemize}
+
+\subsection{Same structure, elsewhere}
+Problem 05's surjectivity was the same discipline: solve $f(a)=b$, then check that the $a$ is allowed. Problem 02 is
+the root cause of false candidates: squaring forgets the sign.
+
+\why{Why can't you use $y=1-x$ when testing $B\Rightarrow A$?}{$B\Rightarrow A$ asks: does \emph{every} point with
+$x=5$ satisfy $A$? Those points are $(5,y)$ for every $y$. Using $y=1-x$ quietly restricts to points that already
+satisfy half of $A$, so you are testing a different implication, $B\wedge(y=1-x)\Rightarrow A$.}
+
+\why{Why did the $x^2$ terms cancel?}{$y^2=x^2-9$ is the hyperbola $x^2-y^2=9$, with asymptotes $y=\pm x$. The line
+$y=1-x$ has slope $-1$, parallel to $y=-x$. Substituting gives $x^2-(1-x)^2=9$, and the $x^2$ terms cancel exactly
+because the slopes match.}
+
+\subsection{The solution, idea first}
+\emph{Idea:} substitution gives the candidates; a counterexample refutes; plugging in confirms.
+\begin{proof}
+$A\Rightarrow B$: if $y=1-x$ and $y^2=x^2-9$, then $(1-x)^2=x^2-9$, so $1-2x=-9$ and $x=5$.
+$B\Rightarrow A$ is false: $(5,0)$ satisfies $B$, but $0\neq1-5$.
+$L_1$: every solution has $x=5$ and $y=1-x=-4$. Conversely $1-5=-4$ and $(-4)^2=16=25-9$, so $L_1=\{(5,-4)\}$.
+$L_2=L_1\cap M_2=\emptyset$, since $-4<0$.
+\end{proof}
+
+\section{Factor What the Target Contains}
+
+\begin{panel}[unbreakable]{The problem}{Ex.\ 8}{}
+Show $\displaystyle\sum_{i=1}^{n}i^3=\frac{n^2(n+1)^2}{4}$ for all $n\in\mathbb{N}$.
+\end{panel}
+
+\subsection{Your path}
+Base case, then the step: you split off $(n+1)^3$, used the hypothesis, took a common denominator, and after one
+struck-out attempt found the move that makes it work. You factored out $(n+1)^2$ (marked in red), and $n^2+4n+4=(n+2)^2$
+was left. Correct.
+
+\begin{panel}[unbreakable]{Weak points}{named exactly}{}
+\begin{enumerate}
+  \item \textbf{The step opens with the goal.} ``$\sum_{i=1}^{n+1}\dots=\frac{(n+1)^2(n+2)^2}{4}\Rightarrow\dots$''
+        writes what you want to prove and arrows away from it. Your computation never uses it, so the proof stands,
+        but on an exam it reads as circular. \emph{Fix:} write ``To show: \dots'' on its own line, then start from
+        the left-hand side.
+  \item \textbf{$\Rightarrow$ between expressions.} $\frac{n^2(n+1)^2}{4}+(n+1)^3\Rightarrow\frac{\dots}{4}$: these are
+        numbers, not statements. \emph{Fix:} a calculation is a chain of $=$.
+  \item \textbf{A dropped exponent:} the first sum reads $\sum i$ instead of $\sum i^3$.
+\end{enumerate}
+\end{panel}
+
+\begin{panel}[unbreakable]{The deep idea}{the target tells you what to factor}{}
+In an induction step you know where you have to land. $\frac{(n+1)^2(n+2)^2}{4}$ contains $(n+1)^2$, so pull
+$(n+1)^2$ out of both terms at once; what is left must be $(n+2)^2$, and it is. Work from the left side to the target,
+with $=$ between expressions.
+\end{panel}
+
+\subsection{Generalize it}
+\begin{itemize}
+  \item \textbf{Nicomachus:} $\sum_{i=1}^n i^3=\bigl(\sum_{i=1}^n i\bigr)^2$, since $\sum i=\frac{n(n+1)}{2}$.
+  \item \textbf{All powers:} $\sum_{i=1}^n i^k$ is a polynomial in $n$ of degree $k+1$ with leading coefficient
+        $\frac{1}{k+1}$: $\frac{n^2}{2}$, $\frac{n^3}{3}$, $\frac{n^4}{4}$, \dots, like $\int_0^n x^k\,dx$.
+  \item \textbf{Induction proves formulas; it doesn't find them.} To find one, compute small cases:
+        $1, 9, 36, 100$ are the squares of $1, 3, 6, 10$.
+\end{itemize}
+
+\subsection{Same structure, elsewhere}
+Problem 01 checked two elements one by one; induction is how a finite check reaches infinitely many. Problem 07 had the
+same direction rule: start from what is given, never from what is wanted.
+
+\why{Why may you use the formula for $n$ inside the step?}{The step proves an implication, $P(n)\Rightarrow P(n+1)$,
+and $P(n)$ is its premise. Using $P(n+1)$, the conclusion, would be circular, which is why the step must not start
+from it.}
+
+\why{Why is $\sum i^3$ a perfect square?}{With $T_n=\frac{n(n+1)}{2}$: $T_{n+1}^2-T_n^2=(T_{n+1}-T_n)(T_{n+1}+T_n)
+=(n+1)\cdot(n+1)^2=(n+1)^3$, since $T_{n+1}+T_n=(n+1)^2$. So the squares $T_n^2$ grow by exactly the cubes, and both
+sides start at $1$.}
+
+\subsection{The solution, idea first}
+\emph{Idea:} split off the last term, use the hypothesis, factor out $(n+1)^2$.
+\begin{proof}
+Let $P(n)$ be the statement $\sum_{i=1}^n i^3=\frac{n^2(n+1)^2}{4}$. $P(1)$: $1=\frac{1\cdot4}{4}$. Assume $P(n)$.
+Then
+\begin{align*}
+\sum_{i=1}^{n+1}i^3&=\sum_{i=1}^{n}i^3+(n+1)^3=\frac{n^2(n+1)^2}{4}+(n+1)^3\\
+&=\frac{(n+1)^2\bigl(n^2+4n+4\bigr)}{4}=\frac{(n+1)^2(n+2)^2}{4},
+\end{align*}
+which is $P(n+1)$. By induction, $P(n)$ holds for every $n\ge1$.
+\end{proof}
+
+\begin{triggers}
+\trigger{An inequality between squares}{pass to $|x|,|y|$; $t\mapsto t^2$ is strictly increasing on $[0,\infty)$}
+\trigger{Prove $A\le B$}{write $B-A$ as a square, or a sum of squares}
+\trigger{Show two sets are equal}{arbitrary $x$, chain $\Leftrightarrow$ on membership, then ``$x$ was arbitrary''}
+\trigger{Is $f$ surjective?}{solve $f(a)=b$; list every condition the formula needs; check $a$ is in the domain}
+\trigger{You solved an equation by $\Rightarrow$ steps}{only candidates so far: plug them back in}
+\trigger{Refute an implication}{one point where the premise holds and the conclusion fails}
+\trigger{An induction step for a closed formula}{factor out what the target contains}
+\end{triggers}
+
+\begin{deck}
+\card{Trigger}{You see $x^2\le y^2$, or any inequality between squares.}{Pass to $|x|,|y|$: $t\mapsto t^2$ is
+  strictly increasing on $[0,\infty)$, so $x^2\le y^2\Leftrightarrow|x|\le|y|$.}
+\card{Why}{Strictly increasing $f$: which property gives $x_1\ge x_2\Rightarrow f(x_1)\ge f(x_2)$?}{Monotonicity.
+  Injectivity only gives $\neq$, never an order.}
+\card{Trigger}{You solved an equation or a system by a chain of $\Rightarrow$.}{You have candidates, not solutions.
+  Plug them back in.}
+\end{deck}
+
+\clearpage
+\section*{Again, in a week}
+Due 19 October 2026. No notes. Write on the grid, then bring it to your weekly review. The solutions are not in this
+file.
+
+\problem[Variant of Ex. 1] In $\mathbb{Z}_3=\{0,1,2\}$ with $+$ and $\cdot$ mod $3$, give the multiplicative inverse
+of every nonzero element. In $\mathbb{Z}_4$, show that $2$ has none. Which field axiom fails in $\mathbb{Z}_4$?
+\answerspace{48mm}
+
+\problem[Variant of Ex. 2] Show $|x+y|\le|x|+|y|$ for all $x,y\in\mathbb{R}$ by comparing $(x+y)^2$ with
+$(|x|+|y|)^2$. Say where you use that both sides are $\ge0$.
+\answerspace{48mm}
+
+\problem[Variant of Ex. 3] Sketch $B=\{(x,y): |x|+2|y|\le2\}$ and $C=\{(x,y): x^2+4y^2\le4\}$. Decide whether
+$B\subseteq C$ or $C\subseteq B$, and prove it.
+\answerspace{60mm}
+
+\clearpage
+\problem[Variant of Ex. 4] Let $f:M\to N$ and $C,D\subseteq N$. Show $f^{-1}(C\setminus D)=f^{-1}(C)\setminus
+f^{-1}(D)$. For $h:\mathbb{R}\to\mathbb{R}$, $h(x)=x^2-1$, find $h^{-1}([0,3])$ and $h([-1,2])$.
+\answerspace{52mm}
+
+\problem[Variant of Ex. 5] Decide injective, surjective, bijective, and give the inverse where it exists:
+$k_1:\mathbb{R}\setminus\{1\}\to\mathbb{R}\setminus\{1\}$, $k_1(x)=\frac{x+1}{x-1}$; and
+$k_2:(0,\infty)\to(0,1)$, $k_2(x)=\frac{1}{1+x^2}$.
+\answerspace{52mm}
+
+\problem[Variant of Ex. 6] Let $f:I\to J$ be strictly decreasing and surjective. Show that $f^{-1}:J\to I$ exists and is
+strictly decreasing. After every step, name the hypothesis it uses.
+\answerspace{50mm}
+
+\clearpage
+\problem[Variant of Ex. 7] (a) For $(x,y)\in\mathbb{R}^2$ let $A$ be ``$x-y=1$ and $x^2-y^2=5$'' and $B$ be ``$x=3$''.
+Show $A\Rightarrow B$. Does $B\Rightarrow A$ hold? Find the solution set on $\mathbb{R}^2$ and on
+$\{(x,y): y<0\}$. (b) Solve $\sqrt{x+2}=x$ over $\mathbb{R}$.
+\answerspace{78mm}
+
+\problem[Variant of Ex. 8] Show by induction: $\displaystyle\sum_{i=1}^{n}i(i+1)=\frac{n(n+1)(n+2)}{3}$ for all
+$n\in\mathbb{N}$.
+\answerspace{80mm}
+
+\end{document}
