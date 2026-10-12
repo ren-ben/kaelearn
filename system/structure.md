@@ -50,6 +50,7 @@ when a body of material doesn't fit any of these, and record it in `student.md` 
 | `subjects/<s>/exams/.../x.pdf` | `Exams/<s>/x.pdf` |
 | `review/.../review-2026-W42.pdf` | `Reviews/review-2026-W42.pdf` |
 | `codex/codex.pdf` | `codex.pdf` |
+| `engine/specimen/x` | `Specimens/x` (reference debrief and videos, plus a hand-made `Videos.md`) |
 | `ATLAS.md`, `GRIMOIRE.md` | `Atlas.md`, `Grimoire.md` (every publish, or `kl.py mirror`) |
 
 Give every PDF that goes to the vault a unique, readable name.

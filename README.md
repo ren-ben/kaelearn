@@ -17,16 +17,39 @@ giving away answers, and keeps the map of everything you've learned. Start with
 4. Open Claude Code in this folder. The Kael'thos output style and the push hook load from
    `.claude/`.
 
+## Course codes
+
+Commands, file names and commits name a course by its code.
+
+| Code | Course | Subject folder |
+|---|---|---|
+| EP1 | Experimentalphysik 1 | `physics` |
+| RM | Physikalische Rechenmethoden | `methods` |
+| LA | Lineare Algebra 1 | `linear-algebra` |
+| ANA | Analysis 1 | `analysis` |
+| FUS | Forschung und Studium | none |
+| CUM | Cummings, *Real Analysis* (self-study) | `analysis` |
+| PRF | Udemy proofs course | `proofs` |
+| ODE | Udemy differential equations course | `odes` |
+
+Homework sheets are `UE03` (exercise sheet 3), so `ANA UE03/2` is problem 2 of Analysis sheet 3.
+Add new courses in `system/student.md` and here.
+
 ## Daily use
 
 - **Before a lecture:** `/pretest ANA sequences`
-- **After a lecture:** in Notability, blurt for 5 minutes on a blank page. Export the notes and
-  the blurt as PDF and use Save to Files to put them in `Obsidian/le vault/Kaelearn/Inbox`
-  (names like `ANA 2026-10-14` and `ANA 2026-10-14 blurt`). Then run `/ingest`.
+- **After a lecture:** blurt. On a blank Notability page, write down everything you remember
+  from the lecture for 5 minutes, without looking at your notes. Recalling it is the practice,
+  and whatever you can't produce is a gap you would otherwise never notice. Export the notes
+  and the blurt as PDF and use Save to Files to put them in `Obsidian/le vault/Kaelearn/Inbox`
+  (names like `ANA 2026-10-14` and `ANA 2026-10-14 blurt`). Then run `/ingest`: it compares
+  the blurt with the notes and lists the gaps.
 - **Exercises:** attempt it, then `/exercise` with the problem and your attempt. Talk it
   through; say "debrief" at the end and the session becomes a short PDF in the vault.
 - **Videos:** Kael'thos makes short manim videos when motion helps, or on request with
-  `/animate <idea>`. They play in Obsidian; in a PDF, tap the frame.
+  `/animate <idea>`. Watch them in Obsidian on the iPad: embedded in the concept note, or tap
+  the frame in a PDF (opened in Obsidian). The GitHub app can't play videos stored in a repo.
+  To try it, open `Kaelearn/Specimens/Videos.md`.
 - **New topic:** `/folio analysis uniform convergence`, or drag in Skript pages.
 - **Weekly:** `/review`, then `/teach <concept>`.
 - **Exams:** `/exam mock ANA`, `/exam oral LA`, `/exam board EP1`, `/exam mixed`.

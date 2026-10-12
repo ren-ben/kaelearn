@@ -98,6 +98,8 @@ def vault_path(f: Path) -> Path:
         return VAULT / parts[2].capitalize() / parts[1] / f.name
     if parts[0] == 'review':
         return VAULT / 'Reviews' / f.name
+    if parts[:2] == ('engine', 'specimen'):  # the reference debrief and its videos, to try on the iPad
+        return VAULT / 'Specimens' / f.name
     return VAULT / f.name           # codex and anything else at the top
 
 
