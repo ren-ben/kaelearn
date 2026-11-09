@@ -20,7 +20,7 @@ gets tested against them.
 | Grimoire re-attempts: 7 entries from ANA UE01 | 2026-10-15 |
 | Debrief variants: ANA UE01, 8 problems (`Debriefs/analysis/2026-10-12-ue01.pdf`, last pages) | 2026-10-19 |
 | First review of the 10 concepts met in ANA UE01 | 2026-10-19 |
-| First review of the 12 rigid-body concepts (EP1, folio physics 01) | 2026-11-16 |
+| First review of the 14 rigid-body concepts (EP1, folios physics 01 and 02) | 2026-11-16 |
 
 ## Analysis
 
@@ -81,6 +81,10 @@ flowchart LR
     PAT --> PP[Physical pendulum]
     TQ --> PP
     AM --> PRE[Precession]
+    AV --> IC[Instantaneous centre of rotation]
+    IC --> ROL
+    MI --> EM[Effective mass]
+    EM --> ROL
   end
 ```
 
@@ -88,7 +92,7 @@ flowchart LR
 |---|---|---|---|---|
 | [[Rigid body]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 EP1 notes + folio 01 |
 | [[Angular velocity]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 EP1 notes: $\vec v_i = \vec v_s+\vec\omega\times\vec r_{si}$ written down |
-| [[Centre of mass]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 EP1 notes: gravity torque $= M\vec R_s\times\vec g$, stability stated |
+| [[Centre of mass]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] · [[02-drehen-im-bild.pdf]] | 2026-11-09 EP1 notes: gravity torque $= M\vec R_s\times\vec g$, stability stated |
 | [[Torque]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 EP1 notes + folio 01 |
 | [[Moment of inertia]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 EP1 notes: cylinder $I_{zz} = \frac12MR^2$ computed |
 | [[Parallel-axis theorem]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 folio 01 |
@@ -98,6 +102,8 @@ flowchart LR
 | [[Rolling]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 folio 01 + video |
 | [[Physical pendulum]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 folio 01 |
 | [[Precession]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 folio 01 |
+| [[Instantaneous centre of rotation]] | 1 | 2026-11-16 | [[02-drehen-im-bild.pdf]] | 2026-11-09 folio 02 |
+| [[Effective mass]] | 1 | 2026-11-16 | [[02-drehen-im-bild.pdf]] | 2026-11-09 folio 02 |
 
 ## Methods
 

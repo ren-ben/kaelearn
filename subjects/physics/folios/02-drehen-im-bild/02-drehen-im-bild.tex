@@ -1,0 +1,356 @@
+% Folio: Drehen, im Bild (EP1), auf Deutsch. Begleitet Folio 01. Build: python engine/kl.py build <this file>
+\documentclass[deutsch]{kaelearn}
+\subject{Experimentalphysik I}
+\folio{02}
+\title{Drehen,\\im Bild}
+\shorttitle{Drehen, im Bild}
+\subtitle{Warum der Schwerpunkt so aussieht, wie sich Drehen anfühlt,\\und zehn Tricks, die Aufgaben kurz machen.}
+\sources{Folio 01 · deine EP1-Mitschrift}
+\readtime{2 Min. Überblick · 30 Min. Folio}
+\filed{2026-11-09}
+\plate{plate.png}{Das Orrery, zweite Nacht}
+\kael{curious}
+
+\newcommand\dd{\mathrm{d}}
+\newcommand\ext{_{\mathrm{ext}}}
+\newcommand\trick[2]{\par\medskip\needspace{5\baselineskip}\noindent{\tek\fontsize{11}{11}\selectfont\color{klhi}#1}\hspace{8pt}%
+  {\fell\fontsize{13.5}{16}\selectfont\color{klhi}#2}\par\nopagebreak\smallskip\noindent\ignorespaces}
+\tikzset{vec/.style={-{Stealth[length=2.2mm]},line width=.8pt},lab/.style={fill=klpage,inner sep=1.2pt}}
+
+\begin{document}
+\makecover
+
+% ======================================================================
+\section{Formeln, die man sehen kann}
+
+\opening{D}{u kennst} die Formeln aus Folio 01. Was fehlt, ist das Gefühl, dass sie gar nicht anders aussehen \emph{könnten}. Eine Formel,
+die du nur auswendig weißt, vergisst du in der Klausur in dem Moment, in dem die Aufgabe anders aussieht als die Übung. Eine Formel, die du
+siehst, rekonstruierst du in zehn Sekunden.
+
+Dieses Folio holt das nach: drei Bilder für den Schwerpunkt, eines für das Drehen, und zehn Tricks, die aus langen Aufgaben kurze machen.
+Das erste Bild ist eine Wippe.
+
+\begin{twominute}
+\begin{itemize}
+  \item \textbf{Schwerpunkt = Balancierpunkt.} Auf der Wippe gilt $m_1d_1 = m_2d_2$. Der Punkt, an dem sich die gewichteten Abstände
+        aufheben, ist $\vec R_s = \sum m_i\vec r_i/M$: ein gewichteter Mittelwert, wie dein ECTS-Notenschnitt.
+  \item \textbf{$\sum m_i\vec r_{si} = 0$} ist derselbe Satz: Vom Mittelwert aus heben sich die gewichteten Abweichungen auf. Darum
+        balanciert ein Körper, im Schwerpunkt gestützt, in jeder Lage.
+  \item \textbf{Der Punkt, der Newton gehorcht.} Nur wenn du die Orte mit den Massen gewichtest, fallen die inneren Kräfte heraus:
+        $M\ddot{\vec R}_s = \vec F\ext$. Darum fliegt der Schwerpunkt eines geworfenen Hammers eine saubere Parabel.
+  \item \textbf{Drehen ist Schieben in Verkleidung:} $\varphi,\omega,I,D,L$ statt $x,v,m,F,p$, solange die Achse fest ist.
+  \item \textbf{$I$ misst, wo die Masse ist}, nicht wie viel: Jedes $\dd m$ muss mit $\omega r$ mitlaufen.
+  \item \textbf{Drei echte Unterschiede:} $I$ hängt von der Achse ab; ein Drehmoment quer zu $\vec L$ dreht $\vec L$, statt es zu
+        verlängern; $\vec L$ muss nicht parallel zu $\vec\omega$ sein.
+  \item \textbf{Die stärksten Tricks:} Bezugspunkt auf die Unbekannten; Rollen ist Drehen um den Auflagepunkt; effektive Masse
+        $m + I/r^2$; ein Loch ist negative Masse.
+\end{itemize}
+\end{twominute}
+
+\begin{guessfirst}
+\begin{enumerate}
+  \item Warum ist $\sum_i m_i\vec r_{si} = 0$? Versuch es in einem Satz, ohne Formel.
+  \item Eine lange Stange: Um welchen Faktor ist es schwerer, sie um ein Ende in Drehung zu versetzen als um ihre Mitte?
+  \item Atwood-Maschine mit massiver Rolle (Vollzylinder, Masse $M$). Wie viel Masse „spürt“ die Beschleunigung von der Rolle: $M$, $M/2$ oder $0$?
+\end{enumerate}
+\end{guessfirst}
+
+\begin{terms}
+\term{Hebelgesetz}{law of the lever}{$m_1d_1 = m_2d_2$: die Wippe balanciert}
+\term{gewichteter Mittelwert}{weighted mean}{$\sum w_ix_i\big/\sum w_i$}
+\term{Schwerpunkt\-system}{centre-of-mass frame}{das System, in dem $S$ ruht; Gesamtimpuls dort null}
+\term{Trägheits\-radius}{radius of gyration}{$k$ mit $I = Mk^2$}
+\term{effektive Masse}{effective mass}{$m + I/r^2$: alles, was mitbeschleunigt werden muss}
+\term{Momentanpol}{instantaneous centre}{der Punkt, der gerade ruht; alles dreht sich um ihn}
+\end{terms}
+
+% ======================================================================
+\section{Warum der Schwerpunkt so aussieht}
+
+\subsection{Bild 1: die Wippe}
+\opening{L}{eg zwei} Massen auf ein leichtes Brett und such den Punkt, an dem du es mit einem Finger tragen kannst. Es balanciert, wenn sich
+die Drehmomente der beiden Gewichte aufheben: $m_1g\,d_1 = m_2g\,d_2$. Das ist das Hebelgesetz, und das $g$ kürzt sich. Miss die Orte als
+Zahlen entlang des Bretts, $x_1 < x_s < x_2$, also $d_1 = x_s - x_1$ und $d_2 = x_2 - x_s$:
+\[
+  m_1(x_s - x_1) = m_2(x_2 - x_s) \quad\Longleftrightarrow\quad x_s = \frac{m_1x_1 + m_2x_2}{m_1 + m_2}.
+\]
+Das ist die Schwerpunktformel. Niemand hat sie definiert, weil sie hübsch aussieht; sie ist die Antwort auf die Frage, wo der Finger
+hin muss. Mit beliebig vielen Massen, links und rechts verteilt, lautet die Bedingung $\sum_i m_i(x_i - x_s) = 0$ (Massen links haben
+negativen Abstand und drehen andersherum), also $x_s = \sum_i m_ix_i/M$. In drei Dimensionen gilt dasselbe für jede Koordinate.
+\aside{Archimedes hat das Hebelgesetz um 250 v.\,Chr. bewiesen und damit Schwerpunkte von Dreiecken und Parabelsegmenten gefunden. Bewiesen, nicht geraten. Ich mochte ihn.}
+
+Das ist ein \emph{gewichteter Mittelwert}, und den kennst du schon: Dein Notenschnitt wird mit den ECTS gewichtet. EP1 (8 ECTS) mit Note 1
+und LA (4 ECTS) mit Note 4 geben $(8\cdot1 + 4\cdot4)/12 = 2$. Leg die Noten als Gewichte auf eine Zahlengerade, und die Wippe balanciert
+genau beim Schnitt.
+
+\begin{center}
+\begin{tikzpicture}[x=2.3cm,y=1cm]
+  \draw[klink,line width=1.3pt] (.55,0)--(5.45,0);
+  \foreach \n in {1,...,5} \draw[kldim] (\n,0)--(\n,.12);
+  \foreach \n in {2,3,5} \node[kldim,above] at (\n,.12) {\tek\fontsize{8}{8}\selectfont\n};
+  \fill[pattern={dither50},pattern color=kldim] (2,-.03)--(1.82,-.72)--(2.18,-.72)--cycle;
+  \draw[kldim] (2,-.03)--(1.82,-.72)--(2.18,-.72)--cycle;
+  \fill[pattern={dither25},pattern color=klink] (.78,.04) rectangle (1.22,1.64); \draw[klhi] (.78,.04) rectangle (1.22,1.64);
+  \fill[pattern={dither25},pattern color=klink] (3.78,.04) rectangle (4.22,.84); \draw[klhi] (3.78,.04) rectangle (4.22,.84);
+  \node[above,align=center] at (1,1.64) {\fell\itshape EP1, Note 1\\[-2pt]\fell\itshape 8 ECTS};
+  \node[above,align=center] at (4,.84) {\fell\itshape LA, Note 4\\[-2pt]\fell\itshape 4 ECTS};
+  \draw[kldim,<->,line width=.5pt] (1,-.95)--(1.97,-.95); \node[kldim,below] at (1.5,-.95){$1$};
+  \draw[kldim,<->,line width=.5pt] (2.03,-.95)--(4,-.95); \node[kldim,below] at (3,-.95){$2$};
+  \node[klhi,below] at (2,-1.35){\fell\itshape Schnitt $2$};
+\end{tikzpicture}
+\end{center}
+\plotcaption{Links $8\cdot1$, rechts $4\cdot2$: Die Wippe balanciert beim Notenschnitt. Ein Schwerpunkt ist ein Notenschnitt, bei dem
+Massen die Rolle der ECTS spielen.}
+
+\subsection{Warum \texorpdfstring{$\sum m_i\vec r_{si} = 0$}{die Summe null ist}}
+Das ist die Frage, an der alles hängt, darum vier Antworten, jede aus einer anderen Richtung.
+
+\emph{Die Rechnung.} $\sum m_i\vec r_{si} = \sum m_i(\vec r_i - \vec R_s) = \sum m_i\vec r_i - M\vec R_s = M\vec R_s - M\vec R_s = 0$. Eine Zeile,
+und sie zeigt: Der Satz ist keine Entdeckung über den Körper. Er ist die Definition von $\vec R_s$, umgestellt.
+
+\emph{Der Mittelwert.} Die gewichteten Abweichungen vom gewichteten Mittelwert summieren sich immer zu null. Im Notenbeispiel:
+$8\cdot(1-2) + 4\cdot(4-2) = -8 + 8 = 0$. Das liegt nicht an deinen Noten; der Mittelwert ist \emph{die} Zahl, um die herum das gilt.
+Läge er woanders, wären die Abweichungen auf einer Seite zu schwer.
+
+\emph{Die Wippe.} Um $S$ hat die Schwerkraft das Drehmoment $\sum_i\vec r_{si}\times m_i\vec g = \big(\sum_i m_i\vec r_{si}\big)\times\vec g$.
+Null, egal wohin $\vec g$ zeigt, also in jeder Lage des Körpers. Genau das heißt „balanciert“.
+
+\emph{Die Bewegung.} Leite ab: $\sum_i m_i\dot{\vec r}_{si} = 0$. Relativ zum Schwerpunkt hat der Körper keinen Gesamtimpuls. Was sich um $S$
+dreht, dreht sich so, dass sich die Impulse in alle Richtungen aufheben. Darum ist der Gesamtimpuls $\vec p = M\vec v_s$, und darum zerfällt
+die Energie sauber in $\frac12Mv_s^2$ plus Drehung: Der Kreuzterm ist $\vec v_s\cdot\sum m_i\dot{\vec r}_{si} = 0$.
+
+\why{Warum balanciert ein Körper, den du genau im Schwerpunkt stützt, in jeder Lage, und warum kann das kein anderer Punkt?}{Um einen
+Stützpunkt $P$ ist das Schweremoment $\big(\sum m_i\vec r_{Pi}\big)\times\vec g$. Für $P = S$ ist die Klammer null, also das Moment für
+jede Lage. Für $P\ne S$ ist die Klammer $M(\vec R_s-\vec r_P)\ne0$, und sobald $\vec g$ nicht parallel dazu steht, kippt der Körper. Ein
+Hammer balanciert auf dem Finger nur an einer Stelle des Stiels, nahe am Kopf.}
+
+\why{Warum liegt der Schwerpunkt eines Rings dort, wo gar keine Masse ist?}{Ein Mittelwert muss keiner der gemittelten Werte sein: Einen
+Schnitt von 2,5 hat niemand als Note bekommen. Beim Ring hat jedes Stück ein gegenüberliegendes, die beiden heben sich in
+$\sum m_i\vec r_{si}$ auf, und übrig bleibt die leere Mitte.}
+
+\subsection{Bild 2: der Punkt, der Newton gehorcht}
+Wirf einen Hammer. Er dreht sich wild, jeder seiner Punkte fliegt eine verschlungene Kurve. Bis auf einen. Schreib Newton für jedes Stück
+und addiere:
+\[
+  \sum_i m_i\ddot{\vec r}_i = \sum_i\vec F_i^{\,\mathrm{ext}} + \sum_{i\ne j}\vec F_{ij} = \vec F\ext ,
+\]
+denn innere Kräfte kommen in Paaren $\vec F_{ij} = -\vec F_{ji}$. Links steht die zweite Ableitung von $\sum m_i\vec r_i = M\vec R_s$. Also
+$M\ddot{\vec R}_s = \vec F\ext$: Der Schwerpunkt bewegt sich, als säße die ganze Masse dort und alle äußeren Kräfte griffen dort an.
+Beim Wurf ist $\vec F\ext = M\vec g$, und er fliegt eine Parabel, ganz gleich wie der Hammer sich dreht.
+
+Und jetzt das Entscheidende: \emph{Diese Gewichtung ist erzwungen.} Nimm irgendeinen gewichteten Mittelwert $\sum c_i\vec r_i$ mit
+$\sum c_i = 1$. Seine Beschleunigung ist $\sum_i(c_i/m_i)\big(\vec F_i^{\,\mathrm{ext}}+\sum_j\vec F_{ij}\big)$. Damit sich jedes Paar
+innerer Kräfte aufhebt, egal wie es aussieht, muss $c_i/m_i = c_j/m_j$ für alle Paare gelten, also $c_i = m_i/M$. Die Schwerpunktformel ist
+der einzige Mittelwert der Orte, der von den inneren Kräften nichts merkt.
+
+\begin{center}
+\begin{tikzpicture}[scale=.92]
+  \draw[kllow,line width=.6pt] plot[domain=0:1,samples=320,variable=\s] ({-5.5+11*\s+1.2*cos(1080*\s+20)},{-1.6+12*\s*(1-\s)+1.2*sin(1080*\s+20)});
+  \draw[kldim,line width=.6pt] plot[domain=0:1,samples=200,variable=\s] ({-5.5+11*\s-.4*cos(1080*\s+20)},{-1.6+12*\s*(1-\s)-.4*sin(1080*\s+20)});
+  \draw[klhi,line width=1.2pt] plot[domain=0:1,samples=80,variable=\s] ({-5.5+11*\s},{-1.6+12*\s*(1-\s)});
+  \foreach \s in {0,.25,.5,.75,1}{
+    \pgfmathsetmacro\cx{-5.5+11*\s}\pgfmathsetmacro\cy{-1.6+12*\s*(1-\s)}\pgfmathsetmacro\a{1080*\s+20}
+    \draw[klink,line width=1.1pt] ({\cx+1.2*cos(\a)},{\cy+1.2*sin(\a)})--({\cx-.4*cos(\a)},{\cy-.4*sin(\a)});
+    \fill[klink] ({\cx+1.2*cos(\a)},{\cy+1.2*sin(\a)}) circle (2.2pt);
+    \fill[klhi] ({\cx-.4*cos(\a)},{\cy-.4*sin(\a)}) circle (3.8pt);
+  }
+  \node[klhi,lab] at (0,2.05) {\fell\itshape Schwerpunkt: Parabel};
+  \node[kldim,lab,anchor=west] at (-6.6,-3.0) {\fell\itshape leichtes Ende $m$: Schleifen};
+  \node[kldim,lab,anchor=east] at (6.6,-3.0) {\fell\itshape schweres Ende $3m$: Wellen};
+\end{tikzpicture}
+\end{center}
+\plotcaption{Eine geworfene Hantel ($m$ und $3m$, der Schwerpunkt ein Viertel vom schweren Ende). Fünf Momentaufnahmen. Die Enden schlingern,
+der Schwerpunkt zieht eine glatte Parabel, weil sich die Stabkräfte in der Summe aufheben.}
+
+\anim{schwerpunkt}{Zwei Würfe derselben Hantel. Beim ersten schlingern die Enden, beim zweiten auch die Stabmitte; nur der Punkt ein
+Viertel vom schweren Ende fliegt glatt. Dann balanciert die Hantel genau dort, und Newton zeigt, warum die Stabkraft herausfällt.}
+
+\begin{keystone}{Der Schwerpunkt}{centre of mass}
+Genau ein Punkt erfüllt $\sum_i m_i(\vec r_i - \vec R_s) = 0$, nämlich $\vec R_s = \frac1M\sum_im_i\vec r_i$. Dieser Punkt
+\begin{enumerate}
+  \item balanciert im homogenen Schwerefeld in jeder Lage,
+  \item bewegt sich nach $M\ddot{\vec R}_s = \vec F\ext$, egal was der Körper sonst tut,
+  \item teilt Energie und Drehimpuls sauber: $E = \frac12Mv_s^2 + E_{\text{um }S}$ und $\vec L = M\vec R_s\times\vec v_s + \vec L_s$.
+\end{enumerate}
+\smallskip\noindent{\color{kldim}\pix{Beweis in einem Atemzug}}\quad (1) $\big(\sum m_i\vec r_{si}\big)\times\vec g = 0$. (2) Innere Kräfte
+heben sich paarweise auf. (3) Jeder Kreuzterm enthält $\sum m_i\vec r_{si}$ oder $\sum m_i\dot{\vec r}_{si}$, und beide sind null.
+\end{keystone}
+
+% ======================================================================
+\section{Wie sich Drehen anfühlt}
+
+\opening{S}{olange die} Achse fest ist, ist Drehen nichts Neues: Es ist Schieben, mit anderen Buchstaben. Jede Formel für einen Massenpunkt
+hat einen Zwilling, und du darfst übersetzen, ohne nachzudenken.
+
+\begin{panel}[unbreakable]{Tabelle}{Übersetzen}{translation and rotation}
+\renewcommand\arraystretch{1.3}
+\begin{tabular}{@{}p{24mm}p{30mm}p{58mm}@{}}
+  {\color{kldim}\pix{Schieben}} & {\color{kldim}\pix{Drehen}} & {\color{kldim}\pix{Was du spürst}}\\
+  $x$, $v$, $a$ & $\varphi$, $\omega$, $\dot\omega$ & Winkel statt Weg; außen läuft jeder Punkt mit $v = \omega r_\perp$\\
+  $m$ & $I = \int r_\perp^2\,\dd m$ & wie schwer es ist, in Drehung zu kommen\\
+  $F$ & $D = r_\perp F$ & Türklinke außen: wenig Kraft, viel Wirkung\\
+  $p = mv$ & $L = I\omega$ & wie schwer es ist, die Drehung zu stoppen\\
+  $F = \dot p$ & $D = \dot L$ & Drehmoment ändert den Drehimpuls\\
+  $\frac12mv^2$ & $\frac12I\omega^2$ & Energie, die in der Drehung steckt
+\end{tabular}
+\end{panel}
+
+\subsection{Trägheitsmoment: wo, nicht wie viel}
+Dreht sich ein Körper mit $\omega$, muss jedes $\dd m$ mitlaufen, und zwar außen schneller: $v = \omega r_\perp$. Masse weit draußen zählt
+doppelt. In der Energie: Sie muss schneller laufen, $v = \omega r_\perp$, und die Energie geht mit $v^2$. Im Drehimpuls: Sie trägt mehr
+Impuls, $\dd m\,\omega r_\perp$, und das an einem längeren Hebel, $r_\perp$. Beide Wege enden bei $r_\perp^2$. Eine Stange um ihr Ende statt um ihre Mitte: $\frac13M\ell^2$ statt $\frac1{12}M\ell^2$, viermal so träge, obwohl die Masse
+dieselbe ist. Gleiche Masse, andere Achse, anderes $I$.
+
+Ein Bild, das hilft, ist der \emph{Trägheitsradius} $k$: $I = Mk^2$. Er ist der Radius eines dünnen Rings derselben Masse mit demselben $I$.
+Vollzylinder $k = R/\sqrt2\approx0{,}71\,R$, Vollkugel $k = \sqrt{2/5}\,R\approx0{,}63\,R$, Stange um die Mitte $k = \ell/\sqrt{12}\approx0{,}29\,\ell$.
+Eine Vollkugel benimmt sich beim Drehen, als säße ihre ganze Masse auf einem Ring mit 63\,\% ihres Radius.
+\aside{Die Erde hat $I\approx0{,}33\,MR^2$, nicht $0{,}4$: Innen ist sie dichter. So wiegt man einen Eisenkern, den niemand je gesehen hat.}
+
+\subsection{Drei Stellen, an denen die Übersetzung bricht}
+\emph{Erstens: $I$ gehört zur Achse, nicht zum Körper.} Eine Masse hat ein $m$; ein Körper hat für jede Achse ein anderes $I$. Darum fragst
+du bei jeder Aufgabe zuerst: um welche Achse?
+
+\emph{Zweitens: $\vec L$ ist ein Pfeil, und ein Drehmoment quer dazu dreht ihn.} $\dd\vec L = \vec D\,\dd t$ zeigt in Richtung des
+Drehmoments. Steht das senkrecht auf $\vec L$, wird $\vec L$ nicht länger, nur schwenkt es. Der Kreisel kippt nicht, er wandert seitwärts.
+Merkregel: Die Spitze von $\vec L$ läuft dem Drehmoment nach.
+
+\needspace{16\baselineskip}
+\begin{center}
+\begin{tikzpicture}[scale=1.25]
+  \draw[kldim,dashed,line width=.5pt] (4,0) arc (0:24:4);
+  \draw[vec,klhi,line width=1.1pt] (0,0)--(4,0) node[below]{$\vec L$};
+  \draw[vec,klink] (4,0)--(4,1.2) node[right]{$\dd\vec L = \vec D\,\dd t$};
+  \draw[vec,klhi] (0,0)--(4,1.2) node[above left]{$\vec L + \dd\vec L$};
+  \draw[kldim] (1.3,0) arc (0:16.7:1.3); \node[kldim] at (1.72,.2){$\dd\varphi$};
+\end{tikzpicture}
+\end{center}
+\plotcaption{Ein kleiner Zuwachs senkrecht zu $\vec L$ ändert die Länge nur in zweiter Ordnung, $|\vec L+\dd\vec L| = \sqrt{L^2+\dd L^2}\approx L$,
+aber die Richtung in erster: $\dd\varphi = \dd L/L$. Viele solche Schritte ergeben eine Kreisbewegung der Spitze, die Präzession $\Omega = D/L$.
+(Die Zeichnung übertreibt $\dd\vec L$.)}
+
+\emph{Drittens: $\vec L$ muss nicht parallel zu $\vec\omega$ sein.} Bei symmetrischen Körpern, die sich um eine Symmetrieachse drehen, ist es
+so; sonst nicht (Folio 01, Teil V: Hauptachsen, Unwucht). Prüfe es, statt es anzunehmen.
+
+\why{Warum fühlt sich ein schnell drehendes Rad „steif“ an, wenn du seine Achse kippen willst?}{Kippen heißt: die Richtung von $\vec L$
+ändern. Bei großem $L$ ist schon eine kleine Richtungsänderung ein großes $\dd\vec L$, und das verlangt ein großes Drehmoment
+$\vec D = \dot{\vec L}$. Dazu weicht die Achse seitwärts aus, denn $\dd\vec L$ zeigt in Richtung deines Drehmoments, nicht in Richtung deiner
+Hand. Probier es mit einem Fahrradrad: Es ist das seltsamste Gefühl, das die Mechanik zu bieten hat.}
+
+% ======================================================================
+\section{Zehn Tricks}
+
+\opening{J}{eder dieser} Tricks spart in irgendeiner Aufgabe eine halbe Seite. Lern sie nicht als Liste; lern bei jedem, \emph{wann} er
+greift. Das steht jeweils im ersten Satz.
+
+\trick{01}{Bezugspunkt auf die Unbekannten}
+Wenn eine Kraft unbekannt ist und dich nicht interessiert (Gelenk, Lager, Auflagepunkt), stell die Momentengleichung um genau ihren
+Angriffspunkt auf. Ihr Hebelarm ist null, sie verschwindet. Leiter an der Wand: um den Fuß, und von drei Unbekannten bleibt eine. Erlaubt ist
+das um $S$ oder einen raumfesten Punkt, in der Statik um jeden Punkt.
+
+\trick{02}{Rollen ist Drehen um den Auflagepunkt}
+Wenn ein Körper rollt (oder irgendeine ebene Bewegung einen Punkt hat, der gerade ruht), ist die Bewegung in diesem Moment eine reine
+Drehung um diesen Punkt, den Momentanpol. Jeder Punkt bewegt sich senkrecht zu seiner Linie dorthin, mit $\omega$ mal Abstand. Oben am Rad:
+$2v_s$, ohne Rechnung. Energie in einem Zug: $E = \frac12I_P\omega^2$ mit $I_P = I_s + MR^2$. Bei einer rutschenden Leiter liegt der Momentanpol
+dort, wo sich die Senkrechten auf die Geschwindigkeiten der beiden Enden schneiden.
+
+\trick{03}{Effektive Masse}
+Wenn ein System nur eine Koordinate $x$ hat und alles über Seile ohne Schlupf oder Rollen ohne Gleiten an $\dot x$ hängt, dann ist die
+kinetische Energie $\frac12m_{\mathrm{eff}}\dot x^2$ mit
+\[
+  m_{\mathrm{eff}} = \sum m + \sum\frac{I}{r^2},
+\]
+wobei $r$ der Radius ist, an dem $v = \omega r$ gilt. Leistet nur die antreibende Kraft $F$ Arbeit, folgt aus
+$\frac{\dd}{\dd t}\big(\frac12m_{\mathrm{eff}}\dot x^2\big) = F\dot x$ sofort $a = F/m_{\mathrm{eff}}$. Ein Drehkörper fühlt sich an wie die
+Zusatzmasse $I/r^2$, an der die Schwerkraft nicht zieht.
+
+\begin{panel}[unbreakable]{Tabelle}{Effektive Masse}{a = Antrieb / effektive Masse}
+\renewcommand\arraystretch{1.35}
+\begin{tabular}{@{}p{56mm}p{26mm}l@{}}
+  {\color{kldim}\pix{Aufbau}} & {\color{kldim}\pix{Antrieb}} & {\color{kldim}\pix{effektive Masse}}\\
+  Vollzylinder rollt die schiefe Ebene hinab & $Mg\sin\alpha$ & $M + \frac{\frac12MR^2}{R^2} = \frac32M$\\
+  Atwood, Rolle als Vollzylinder $M$ & $(m_2-m_1)\,g$ & $m_1+m_2+\frac12M$\\
+  Jo-Jo, Achsradius $r$ & $mg$ & $m + I_s/r^2$\\
+  Klotz $m_1$ auf glattem Tisch, gezogen von hängender Masse $m_2$ über eine Rolle $I$, $r$ & $m_2\,g$ & $m_1+m_2+I/r^2$
+\end{tabular}
+\end{panel}
+
+Erste Zeile: $a = \frac23g\sin\alpha$. Zweite: $a = (m_2-m_1)g/(m_1+m_2+\frac12M)$, dieselbe Antwort wie in Folio 01, ohne eine einzige
+Seilkraft. Die Rolle „wiegt“ für die Beschleunigung $M/2$; das war Frage 3.
+
+\why{Warum fügt ein Drehkörper genau $I/r^2$ zur Masse hinzu?}{Seine Energie ist $\frac12I\omega^2$, und mit $\omega = v/r$ wird daraus
+$\frac12\,\frac{I}{r^2}\,v^2$: dieselbe Form wie $\frac12mv^2$ mit $m = I/r^2$. Für die Beschleunigung zählt nur, wie viel Energie pro
+Geschwindigkeit$^2$ im System steckt. Ob sie in Translation oder Drehung steckt, ist der Bewegungsgleichung egal.}
+
+\trick{04}{Ein Loch ist negative Masse}
+Wenn ein Körper eine Aussparung hat, rechne den vollen Körper und zieh das Loch als Körper mit negativer Masse ab. Das geht für den
+Schwerpunkt (Summen sind linear) und für $I$ (Integrale sind additiv; das Loch mit Steiner um dieselbe Achse). Scheibe, Radius $R$, Masse $M$
+ohne Loch, mit kreisförmigem Loch vom Radius $R/2$ bei $x = R/2$: Das Loch hätte die Masse $M/4$, also
+\[
+  x_s = \frac{M\cdot0 - \frac M4\cdot\frac R2}{M - \frac M4} = -\frac R6 .
+\]
+Der Schwerpunkt rückt vom Loch weg. Auch der dicke Hohlzylinder ist so in einer Zeile: $\frac12M_2R_2^2 - \frac12M_1R_1^2 = \frac12M(R_1^2+R_2^2)$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  \fill[pattern={dither25},pattern color=klink,even odd rule] (0,0) circle (1.6) (.8,0) circle (.8);
+  \draw[klink,line width=.7pt] (0,0) circle (1.6); \draw[kldim,line width=.6pt] (.8,0) circle (.8);
+  \draw[kldim,dashed,line width=.4pt] (-2,0)--(2.2,0);
+  \fill[klink] (0,0) circle (1.4pt) node[above=2pt,lab]{$O$};
+  \fill[klhi] (-.267,0) circle (2.2pt) node[below=3pt,lab]{$S$};
+  \node[kldim] at (.8,.38){\fell\itshape Loch};
+  \node[anchor=west,kldim] at (2.5,.3){\begin{minipage}{45mm}\fell\itshape Volle Scheibe minus Loch.\\ Der Schwerpunkt liegt bei $-R/6$.\end{minipage}};
+\end{tikzpicture}
+\end{center}
+
+\trick{05}{Die Symmetrie-Summe}
+Wenn ein Körper in alle drei Richtungen gleich aussieht (Kugel, Hohlkugel, Würfel), addiere die drei Achsen:
+$I_x+I_y+I_z = 2\int r^2\,\dd m$, und jedes ist ein Drittel davon. Vollkugel: $\int r^2\,\dd m = \frac35MR^2$, also $\frac25MR^2$. Hohlkugel:
+$\int r^2\,\dd m = MR^2$, also $\frac23MR^2$. Keine Kugelkoordinaten, kein $\sin\theta$.
+
+\trick{06}{Flache Körper: senkrechte Achsen}
+Wenn die ganze Masse in einer Ebene liegt, ist $I_z = I_x + I_y$ für die Achse senkrecht zur Ebene. Scheibe um einen Durchmesser:
+$\frac12\cdot\frac12MR^2 = \frac14MR^2$. Quadratische Platte, Kante $a$: $I_z = \frac16Ma^2$, also $\frac1{12}Ma^2$ um jede Achse in der Ebene
+durch die Mitte, auch die Diagonale, denn die vierzählige Symmetrie macht alle diese Achsen gleich.
+
+\trick{07}{Steiner nur über den Schwerpunkt}
+Wenn die Achse nicht durch $S$ geht: $I_A = I_s + Md^2$, wobei eine der beiden Achsen durch $S$ gehen \emph{muss}. Von $A$ nach $B$ immer über
+$S$. Und weil $Md^2\ge0$, ist die Achse durch $S$ die leichteste aller parallelen Achsen. Stange: Mitte $\frac1{12}$, Ende
+$\frac1{12}+\frac14 = \frac13$, der Faktor 4 aus Frage 2.
+
+\trick{08}{Die $k$-Probe}
+Schreib jedes Ergebnis als $I = kMR^2$ mit $R$ = größter Abstand von der Achse. Dann muss $0\le k\le1$ sein, denn $r_\perp\le R$ überall; $k = 1$
+nur für den Ring. Kommt $k>1$ heraus, hast du einen Fehler. Und jede Formel mit $I$ muss für $I\to0$ das Ergebnis für einen Massenpunkt geben
+(Rolle ohne Masse, Klotz statt Kugel).
+
+\trick{09}{Drehimpuls um die Wirkungslinie der Unbekannten}
+Wenn eine Kraft kurz und heftig oder unbekannt ist (Stoß, Gleitreibung bis zum Rollen), nimm den Drehimpuls um einen raumfesten Punkt
+auf ihrer Wirkungslinie. Dort hat sie kein Moment, und $L$ bleibt erhalten, obwohl Impuls und Energie es nicht tun. Kugel im Stab: um das
+Lager. Billardkugel vom Gleiten zum Rollen: um einen Punkt auf dem Tisch, $v = v_0/(1+k)$.
+
+\trick{10}{Energie für „wie schnell“, Kräfte für „wie stark“}
+Wenn nach einer Geschwindigkeit zwischen zwei Lagen gefragt ist und nichts Energie verheizt (Rollen ohne Gleiten, reibungsfreie Lager),
+nimm den Energiesatz, mit $\frac12(M+I_s/R^2)v^2$. Wenn nach einer Kraft gefragt ist (Seilkraft, Reibung, Lagerkraft), brauchst du die
+Bewegungsgleichungen, $M\vec a_s = \vec F$ und $D = I\dot\omega$. Gleitreibung oder ein Stoß im Spiel: Energie ist verloren, nimm Trick 09.
+
+% ======================================================================
+\begin{triggers}
+\trigger{Seil, Rolle oder Rollen, nur eine Koordinate}{effektive Masse: $a = F_{\mathrm{Antrieb}}\big/\big(\sum m + \sum I/r^2\big)$}
+\trigger{Körper mit Loch oder Aussparung}{Loch als negative Masse, für $\vec R_s$ und für $I$}
+\trigger{Ebene Bewegung, Geschwindigkeit eines Punktes gesucht}{Momentanpol: $v = \omega\cdot$Abstand, senkrecht zur Verbindung}
+\trigger{Kugel, Hohlkugel, Würfel: $I$ gesucht}{$I_x+I_y+I_z = 2\int r^2\,\dd m$}
+\trigger{Dünne Platte}{$I_z = I_x + I_y$}
+\trigger{Ein Ergebnis mit $I$}{$k$-Probe: $0\le k\le1$; $I\to0$ gibt den Massenpunkt}
+\trigger{Schwerpunkt mehrerer Teile}{gewichteter Mittelwert der Teil-Schwerpunkte}
+\end{triggers}
+
+\needspace{.42\textheight}
+\marginkael{delighted}
+\begin{deck}
+\card{Warum}{Warum ist $\sum_i m_i\vec r_{si} = 0$?}{$S$ ist der gewichtete Mittelwert; die gewichteten Abweichungen davon heben sich auf. Physikalisch: Dort balanciert der Körper.}
+\card{Warum}{Warum fliegt gerade der Schwerpunkt eine Parabel?}{Nur bei Gewichten $\propto m_i$ fallen die inneren Kräfte aus der Summe: $M\ddot{\vec R}_s = M\vec g$.}
+\card{Trigger}{Seil, Rolle oder Rollen, eine Koordinate. Wozu greifst du?}{$a = F_{\mathrm{Antrieb}}/(\sum m + \sum I/r^2)$.}
+\card{Trigger}{Scheibe mit Loch, Schwerpunkt gesucht. Wozu greifst du?}{Volle Scheibe plus Loch mit negativer Masse.}
+\card{Def}{Trägheitsradius: $I = $ \{\{$Mk^2$\}\}; Vollkugel $k = $ \{\{$\sqrt{2/5}\,R\approx0{,}63\,R$\}\}.}{Der Radius des Rings mit gleicher Masse und gleichem $I$.}
+\end{deck}
+
+\end{document}
