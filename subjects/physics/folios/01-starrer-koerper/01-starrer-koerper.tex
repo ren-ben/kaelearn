@@ -1,0 +1,849 @@
+% Folio: Starrer Körper (EP1), auf Deutsch. Build: python engine/kl.py build <this file>
+\documentclass[deutsch]{kaelearn}
+\subject{Experimentalphysik I}
+\folio{01}
+\title{Starrer\\Körper}
+\shorttitle{Starrer Körper}
+\subtitle{$10^{25}$ Atome, sechs Zahlen.\\Wie sich ein Ding bewegt, das sich nicht verformt.}
+\sources{Deine EP1-Mitschrift · Standardstoff EP1}
+\readtime{2 Min. Überblick · 75 Min. Folio}
+\filed{2026-11-09}
+\plate{plate.png}{Das Orrery}
+\kael{reading}
+
+\newcommand\dd{\mathrm{d}}
+\newcommand\ext{_{\mathrm{ext}}}
+\newcommand\step[1]{\par\smallskip\noindent{\color{kldim}\pix{#1}}\quad}
+\makeatletter
+\newenvironment{shortexample}[1]{\refstepcounter{klitem}\begin{panel}[unbreakable]{\kl@L@ex\ \kl@folio.\theklitem}{#1}{}}{\end{panel}}
+\makeatother
+\tikzset{vec/.style={-{Stealth[length=2.2mm]},line width=.8pt},lab/.style={fill=klpage,inner sep=1.2pt}}
+
+\begin{document}
+\makecover
+
+% ======================================================================
+\section{Sechs Zahlen}
+
+\opening{E}{in Ziegelstein} besteht aus etwa $10^{25}$ Atomen. Newton für jedes einzelne wären $3\cdot10^{25}$ gekoppelte
+Differentialgleichungen. Niemand löst die. Und trotzdem weißt du ungefähr, wie ein geworfener Ziegel fliegt.
+
+Der Grund ist eine einzige Beobachtung: Im Ziegel ändert sich der Abstand zwischen zwei Atomen nicht. Diese Einschränkung,
+$|\vec r_i-\vec r_j| = \text{const}$ für alle Paare, lässt von den $3\cdot10^{25}$ Zahlen genau sechs übrig: drei für den Ort eines
+Punktes, drei für die Orientierung. Ein Körper, für den das exakt gilt, heißt \emph{starrer Körper} \de{(rigid body)}. Echte Körper
+verformen sich ein wenig; wenn diese Verformung für deine Frage keine Rolle spielt, rechnest du starr.
+
+Das ganze Kapitel beantwortet eine Frage: \emph{Welche Gleichungen regieren diese sechs Zahlen?} Die Antwort sind zwei
+Vektorgleichungen, eine für das Schieben, eine für das Drehen. Alles andere, Trägheitsmoment, Tensor, Steiner, Rollen, Kreisel, ist
+die Kunst, den Drehimpuls durch die Drehgeschwindigkeit auszudrücken. Wenn du das einmal gesehen hast, ist das Kapitel kurz.
+\aside{Euler hat das 1765 aufgeschrieben, in der \emph{Theoria motus corporum solidorum}, samt Hauptachsen. Er sah damals auf einem Auge. Es hat gereicht.}
+
+\begin{twominute}
+\begin{itemize}
+  \item \textbf{Starr} heißt: alle Abstände fest. Dann reichen 6 Zahlen: 3 für den Schwerpunkt \de{(centre of mass)}, 3 für die Drehlage.
+  \item \textbf{Jede Bewegung} ist Schieben plus Drehen: $\vec v_i = \vec v_s + \vec\omega\times\vec r_{si}$, mit \emph{einem} $\vec\omega$ für den ganzen Körper.
+  \item \textbf{Schieben:} $M\dot{\vec v}_s = \vec F\ext$. Der Schwerpunkt fliegt wie ein Massenpunkt, egal wie der Körper sich dreht.
+  \item \textbf{Drehen:} $\dot{\vec L} = \vec D\ext$, um den Schwerpunkt oder um einen raumfesten Punkt.
+  \item \textbf{Die Brücke:} $\vec L = I\vec\omega$ mit dem Trägheitstensor $I_{ij} = \int(r^2\delta_{ij}-x_ix_j)\,\dd m$.
+        Um eine feste Achse: $L_z = I\omega$, $D_z = I\dot\omega$, $I = \int r_\perp^2\,\dd m$.
+  \item \textbf{Energie:} $E = \frac12Mv_s^2 + \frac12\vec\omega\cdot I_s\vec\omega$. \textbf{Steiner:} $I_A = I_s + Md^2$, nur von einer Achse durch $S$ aus.
+  \item \textbf{Schwerkraft} greift im Schwerpunkt an: $\vec D = M\vec R_s\times\vec g$.
+  \item \textbf{$\vec L\parallel\vec\omega$ nur um Hauptachsen} (Eigenvektoren von $I$). Sonst läuft $\vec L$ mit, und die Lager müssen ein Drehmoment liefern.
+  \item \textbf{Rollen:} Der Auflagepunkt ruht, $v_s = \omega R$. \textbf{Kreisel:} $\vec D\perp\vec L$ dreht $\vec L$, statt den Kreisel zu kippen; $\Omega = D/L$.
+  \item \textbf{Der Trick fast jeder Aufgabe:} Leg den Bezugspunkt dorthin, wo die unbekannte Kraft angreift. Dann fällt sie heraus.
+\end{itemize}
+\end{twominute}
+
+\begin{guessfirst}
+\begin{enumerate}
+  \item Vollkugel, Vollzylinder und dünner Ring werden gleichzeitig auf derselben schiefen Ebene losgelassen und rollen hinunter.
+        In welcher Reihenfolge kommen sie an? Hängt das von Masse oder Radius ab?
+  \item Ein Fahrrad fährt mit $10\,\mathrm{m/s}$. Wie schnell bewegt sich der oberste Punkt des Reifens gegenüber der Straße? Der unterste?
+  \item Ein schnell drehendes Rad hängt mit waagrechter Achse an einer Schnur, die nur an \emph{einem} Achsenende befestigt ist. Du
+        lässt das andere Ende los. Was passiert?
+\end{enumerate}
+\end{guessfirst}
+
+\begin{terms}
+\term{starrer Körper}{rigid body}{alle Abstände zwischen Massenelementen fest}
+\term{Schwerpunkt}{centre of mass}{$\vec R_s = \frac1M\int\vec r\,\dd m$}
+\term{Winkel\-geschwindigkeit}{angular velocity}{$\vec\omega$: Richtung = Drehachse (rechte Hand), Betrag = Drehrate}
+\term{Drehmoment}{torque}{$\vec D = \vec r\times\vec F$}
+\term{Drehimpuls}{angular momentum}{$\vec L = \int\vec r\times\vec v\,\dd m$}
+\term{Trägheits\-moment}{moment of inertia}{$I = \int r_\perp^2\,\dd m$: Drehträgheit um eine Achse}
+\term{Trägheits\-tensor}{inertia tensor}{die Matrix $I$ mit $\vec L = I\vec\omega$}
+\term{Hauptachse}{principal axis}{Achse mit $\vec L\parallel\vec\omega$; Eigenvektor von $I$}
+\term{Satz von Steiner}{parallel-axis theorem}{$I_A = I_s + Md^2$}
+\term{Präzession}{precession}{Drehung von $\vec L$ unter einem Drehmoment $\perp\vec L$}
+\end{terms}
+
+% ======================================================================
+\section{Schieben und Drehen}
+
+\opening{B}{evor wir} irgendetwas bewegen, die Buchhaltung. Ein Körper mit Dichte $\rho(\vec r)$ hat die Masse
+$M = \int_V\rho(\vec r)\,\dd^3V$, bei konstanter Dichte $M = \rho V$. Jede Summe über Teilchen $\sum_i m_i(\dots)$ wird zum Integral
+$\int(\dots)\,\dd m$ mit dem Massenelement $\dd m = \rho\,\dd^3V$. Mehr steckt in den Integralen dieses Kapitels nicht.
+
+\begin{definition}{Schwerpunkt}{centre of mass}
+\[
+  \vec R_s = \frac1M\sum_i m_i\vec r_i = \frac1M\int_V\vec r\,\rho(\vec r)\,\dd^3V .
+\]
+Schreib jeden Ort als $\vec r_i = \vec R_s + \vec r_{si}$ ($\vec r_{si}$: Ort relativ zum Schwerpunkt). Dann gilt
+\[
+  \sum_i m_i\,\vec r_{si} = 0, \qquad\text{kontinuierlich}\quad \int(\vec r-\vec R_s)\,\dd m = 0 .
+\]
+\end{definition}
+
+Die zweite Zeile ist nur die Definition, umgestellt: $\sum m_i\vec r_{si} = \sum m_i\vec r_i - M\vec R_s = 0$. Merk sie dir trotzdem
+gesondert. Sie ist das Arbeitspferd des Kapitels: Jeder Kreuzterm, der unten verschwindet (bei der Schwerkraft, bei der Energie,
+beim Drehimpuls, bei Steiner), verschwindet an genau dieser Gleichung. Der Schwerpunkt ist \emph{der} Punkt, um den die Masse
+ausbalanciert ist. Darum liegt er auf jeder Symmetrieebene: Spiegelpaare heben sich in $\sum m_i\vec r_{si}$ auf.
+
+\subsection{Warum sechs}
+Drei Punkte des Körpers, die nicht auf einer Geraden liegen, legen ihn fest: Jeder weitere Punkt ist durch seine Abstände zu diesen
+dreien bestimmt. Drei Punkte haben $9$ Koordinaten, ihre drei gegenseitigen Abstände sind fest, bleiben $9-3 = 6$ Freiheitsgrade
+\de{(degrees of freedom)}. Üblich: drei für $\vec R_s$, drei Winkel für die Drehlage.
+
+\subsection{Die Geschwindigkeit jedes Punktes}
+\aside{$v = \omega r_\perp$ ist die Unterschrift der Starrheit. Galaxien haben sie nicht: Ihre äußeren Sterne laufen fast so schnell wie die inneren. Ich habe nachgezählt.}Leite $\vec r_i = \vec R_s + \vec r_{si}$ ab: $\vec v_i = \vec v_s + \dot{\vec r}_{si}$. Starr heißt $|\vec r_{si}|^2 = \text{const}$, also
+\[
+  \frac{\dd}{\dd t}\,\vec r_{si}^{\,2} = 2\,\vec r_{si}\cdot\dot{\vec r}_{si} = 0 \quad\Longrightarrow\quad \dot{\vec r}_{si}\perp\vec r_{si}.
+\]
+Jeder Punkt bewegt sich senkrecht zu seiner Verbindung mit $S$: Er läuft auf einer Kugel um $S$. Das ist noch nicht ganz der Satz,
+den du in deiner Mitschrift hast. Der braucht ein Stück mehr.
+
+\begin{theorem}{Geschwindigkeiten im starren Körper}{velocity field}
+Es gibt einen Vektor $\vec\omega(t)$, die \emph{Winkelgeschwindigkeit}, für den an jedem Punkt des Körpers gilt
+\[
+  \vec v_i = \vec v_s + \vec\omega\times\vec r_{si}.
+\]
+Schieben des Schwerpunkts plus Drehen um eine Achse durch ihn. Liegt der Körper nicht auf einer Geraden, ist $\vec\omega$ eindeutig.
+\end{theorem}
+
+\begin{proof}[Beweisskizze]
+Starr heißt auch $(\vec r_{si}-\vec r_{sj})^2 = \text{const}$ für jedes Paar. Ableiten und $\vec r_{si}\cdot\dot{\vec r}_{si} = 0$
+benutzen gibt $\vec r_{si}\cdot\dot{\vec r}_{sj} = -\,\vec r_{sj}\cdot\dot{\vec r}_{si}$. Die Zuordnung $\vec r_{si}\mapsto\dot{\vec r}_{si}$
+setzt sich deshalb zu einer linearen Abbildung $A$ mit $\vec a\cdot A\vec b = -\vec b\cdot A\vec a$ fort (dass diese Fortsetzung
+wohldefiniert ist, überspringe ich). $A$ ist also eine antisymmetrische $3\times3$-Matrix, und jede solche ist ein Kreuzprodukt:
+\[
+  A = \begin{pmatrix}0&-\omega_3&\omega_2\\ \omega_3&0&-\omega_1\\ -\omega_2&\omega_1&0\end{pmatrix},\qquad A\vec b = \vec\omega\times\vec b .
+\]
+\end{proof}
+
+\why{Warum reicht $|\vec r_{si}| = \text{const}$ nicht für ein gemeinsames $\vec\omega$?}{Es sagt nur, dass jeder Punkt auf
+\emph{seiner} Kugel um $S$ bleibt. Zwei Punkte dürften dann um verschiedene Achsen kreisen, wie zwei Monde um einen Planeten. Dann
+ändert sich aber ihr Abstand zueinander. Erst die festen Abstände \emph{zwischen} den Punkten kleben alle Drehungen zu einer einzigen
+zusammen.}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.25]
+  \def\blob{plot[smooth cycle,tension=.8] coordinates {(2.6,1.5)(3.4,0.9)(5.0,1.1)(6.6,2.3)(6.5,3.8)(5.0,4.1)(3.6,3.5)(2.7,2.6)}}
+  \fill[pattern={dither25},pattern color=kllow] \blob;
+  \draw[kldim,line width=.6pt] \blob;
+  \coordinate (O) at (0,0); \coordinate (S) at (4,2.2); \coordinate (P) at (5.7,2.0);
+  \draw[vec,klink] (O)--(S) node[midway,above left,lab]{$\vec R_s$};
+  \draw[vec,klink] (O)--(P) node[midway,below right,lab]{$\vec r_i$};
+  \draw[vec,klhi] (S)--(P) node[midway,below,lab]{$\vec r_{si}$};
+  \fill[klink] (O) circle (1.6pt) node[below left]{$O$};
+  \fill[klhi] (S) circle (2pt) node[below left,lab]{$S$};
+  \fill[klhi] (P) circle (1.6pt);
+  \draw[klhi,line width=.6pt] (3.3,2.9) circle (4.5pt); \fill[klhi] (3.3,2.9) circle (1.3pt);
+  \node[left=5pt,lab] at (3.3,2.9) {$\vec\omega$ (zu dir)};
+  \draw[vec,kldim] (P)--++(1.2,0.3) node[right]{$\vec v_s$};
+  \draw[vec,kldim] (P)--++(0.11,0.935) node[left,lab]{$\vec\omega\times\vec r_{si}$};
+  \draw[kldim,dashed,line width=.4pt] ($(P)+(1.2,0.3)$)--++(0.11,0.935) ($(P)+(0.11,0.935)$)--++(1.2,0.3);
+  \draw[vec,klhi,line width=1.1pt] (P)--++(1.31,1.235) node[above]{$\vec v_i$};
+\end{tikzpicture}
+\end{center}
+\plotcaption{Jeder Punkt bekommt dieselbe Schwerpunktsgeschwindigkeit $\vec v_s$ plus einen Drehanteil, der senkrecht auf $\vec r_{si}$
+steht und mit dem Abstand zur Achse wächst. $\vec\omega$ zeigt hier aus dem Blatt: Drehung gegen den Uhrzeigersinn.}
+
+Was $\vec\omega$ bedeutet: Daumen der rechten Hand in Richtung $\vec\omega$, die Finger zeigen die Drehrichtung. Der Betrag
+$|\vec\omega\times\vec r| = \omega\,r\sin\theta = \omega\,r_\perp$ ist $\omega$ mal Abstand von der Drehachse. Punkte auf der Achse
+haben keinen Drehanteil.
+
+\why{Warum hängt $\vec\omega$ nicht davon ab, welchen Punkt du als Zentrum nimmst?}{Nimm statt $S$ irgendeinen Punkt $P$ des Körpers.
+Aus $\vec v_P = \vec v_s + \vec\omega\times\vec r_{sP}$ und $\vec v_i = \vec v_s + \vec\omega\times\vec r_{si}$ folgt durch Subtrahieren
+$\vec v_i = \vec v_P + \vec\omega\times(\vec r_i-\vec r_P)$. Gleiches $\vec\omega$, anderer Schiebeanteil. Die Drehung gehört dem
+Körper; die Translation hängt von deiner Wahl ab. Das nutzt du beim Rollen aus: Wähl den Punkt, der gerade ruht, und die ganze Bewegung
+ist eine reine Drehung um ihn.}
+
+% ======================================================================
+\section{Wo die Schwerkraft angreift}
+
+\opening{D}{eine Mitschrift} beginnt hier, und zu Recht: Die erste Frage an einen ausgedehnten Körper ist, wo seine Gewichtskraft
+eigentlich angreift. Sie greift überall an, an jedem $\dd m$. Summier das auf, im homogenen Feld $\vec g = -g\,\hat e_z$:
+\[
+  \vec F = \int\vec g\,\dd m = M\vec g,\qquad
+  \vec D_O = \int\vec r\times\vec g\,\dd m = \Big(\int\vec r\,\dd m\Big)\times\vec g = M\,\vec R_s\times\vec g .
+\]
+Der Trick in der zweiten Rechnung: $\vec g$ ist für alle $\dd m$ derselbe Vektor und darf aus dem Integral. Was übrig bleibt,
+$\int\vec r\,\dd m$, ist per Definition $M\vec R_s$.
+
+\begin{theorem}{Schwerkraft auf einen starren Körper}{gravity on a rigid body}
+Im homogenen Schwerefeld wirken alle Gewichtskräfte zusammen wie \emph{eine} Kraft $M\vec g$, die im Schwerpunkt angreift:
+$\vec F = M\vec g$ und $\vec D_O = M\,\vec R_s\times\vec g$ für jeden Bezugspunkt $O$.
+\end{theorem}
+
+Daher der Name Schwer-punkt. Die Voraussetzung \emph{homogen} ist echt: Im ungleichmäßigen Feld (der Mond zieht an der erdnahen Seite
+stärker) gibt es keinen solchen Punkt, und das resultierende Drehmoment ist der Grund, warum die Erdachse präzediert.
+
+Was daraus folgt, steht in deiner Mitschrift; hier mit Begründung:
+\begin{itemize}
+  \item Um den Schwerpunkt selbst ($\vec R_s = 0$) ist $\vec D = 0$. Ein im Schwerpunkt aufgehängter Körper ist drehmomentfrei und
+        bleibt in jeder Lage stehen: indifferentes Gleichgewicht.
+  \item Aufgehängt in $A$: $\vec D_A = M(\vec R_s-\vec r_A)\times\vec g$. Null genau dann, wenn $S$ senkrecht unter oder über $A$ liegt.
+        Liegt $S$ unter $A$ (dein „$\vec g\parallel\vec R_s$“, mit $\vec R_s$ von $A$ aus gemessen), dreht jede Auslenkung zurück: stabil.
+        Liegt $S$ über $A$, dreht sie weiter weg: labil.
+  \item Praktisch: Häng einen Körper nacheinander an zwei Punkten auf. Die beiden Lotlinien schneiden sich im Schwerpunkt.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.12]
+  % stabil
+  \begin{scope}
+    \begin{scope}[rotate around={18:(0,0)}]
+      \fill[pattern={dither25},pattern color=kllow] (-.5,-2.0) rectangle (.5,.35); \draw[kldim] (-.5,-2.0) rectangle (.5,.35);
+      \coordinate (S1) at (0,-.95);
+    \end{scope}
+    \draw[kldim,dashed] (0,.6)--(0,-2.3);
+    \draw[klhi,fill=klpage,line width=.8pt] (0,0) circle (3.2pt); \node[right=5pt,lab] at (0,.05){$A$};
+    \node[klhi] at (S1){$\times$}; \draw[vec,klhi] (S1)--++(0,-.7) node[right,lab]{$M\vec g$};
+    \draw[vec,klink] (-62:2.3) arc (-62:-100:2.3);
+    \node[kldim] at (0,-3.2){\pix{stabil}};
+  \end{scope}
+  % indifferent
+  \begin{scope}[xshift=4cm]
+    \begin{scope}[rotate around={30:(0,-.8)}]
+      \fill[pattern={dither25},pattern color=kllow] (-.5,-2.0) rectangle (.5,.35); \draw[kldim] (-.5,-2.0) rectangle (.5,.35);
+    \end{scope}
+    \draw[klhi,fill=klpage,line width=.8pt] (0,-.8) circle (3.2pt); \node[right=5pt,lab] at (0,-.8){$A = S$};
+    \node[kldim] at (0,-3.2){\pix{indifferent}};
+  \end{scope}
+  % labil
+  \begin{scope}[xshift=8cm,yshift=-1.6cm]
+    \begin{scope}[rotate around={-18:(0,0)}]
+      \fill[pattern={dither25},pattern color=kllow] (-.5,-.35) rectangle (.5,2.0); \draw[kldim] (-.5,-.35) rectangle (.5,2.0);
+      \coordinate (S3) at (0,.95);
+    \end{scope}
+    \draw[kldim,dashed] (0,-.4)--(0,2.3);
+    \draw[klhi,fill=klpage,line width=.8pt] (0,0) circle (3.2pt); \node[left=5pt,lab] at (0,0){$A$};
+    \node[klhi] at (S3){$\times$}; \draw[vec,klhi] (S3)--++(0,-.7) node[right,lab]{$M\vec g$};
+    \draw[vec,klink] (80:2.3) arc (80:50:2.3);
+    \node[kldim] at (0,-1.6){\pix{labil}};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\plotcaption{Ausgelenkt um ein paar Grad. Links zieht $M\vec g$ den Schwerpunkt ($\times$) zurück unter $A$, rechts weiter weg von der
+Senkrechten über $A$. In der Mitte hat $M\vec g$ keinen Hebelarm.}
+
+\subsection{Gleichgewicht}
+
+\begin{theorem}{Statisches Gleichgewicht}{static equilibrium}
+Ein ruhender starrer Körper bleibt in Ruhe genau dann, wenn $\sum\vec F\ext = 0$ und $\sum\vec D\ext = 0$.
+Ist $\sum\vec F\ext = 0$, dann ist $\sum\vec D\ext$ für jeden Bezugspunkt derselbe.
+\end{theorem}
+
+Der zweite Satz in einer Zeile: $\vec D_P = \sum_i(\vec r_i-\vec r_P)\times\vec F_i = \vec D_O - \vec r_P\times\sum_i\vec F_i$.
+
+\why{Warum darfst du den Bezugspunkt frei wählen, und warum ist das schon die halbe Lösung?}{Wenn $\sum\vec F = 0$, hängt $\vec D_P$
+nicht von $P$ ab. Also legst du $P$ dorthin, wo die Kräfte angreifen, die du nicht kennst und nicht brauchst: Ihr Hebelarm ist null, sie
+fallen aus der Momentengleichung heraus. Aus drei Unbekannten in einer Gleichung wird eine.}
+
+\begin{example}{Leiter an glatter Wand}
+Eine Leiter (Länge $\ell$, Masse $m$, Schwerpunkt in der Mitte) lehnt unter dem Winkel $\alpha$ zum Boden an einer reibungsfreien
+Wand. Haftreibungszahl am Boden: $\mu$. Ab welchem Winkel rutscht sie?
+\begin{center}
+\begin{tikzpicture}[scale=.9]
+  \fill[pattern={dither25},pattern color=kllow] (-1.2,-.25) rectangle (3.0,0); \draw[kldim] (-1.2,0)--(2.6,0);
+  \fill[pattern={dither25},pattern color=kllow] (2.6,-.25) rectangle (2.85,3.9); \draw[kldim] (2.6,0)--(2.6,3.9);
+  \draw[klink,line width=1.8pt] (0,0)--(2.6,3.4);
+  \draw[kldim] (.6,0) arc (0:52.6:.6); \node[kldim] at (.85,.3){$\alpha$};
+  \draw[vec,klhi] (0,0)--(0,1.3) node[above]{$N_1$};
+  \draw[vec,klhi] (0,.08)--(.9,.08); \node[klhi] at (1.05,-.25){$f$};
+  \draw[vec,klhi] (2.6,3.4)--(1.6,3.4) node[left]{$N_2$};
+  \draw[vec,klhi] (1.3,1.7)--(1.3,.65) node[below right=-1pt,lab]{$mg$};
+\end{tikzpicture}
+\end{center}
+\step{Verstehen} Kräfte: Gewicht $mg$ in der Mitte; Boden: Normalkraft $N_1$ nach oben und Haftreibung $f$ zur Wand hin; glatte
+Wand: nur $N_2$, waagrecht. Gesucht: das kleinste $\alpha$ mit $f\le\mu N_1$.
+\step{Plan} Gleichgewicht: zwei Kraftgleichungen, eine Momentengleichung, drei Unbekannte. Bezugspunkt: der Fuß, denn dort greifen zwei
+der drei Unbekannten an.
+\step{Rechnung} Senkrecht: $N_1 = mg$. Waagrecht: $f = N_2$. Momente um den Fuß (Kraft mal senkrechter Abstand):
+$N_2\,\ell\sin\alpha = mg\,\frac\ell2\cos\alpha$, also $N_2 = \dfrac{mg}{2\tan\alpha}$. Haften verlangt $f\le\mu N_1$:
+\[
+  \frac{mg}{2\tan\alpha}\le\mu\,mg \quad\Longleftrightarrow\quad \tan\alpha\ge\frac1{2\mu}.
+\]
+\step{Rückschau} $\mu\to0$ gibt $\alpha\to90^\circ$: Ohne Reibung steht nur die senkrechte Leiter. Großes $\mu$: fast jeder Winkel
+hält. Masse und Länge fallen heraus, was sein muss, denn $\tan\alpha$ und $\mu$ sind reine Zahlen.
+\end{example}
+
+\begin{shortexample}{Schwerpunkt einer Halbkreisscheibe}
+Homogene Halbkreisscheibe, Radius $R$, Flächendichte $\sigma$, gerader Rand auf der $x$-Achse. Wegen der Spiegelsymmetrie ist
+$x_s = 0$. Polarkoordinaten: $\dd A = r\,\dd r\,\dd\varphi$, $y = r\sin\varphi$, $M = \sigma\pi R^2/2$:
+\[
+  y_s = \frac1M\int y\,\sigma\,\dd A = \frac\sigma M\int_0^R\!r^2\,\dd r\int_0^\pi\!\sin\varphi\,\dd\varphi
+      = \frac\sigma M\cdot\frac{R^3}3\cdot2 = \frac{4R}{3\pi}\approx0{,}42\,R .
+\]
+\step{Rückschau} Kleiner als $R/2$: Nahe dem geraden Rand ist die Scheibe am breitesten, dort sitzt mehr Masse. Das $r$ im Flächenelement
+ist der Faktor, den man vergisst.
+\end{shortexample}
+
+% ======================================================================
+\section{Eine feste Achse}
+
+\opening{B}{evor der} Tensor kommt, der Fall, der die meisten Aufgaben abdeckt: Der Körper dreht sich um eine raumfeste Achse. Rad,
+Tür, Rolle, Pendel. Leg die Achse auf $z$. Jeder Punkt läuft auf einem Kreis mit Radius $r_\perp$ (Abstand zur Achse) und hat die
+Geschwindigkeit $v = \omega r_\perp$. Die kinetische Energie:
+\[
+  E_{\mathrm{rot}} = \sum_i\tfrac12m_iv_i^2 = \tfrac12\Big(\sum_i m_ir_{\perp i}^2\Big)\,\omega^2 = \tfrac12I\omega^2 .
+\]
+
+\begin{definition}{Trägheitsmoment}{moment of inertia}
+Das Trägheitsmoment um eine Achse ist $\displaystyle I = \sum_i m_ir_{\perp i}^2 = \int r_\perp^2\,\dd m$, mit $r_\perp$ = Abstand von
+der Achse.
+\end{definition}
+
+Dieselbe Zahl steckt im Drehimpuls. Mit $\vec v = \omega(-y,x,0)$ ist $(\vec r\times\vec v)_z = xv_y-yv_x = \omega(x^2+y^2) = \omega r_\perp^2$,
+also $L_z = I\omega$. Weil sich $r_\perp$ beim Drehen um $z$ nicht ändert, ist $I$ konstant, und $\dot L_z = I\dot\omega$.
+
+\begin{theorem}{Drehung um eine feste Achse}{fixed-axis rotation}
+Dreht sich ein starrer Körper mit $\omega$ um eine raumfeste Achse $z$, dann gilt mit dem Trägheitsmoment $I$ um \emph{genau diese} Achse
+\[
+  L_z = I\omega,\qquad D_z = I\dot\omega,\qquad E_{\mathrm{rot}} = \tfrac12I\omega^2,\qquad P = D_z\omega,\qquad W = \int D_z\,\dd\varphi .
+\]
+\end{theorem}
+
+Achtung, nur die $z$-Komponente. $L_x$ und $L_y$ müssen nicht null sein; um sie kümmert sich Teil V.
+
+\begin{panel}[unbreakable]{Tabelle}{Schieben und Drehen}{every formula has a twin}
+\renewcommand\arraystretch{1.25}
+\begin{tabular}{@{}p{34mm}p{36mm}l@{}}
+  {\color{kldim}\pix{Größe}} & {\color{kldim}\pix{Translation}} & {\color{kldim}\pix{Drehung um feste Achse}}\\
+  Lage & $x$ & $\varphi$\\
+  Geschwindigkeit & $v = \dot x$ & $\omega = \dot\varphi$\\
+  Beschleunigung & $a = \dot v$ & $\dot\omega$\\
+  Trägheit & $m$ & $I = \int r_\perp^2\,\dd m$\\
+  Ursache & Kraft $F$ & Drehmoment $D_z = (\vec r\times\vec F)_z$\\
+  Impuls & $p = mv$ & $L_z = I\omega$\\
+  Grundgleichung & $F = \dot p = ma$ & $D_z = \dot L_z = I\dot\omega$\\
+  Energie & $\frac12mv^2$ & $\frac12I\omega^2$\\
+  Arbeit, Leistung & $\int F\,\dd x$, \ $Fv$ & $\int D_z\,\dd\varphi$, \ $D_z\omega$
+\end{tabular}
+\end{panel}
+
+\why{Warum geht der Abstand zur Achse im Quadrat ein?}{Ein Faktor $r_\perp$ kommt aus der Geschwindigkeit: doppelt so weit draußen,
+doppelt so schnell. Der zweite kommt, je nachdem wohin du schaust, aus dem Quadrat in $\frac12mv^2$ oder aus dem Hebelarm in
+$\vec r\times\vec v$. Probier es: Halt einen Hammer am Stielende und schwing ihn hin und her, dann halt ihn am Kopf. Gleiche Masse,
+anderes $I$, ganz anderes Gefühl. Trägheitsmoment misst nicht, \emph{wie viel} Masse da ist, sondern \emph{wo}.}
+
+\subsection{Trägheitsmomente ausrechnen}
+Immer dasselbe Rezept: $\dd m$ in passenden Koordinaten ($\lambda\,\dd x$ für einen Stab, $\sigma\,\dd A$ für eine Platte,
+$\rho\,\dd^3V$ für Volumen), $r_\perp$ zur gewählten Achse, integrieren, mit $M$ ausdrücken.
+
+\begin{shortexample}{Dünner Stab}
+Länge $\ell$, $\lambda = M/\ell$, Achse quer durch die Mitte: $\displaystyle I = \int_{-\ell/2}^{\ell/2}x^2\,\frac M\ell\,\dd x = \frac{M\ell^2}{12}$.
+Achse durchs Ende: $\displaystyle\int_0^\ell x^2\,\frac M\ell\,\dd x = \frac{M\ell^2}3$, viermal so viel, weil jetzt Masse doppelt so weit
+draußen sitzen kann.
+\end{shortexample}
+
+\begin{example}{Vollzylinder, deine Rechnung}
+Zylinderkoordinaten $x = r\cos\varphi$, $y = r\sin\varphi$, $z$, mit $\dd^3V = r\,\dd r\,\dd\varphi\,\dd z$. Achse = Symmetrieachse:
+\[
+  I_{zz} = \rho\int(x^2+y^2)\,\dd^3V = \rho\int_0^h\!\dd z\int_0^{2\pi}\!\dd\varphi\int_0^R\!r^2\cdot r\,\dd r
+         = \rho\,h\,2\pi\,\frac{R^4}4 = \tfrac12\underbrace{\rho\,\pi R^2h}_{M}\,R^2 = \tfrac12MR^2 .
+\]
+Ein $r^2$ ist $r_\perp^2$, das dritte $r$ ist das Volumenelement. Ohne es käme $\frac13$ statt $\frac12$ heraus. Die Höhe $h$ fällt weg:
+Eine Münze und eine Walze mit gleichem $M$ und $R$ haben dasselbe $I_{zz}$.
+\end{example}
+
+\begin{example}{Kugel, ohne Kugelkoordinaten}
+Addiere die Trägheitsmomente um die drei Koordinatenachsen durch den Mittelpunkt:
+\[
+  I_x+I_y+I_z = \int\big[(y^2+z^2)+(x^2+z^2)+(x^2+y^2)\big]\,\dd m = 2\int r^2\,\dd m .
+\]
+Bei einer Kugel sind die drei gleich, also $I = \frac23\int r^2\,\dd m$. Vollkugel: in Schalen zerlegen, $\dd m = \rho\,4\pi r^2\,\dd r$,
+$\int r^2\,\dd m = 4\pi\rho R^5/5 = \frac35MR^2$ (mit $M = \frac43\pi R^3\rho$), also $I = \frac25MR^2$. Dünne Hohlkugel: alle Masse bei
+$r = R$, $\int r^2\,\dd m = MR^2$, also $I = \frac23MR^2$. Symmetrie vor Algebra.
+\end{example}
+
+\begin{panel}[unbreakable]{Tabelle}{Trägheitsmomente}{homogene Körper, Masse M}
+\renewcommand\arraystretch{1.3}
+\begin{tabular}{@{}p{46mm}p{38mm}l@{}}
+  {\color{kldim}\pix{Körper}} & {\color{kldim}\pix{Achse}} & {\color{kldim}\pix{Trägheitsmoment}}\\
+  Punktmasse & im Abstand $r$ & $Mr^2$\\
+  Dünner Ring, dünner Hohlzylinder & Symmetrieachse & $MR^2$\\
+  Vollzylinder, Scheibe & Symmetrieachse & $\frac12MR^2$\\
+  Dicker Hohlzylinder & Symmetrieachse & $\frac12M(R_1^2+R_2^2)$\\
+  Scheibe & Durchmesser & $\frac14MR^2$\\
+  Vollzylinder, Höhe $h$ & quer durch $S$ & $M\big(\frac{R^2}4+\frac{h^2}{12}\big)$\\
+  Dünner Stab, Länge $\ell$ & quer durch die Mitte & $\frac1{12}M\ell^2$\\
+  Dünner Stab, Länge $\ell$ & quer durch ein Ende & $\frac13M\ell^2$\\
+  Vollkugel & durch die Mitte & $\frac25MR^2$\\
+  Dünne Hohlkugel & durch die Mitte & $\frac23MR^2$\\
+  Quader $a\times b\times c$ & parallel zu $c$, durch $S$ & $\frac1{12}M(a^2+b^2)$\\
+  Würfel, Kante $a$ & jede Achse durch $S$ & $\frac16Ma^2$
+\end{tabular}
+\end{panel}
+
+\aside{Huygens hatte den Satz 1673, für seine Pendeluhr. Der deutsche Name ging an Steiner, 150 Jahre später. So ist das mit Namen.}Zwei Abkürzungen erzeugen die halbe Tabelle. Für eine \emph{dünne ebene Platte} in der $xy$-Ebene ist $z = 0$ für alle Masse, also
+$I_z = \int(x^2+y^2)\,\dd m = I_x+I_y$ (Satz der senkrechten Achsen). Die Scheibe: $I_z = \frac12MR^2$ und $I_x = I_y$ geben
+$I_x = \frac14MR^2$. Die zweite Abkürzung ist Steiner.
+
+\begin{theorem}{Satz von Steiner}{parallel-axis theorem}
+Ist $I_s$ das Trägheitsmoment um eine Achse durch den Schwerpunkt und $A$ eine dazu \emph{parallele} Achse im Abstand $d$, dann
+\[
+  I_A = I_s + Md^2 .
+\]
+\end{theorem}
+\begin{proof}
+Miss alles senkrecht zur Achsenrichtung. Der Abstandsvektor eines Massenelements von der Achse $A$ ist $\vec d + \vec u$, wobei $\vec u$ der
+Abstandsvektor von der Schwerpunktsachse ist. Dann
+$I_A = \int|\vec d+\vec u|^2\,\dd m = Md^2 + 2\,\vec d\cdot\!\int\vec u\,\dd m + \int u^2\,\dd m$.
+Der mittlere Term ist null: $\int\vec u\,\dd m$ ist der senkrechte Teil von $\int(\vec r-\vec R_s)\,\dd m = 0$. Das Arbeitspferd, zum
+zweiten Mal.
+\end{proof}
+
+Probe: Stab ums Ende, $\frac1{12}M\ell^2 + M(\frac\ell2)^2 = \frac13M\ell^2$. Zwei Folgen. Unter allen parallelen Achsen hat die durch $S$
+das kleinste $I$. Und Steiner verbindet nur eine Schwerpunktsachse mit einer anderen Achse: Von $A$ nach $B$ gehst du über $S$,
+$I_B = I_A - Md_A^2 + Md_B^2$, niemals mit dem Abstand $AB$.
+
+% ======================================================================
+\section{Wenn \texorpdfstring{$L$}{L} nicht zu \texorpdfstring{$\omega$}{omega} passt}
+
+\opening{B}{is jetzt} haben wir nur $L_z$ angeschaut. Aber $\vec L$ hat drei Komponenten, und die zwei anderen sind nicht immer null.
+Das konkreteste Beispiel: eine Hantel, schräg auf eine Achse gesteckt.
+
+Zwei Massen $m$ sitzen bei $\pm\vec r$, $|\vec r| = a$, der Stab schließt mit der Achse den Winkel $\theta$ ein, und $\vec\omega = \omega\hat e_z$.
+In dem Moment, in dem der Stab in der $xz$-Ebene liegt, ist $\vec r = a(\sin\theta,0,\cos\theta)$ und $\vec v = \vec\omega\times\vec r = \omega a\sin\theta\,\hat e_y$.
+Beide Massen zusammen:
+\[
+  \vec L = 2m\,\vec r\times\vec v = 2m\,\omega a^2\sin\theta\,(-\cos\theta,\ 0,\ \sin\theta).
+\]
+Dieser Vektor steht senkrecht auf dem Stab (Skalarprodukt mit $(\sin\theta,0,\cos\theta)$ ist null), nicht parallel zur Achse. Seine
+$z$-Komponente ist $2m(a\sin\theta)^2\omega = I_z\omega$, wie in Teil IV. Aber er hat auch $L_x = -2m\omega a^2\sin\theta\cos\theta$, und
+dieser Teil dreht sich mit der Hantel herum.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.15]
+  \draw[kldim,dashed] (0,-2.0)--(0,2.0);
+  \draw[vec,klink] (0,1.75)--(0,2.45) node[right]{$\vec\omega$};
+  \draw[kldim,-{Stealth[length=1.6mm]}] ([shift={(0,2.05)}]200:.38 and .12) arc (200:500:.38 and .12);
+  \draw[klhi,line width=1.3pt] (-1.03,-1.47)--(1.03,1.47);
+  \fill[klhi] (1.03,1.47) circle (4.5pt); \fill[klhi] (-1.03,-1.47) circle (4.5pt);
+  \node[right=5pt] at (1.03,1.47){$m$}; \node[left=5pt] at (-1.03,-1.47){$m$};
+  \draw[kldim] (0,.6) arc (90:55:.6); \node[kldim] at (.22,.85){$\theta$};
+  \draw[vec,klhi,line width=1.1pt] (0,0)--(-1.38,.97) node[above left]{$\vec L$};
+  \draw[kldim] (-.229,.161)--(-.068,.390)--(.161,.229);
+  \node[kldim,anchor=west] at (1.6,-.4){\begin{minipage}{40mm}\fell\itshape\fontsize{10.5}{13}\selectfont $\vec L\perp$ Stab, nicht $\parallel\vec\omega$.\\ Dreht die Hantel, läuft $\vec L$ auf einem Kegel um die Achse.\end{minipage}};
+\end{tikzpicture}
+\end{center}
+\plotcaption{Momentaufnahme. Die Spitze von $\vec L$ wandert, also ist $\dot{\vec L}\ne0$, obwohl $\omega$ konstant ist. Ein sich änderndes
+$\vec L$ braucht ein Drehmoment, und das liefern die Lager der Achse. Das ist eine Unwucht; beim Reifenwechsel wird sie mit kleinen
+Bleigewichten weggewuchtet.}
+
+Intuition, im mitdrehenden System: Die Fliehkraft zieht beide Massen nach außen, die obere nach rechts, die untere nach links. Die
+beiden Kräfte bilden ein Kräftepaar, das den Stab waagrecht stellen will. Die Lager halten dagegen. Die genaue Größe:
+$|\vec D| = |\dot{\vec L}| = \omega|L_x| = 2m\omega^2a^2\sin\theta\cos\theta$.
+
+\subsection{Der allgemeine Fall}
+Dreht sich der Körper um einen festen Punkt (oder betrachtest du die Drehung um $S$), ist $\vec v = \vec\omega\times\vec r$ mit $\vec r$
+von diesem Punkt aus. Mit $\vec A\times(\vec B\times\vec C) = \vec B(\vec A\cdot\vec C)-\vec C(\vec A\cdot\vec B)$:
+\[
+  \vec L = \int\vec r\times(\vec\omega\times\vec r)\,\dd m = \int\big[r^2\vec\omega - (\vec r\cdot\vec\omega)\,\vec r\big]\,\dd m,
+  \qquad L_i = \sum_j\Big[\int(r^2\delta_{ij}-x_ix_j)\,\dd m\Big]\omega_j .
+\]
+
+\begin{definition}{Trägheitstensor}{inertia tensor}
+Bezüglich eines Punktes (Schwerpunkt oder fester Drehpunkt) ist $I_{ij} = \int(r^2\delta_{ij}-x_ix_j)\,\dd m$, ausgeschrieben
+\[
+  I = \begin{pmatrix}
+    \int(y^2+z^2)\,\dd m & -\int xy\,\dd m & -\int xz\,\dd m\\[2pt]
+    -\int xy\,\dd m & \int(x^2+z^2)\,\dd m & -\int yz\,\dd m\\[2pt]
+    -\int xz\,\dd m & -\int yz\,\dd m & \int(x^2+y^2)\,\dd m
+  \end{pmatrix}.
+\]
+Dann gilt $\vec L = I\vec\omega$, also $L_i = \sum_jI_{ij}\,\omega_j$, und $E_{\mathrm{rot}} = \frac12\vec\omega\cdot\vec L = \frac12\,\vec\omega^{\mathrm T}I\,\vec\omega$.
+\end{definition}
+
+Lies die Matrix so. Auf der Diagonale stehen die Trägheitsmomente um die Koordinatenachsen: $y^2+z^2$ ist das Abstandsquadrat von der
+$x$-Achse. Daneben stehen die Deviationsmomente \de{(products of inertia)}. Sie messen, wie schief die Masse zu den Achsen liegt, und
+sie sind genau das, was $\vec L$ von $\vec\omega$ wegdreht. $I$ ist symmetrisch, $I_{ij} = I_{ji}$, weil $x_ix_j = x_jx_i$.
+
+Die Energie in einer Zeile: $(\vec\omega\times\vec r)^2 = \omega^2r^2-(\vec\omega\cdot\vec r)^2 = \vec\omega\cdot\big[r^2\vec\omega-(\vec r\cdot\vec\omega)\vec r\big]$,
+integriert $E_{\mathrm{rot}} = \frac12\vec\omega\cdot\vec L$. Ausgeschrieben, wie bei dir:
+$\frac12\big(I_{11}\omega_1^2+I_{22}\omega_2^2+I_{33}\omega_3^2+2I_{12}\omega_1\omega_2+2I_{13}\omega_1\omega_3+2I_{23}\omega_2\omega_3\big)$.
+Und für $\vec\omega = \omega\hat n$ ist $E_{\mathrm{rot}} = \frac12(\hat n^{\mathrm T}I\hat n)\,\omega^2$: Das Trägheitsmoment um \emph{jede}
+Achse $\hat n$ durch den Punkt ist $I_n = \hat n^{\mathrm T}I\hat n = \sum_{ij}I_{ij}n_in_j$. Der Tensor kennt sie alle.
+
+\begin{panel}[unbreakable]{Check}{deine Mitschrift}{}
+In der Zeile für $L_1$ steht bei dir $+\,xy\,\omega_2 + xz\,\omega_3$. Aus $-(\vec r\cdot\vec\omega)\,\vec r$ kommt dort ein Minus:
+\[
+  L_1 = \rho\int\big[(y^2+z^2)\,\omega_1 - xy\,\omega_2 - xz\,\omega_3\big]\,\dd^3V .
+\]
+Deine Definition $I_{12} = -\int x_1x_2\,\dd m$ weiter unten ist richtig, und sie passt nur mit diesem Minus. Ein Vorzeichen, kein
+Denkfehler; aber genau so eines kostet in der Klausur den ganzen Tensor.
+\end{panel}
+
+\subsection{Hauptachsen}
+
+\begin{theorem}{Hauptachsen}{principal axes}
+$I$ ist reell und symmetrisch. Nach dem Spektralsatz (Lineare Algebra) gibt es drei zueinander senkrechte Einheitsvektoren
+$\hat e_1,\hat e_2,\hat e_3$ und Zahlen $I_1,I_2,I_3\ge0$ mit $I\hat e_k = I_k\hat e_k$. In diesen Achsen ist
+\[
+  I = \begin{pmatrix}I_1&0&0\\0&I_2&0\\0&0&I_3\end{pmatrix},\qquad \vec L = (I_1\omega_1,\ I_2\omega_2,\ I_3\omega_3),\qquad
+  E_{\mathrm{rot}} = \tfrac12\big(I_1\omega_1^2+I_2\omega_2^2+I_3\omega_3^2\big).
+\]
+$\vec L\parallel\vec\omega$ gilt genau dann, wenn $\vec\omega$ ein Eigenvektor von $I$ ist.
+\end{theorem}
+
+Die $I_k$ heißen Hauptträgheitsmomente. Sie sind $\ge0$, weil $\hat n^{\mathrm T}I\hat n = \int r_\perp^2\,\dd m\ge0$. Bei der Hantel ist die
+Achse kein Eigenvektor, darum die Unwucht. Eine Achse, um die sich ein Körper ohne Lagerkräfte drehen kann, heißt freie Achse; das sind
+genau die Hauptachsen durch den Schwerpunkt.
+
+\textbf{Hauptachsen ohne Rechnung, aus der Symmetrie.} Ist $z\mapsto-z$ eine Spiegelsymmetrie des Körpers, hat jedes $\dd m$ bei
+$(x,y,z)$ einen Partner bei $(x,y,-z)$. In $I_{xz} = -\int xz\,\dd m$ und $I_{yz}$ heben sich die Partner auf: Die Normale einer
+Spiegelebene ist eine Hauptachse. Ebenso jede Drehsymmetrieachse. Dein $I_{xy} = 0$ beim Zylinder, mit dem
+$\int_0^{2\pi}\cos\varphi\sin\varphi\,\dd\varphi = 0$, ist kein Zufall: Es ist die Symmetrie, die in der Rechnung spricht.
+
+Drei Sorten Körper. Alle $I_k$ gleich: Kugelkreisel (Kugel, Würfel). Zwei gleich: symmetrischer Kreisel (Zylinder, Kegel, näherungsweise die
+Erde). Alle verschieden: unsymmetrischer Kreisel (Buch, Handy, Tennisschläger).
+
+\why{Warum hat ein Würfel um jede Achse durch seinen Mittelpunkt dasselbe Trägheitsmoment, sogar um die Raumdiagonale?}{Die drei
+Spiegelebenen machen alle Deviationsmomente null, und die Drehungen um $90^\circ$ vertauschen die Achsen, also $I_1 = I_2 = I_3 = \frac16Ma^2$.
+Dann ist $I$ das $\frac16Ma^2$-fache der Einheitsmatrix, und $\hat n^{\mathrm T}I\hat n = \frac16Ma^2$ für jedes $\hat n$. Ein Würfel dreht
+sich wie eine Kugel. Er sieht nur nicht so aus.}
+
+Zwei Werkzeuge noch. \emph{Steiner für den Tensor:} Ist $\vec d$ der Vektor von $A$ nach $S$, dann
+$I^{(A)}_{ij} = I^{(s)}_{ij} + M(d^2\delta_{ij}-d_id_j)$; die Diagonale davon ist der Steiner aus Teil IV. \emph{Die Dreiecksungleichung:}
+$I_1+I_2 = I_3 + 2\int x_3^2\,\dd m\ge I_3$, mit Gleichheit genau für flache Körper. Das ist der Satz der senkrechten Achsen, von oben
+gesehen. Trägst du für jede Richtung $\hat n$ den Punkt $\hat n/\sqrt{I_n}$ ab, entsteht die Fläche $\vec x^{\mathrm T}I\vec x = 1$, das
+Trägheitsellipsoid, mit den Hauptachsen als Achsen. Beim Würfel ist es eine Kugel.
+
+% ======================================================================
+\section{Die zwei Gleichungen}
+
+\opening{J}{etzt die} Dynamik, und sie ist kürzer, als du fürchtest. Schreib Newton für jedes Teilchen hin,
+$m_i\ddot{\vec r}_i = \vec F_i^{\mathrm{ext}} + \sum_{j\ne i}\vec F_{ij}$, und summiere.
+
+\emph{Über alle Teilchen:} Die inneren Kräfte heben sich paarweise auf ($\vec F_{ij} = -\vec F_{ji}$, actio gleich reactio). Es bleibt
+$M\ddot{\vec R}_s = \vec F\ext$, der Schwerpunktsatz.
+
+\emph{Mit $\vec r_i\times$ davor:} $\dot{\vec L} = \sum_i\vec r_i\times m_i\ddot{\vec r}_i$ (denn $\dot{\vec r}_i\times\dot{\vec r}_i = 0$).
+Ein Paar innerer Kräfte gibt $\vec r_i\times\vec F_{ij}+\vec r_j\times\vec F_{ji} = (\vec r_i-\vec r_j)\times\vec F_{ij}$, und das ist null,
+wenn die Kraft entlang der Verbindungslinie wirkt. Es bleibt $\dot{\vec L} = \vec D\ext$, der Drallsatz, um einen raumfesten Punkt.
+
+\emph{Zerlegt in Schwerpunkt und Drehung um ihn:} Setz $\vec v_i = \vec v_s+\vec\omega\times\vec r_{si}$ ein. Bei der Energie
+\[
+  E = \sum_i\tfrac12m_i\big(\vec v_s+\vec\omega\times\vec r_{si}\big)^2
+    = \tfrac12Mv_s^2 + \vec v_s\cdot\Big(\vec\omega\times\sum_im_i\vec r_{si}\Big) + \tfrac12\sum_im_i(\vec\omega\times\vec r_{si})^2 ,
+\]
+und der Kreuzterm stirbt am Arbeitspferd, zum dritten Mal. Beim Drehimpuls genauso.
+
+\begin{keystone}{Die zwei Gleichungen}{equations of motion}
+\[
+  M\,\dot{\vec v}_s = \vec F\ext, \qquad \dot{\vec L} = \vec D\ext, \qquad \vec L = I\vec\omega .
+\]
+Die zweite gilt um einen raumfesten Punkt oder um den Schwerpunkt, auch wenn dieser beschleunigt. Dazu
+\[
+  E_{\mathrm{kin}} = \tfrac12Mv_s^2 + \tfrac12\,\vec\omega\cdot I_s\vec\omega, \qquad
+  \vec L_O = M\,\vec R_s\times\vec v_s + I_s\vec\omega ,
+\]
+mit $I_s$ um den Schwerpunkt: Bahnanteil plus Eigendrehung. Sechs Gleichungen für sechs Freiheitsgrade.
+
+\smallskip\noindent{\color{kldim}\pix{Beweis in einem Atemzug}}\quad Newton für jedes Teilchen, summiert; innere Kräfte heben sich
+paarweise weg (actio gleich reactio, Zentralkräfte); bei $E$ und $\vec L$ fallen die Kreuzterme wegen $\sum m_i\vec r_{si} = 0$.
+\end{keystone}
+
+\why{Warum gilt der Drallsatz um den Schwerpunkt, auch wenn der Schwerpunkt beschleunigt, aber nicht um jeden anderen bewegten
+Punkt?}{Rechnung: $\vec L_O = M\vec R_s\times\vec v_s+\vec L_s$ ableiten gibt $M\vec R_s\times\dot{\vec v}_s+\dot{\vec L}_s$, und
+$\vec D_O = \sum(\vec R_s+\vec r_{si})\times\vec F_i = \vec R_s\times\vec F+\vec D_s$. Mit $M\dot{\vec v}_s = \vec F$ bleibt
+$\dot{\vec L}_s = \vec D_s$. Bild: Im beschleunigten System eines Punktes $P$ wirkt die Scheinkraft $-M\vec a_P$, und zwar im Schwerpunkt.
+Um $S$ hat sie keinen Hebelarm, um jeden anderen Punkt schon. Nimm also $S$ oder einen raumfesten Punkt, sonst nichts.}
+
+\subsection{Was erhalten bleibt}
+\emph{Drehimpuls:} Ist $\vec D\ext = 0$ um einen Punkt, bleibt $\vec L$ um diesen Punkt konstant, als Vektor. \emph{Energie:} Bleibt
+erhalten, wenn nur konservative Kräfte Arbeit leisten. Zwangskräfte einer reibungsfreien festen Achse und die Haftreibung beim Rollen
+leisten keine (Teil VII).
+
+\why{Eine Eisläuferin zieht in der Pirouette die Arme an. Der Drehimpuls bleibt, die Energie nicht. Woher kommt sie?}{$L = I\omega$
+bleibt, also $E = L^2/(2I)$, und das steigt, wenn $I$ sinkt. Die Differenz leistet sie selbst. Im mitdrehenden System sieht man es: Die
+Arme müssen gegen die Fliehkraft $m\omega^2r$ nach innen gezogen werden, und $\int m\omega^2r\,\dd r$ ist genau $\Delta E$. Drehimpuls
+kann von innen nicht nachgefüllt werden, Energie schon.}
+
+\begin{panel}{Rezept}{jede Aufgabe zum starren Körper}{}
+\begin{enumerate}
+  \item \textbf{Skizze.} Jede Kraft mit ihrem Angriffspunkt. Beim starren Körper zählt der Ort, nicht nur der Betrag.
+  \item \textbf{Zwangsbedingungen.} Feste Achse? Rollen, $v_s = \omega R$ und $\dot v_s = \dot\omega R$? Seil ohne Schlupf, $a = \dot\omega r$?
+  \item \textbf{Welcher Satz.} Kräfte oder Beschleunigungen gesucht: die zwei Gleichungen. Nur Geschwindigkeiten zwischen zwei Lagen:
+        Energie, falls nichts Energie verheizt. Stoß, Zusammenziehen, unbekannte Kraft in einem Gelenk: Drehimpulserhaltung um dieses Gelenk.
+  \item \textbf{Bezugspunkt.} $S$ oder ein raumfester Punkt, am besten dort, wo Unbekannte angreifen.
+  \item \textbf{Zählen.} So viele Gleichungen wie Unbekannte?
+  \item \textbf{Rückschau.} Einheiten. $I\to0$ muss das Ergebnis für Massenpunkte geben. Grenzfälle.
+\end{enumerate}
+\end{panel}
+
+\begin{example}{Rolle mit Masse}
+Zwei Massen $m_1<m_2$ hängen an einem Seil über einer Rolle (Vollzylinder, Masse $M$, Radius $R$, reibungsfrei gelagert). Das Seil rutscht
+nicht. Wie groß ist die Beschleunigung?
+\step{Verstehen} Drei Körper, Unbekannte $a$, $T_1$, $T_2$. Die Seilkräfte links und rechts sind \emph{verschieden}: Wären sie gleich,
+hätte die Rolle kein Drehmoment und könnte nicht schneller werden.
+\step{Plan} Newton für jede Masse, $D = I\dot\omega$ für die Rolle, dazu die Zwangsbedingung $a = \dot\omega R$.
+\step{Rechnung} $m_2a = m_2g-T_2$, \ $m_1a = T_1-m_1g$, \ $(T_2-T_1)R = \frac12MR^2\cdot\frac aR$, also $T_2-T_1 = \frac12Ma$. Die ersten
+zwei addiert: $(m_1+m_2)a = (m_2-m_1)g-(T_2-T_1)$, also
+\[
+  a = \frac{(m_2-m_1)\,g}{m_1+m_2+\frac12M} .
+\]
+\step{Rückschau} $M\to0$ gibt die ideale Atwood-Maschine. Die Rolle wirkt wie eine Zusatzmasse $\frac12M$, die mitbeschleunigt werden muss,
+an der aber keine Schwerkraft zieht (die trägt das Lager). Das $\frac12$ ist ihr $k = I/(MR^2)$.
+\end{example}
+
+\begin{shortexample}{Kugel bleibt in einem Stab stecken}
+Ein Stab (Masse $M$, Länge $\ell$) hängt reibungsfrei an seinem oberen Ende. Eine Kugel (Masse $m$, Geschwindigkeit $v$, waagrecht) trifft
+ihn am unteren Ende und bleibt stecken. Winkelgeschwindigkeit direkt danach?
+\step{Plan} Impuls? Nein: Das Lager stößt während des Stoßes mit einer unbekannten Kraft zurück. Energie? Nein: Steckenbleiben verheizt
+Energie. Aber um das Lager hat die Lagerkraft keinen Hebelarm, und die Schwerkraft ist während des kurzen Stoßes vernachlässigbar.
+Also bleibt der Drehimpuls um das Lager erhalten.
+\step{Rechnung} Vorher $L = mv\ell$. Nachher $L = \big(\frac13M\ell^2+m\ell^2\big)\omega$. Also
+\[
+  \omega = \frac{3mv}{(M+3m)\,\ell} .
+\]
+\step{Rückschau} $M\to0$: $\omega = v/\ell$, die Kugel läuft einfach weiter auf dem Kreis. Einheiten: $1/\mathrm s$.
+\end{shortexample}
+
+% ======================================================================
+\section{Rollen}
+
+\opening{E}{in Rad} rollt ohne zu rutschen, wenn der Auflagepunkt $P$ dieselbe Geschwindigkeit hat wie die Straße: null. Mit dem Satz
+aus Teil II und $\vec r_{sP}$ vom Mittelpunkt nach unten:
+\[
+  \vec v_P = \vec v_s + \vec\omega\times\vec r_{sP} = 0 \quad\Longrightarrow\quad v_s = \omega R .
+\]
+Das ist die Rollbedingung \de{(rolling condition)}. Oben zeigt $\vec\omega\times\vec r$ nach vorn statt nach hinten, also
+$v_{\mathrm{oben}} = v_s+\omega R = 2v_s$. Und weil $P$ gerade ruht, darfst du (Warum-Frage in Teil II) die ganze Bewegung als reine
+Drehung um $P$ lesen: $\vec v_i = \vec\omega\times(\vec r_i-\vec r_P)$. Jeder Punkt bewegt sich senkrecht zu seiner Verbindung mit $P$,
+mit $\omega$ mal Abstand zu $P$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  \fill[pattern={dither25},pattern color=kllow] (-1.9,-1.2) rectangle (2.7,-1); \draw[kldim] (-1.9,-1)--(2.7,-1);
+  \draw[klink,line width=.9pt] (0,0) circle (1);
+  \foreach \p in {(1,0),(-1,0)} \draw[kldim,dashed,line width=.4pt] (0,-1)--\p;
+  \draw[kldim,dashed,line width=.4pt] (0,-1)--(1.2,1);
+  \draw[vec,klhi,line width=1pt] (0,1)--(1.2,1) node[right]{$2v_s$};
+  \draw[vec,klhi,line width=1pt] (0,0)--(.6,0) node[above=2pt,lab]{$v_s$};
+  \draw[vec,klhi,line width=1pt] (1,0)--(1.6,-.6) node[right]{$\sqrt2\,v_s$};
+  \draw[vec,klhi,line width=1pt] (-1,0)--(-.4,.6) node[above=1pt,lab]{$\sqrt2\,v_s$};
+  \fill[klhi] (0,-1) circle (2pt) node[left=8pt,lab]{$P$: \ $v = 0$};
+  \fill[klhi] (0,0) circle (1.5pt) (0,1) circle (1.5pt) (1,0) circle (1.5pt) (-1,0) circle (1.5pt);
+  \draw[vec,klink] (225:.55) arc (225:135:.55); \node[klink] at (-.27,0){$\omega$};
+\end{tikzpicture}
+\end{center}
+\plotcaption{Das Geschwindigkeitsprofil entlang des senkrechten Durchmessers ist eine Gerade durch $P$: unten $0$, Mitte $v_s$, oben $2v_s$.
+Die seitlichen Punkte bewegen sich schräg, senkrecht zu ihrer Linie nach $P$. Das Rad dreht sich in jedem Moment um seinen Auflagepunkt.}
+
+\anim{rollen}{Erst schieben, dann drehen, dann Pfeil an Pfeil: oben $2v_s$, unten $0$. Achte darauf, dass jeder Ergebnispfeil
+senkrecht auf seiner Linie zum Auflagepunkt steht. Am Ende rollt das Rad, und ein Randpunkt zeichnet eine Zykloide mit einer Spitze dort,
+wo er kurz stillsteht.}
+
+Die Energie zweimal, als Probe. Als Schwerpunkt plus Drehung: $E = \frac12Mv_s^2+\frac12I_s\omega^2 = \frac12\big(M+I_s/R^2\big)v_s^2$. Als
+reine Drehung um $P$, mit Steiner $I_P = I_s+MR^2$: $E = \frac12I_P\omega^2 = \frac12(I_s+MR^2)\,v_s^2/R^2$. Dasselbe.
+
+\subsection{Die schiefe Ebene}
+Schreib $I_s = kMR^2$; die reine Zahl $k$ sagt nur, wie die Masse verteilt ist: Ring $1$, Hohlkugel $\frac23$, Vollzylinder $\frac12$,
+Vollkugel $\frac25$. Rollt der Körper aus der Ruhe die Höhe $h$ hinunter, gibt der Energiesatz
+\[
+  Mgh = \tfrac12(1+k)\,Mv_s^2 \quad\Longrightarrow\quad v_s = \sqrt{\frac{2gh}{1+k}},\qquad a = \frac{g\sin\alpha}{1+k}.
+\]
+Probe mit Kräften. Haftreibung $f$ hangaufwärts: $Ma = Mg\sin\alpha-f$, und um $S$: $fR = I_s\dot\omega = kMR^2\cdot a/R$, also $f = kMa$.
+Eingesetzt: $a(1+k) = g\sin\alpha$. Gleich. Nebenbei: Rollen ohne Rutschen braucht $f\le\mu_0Mg\cos\alpha$, also $\tan\alpha\le\mu_0(1+k)/k$.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,xbar,width=.78\linewidth,height=48mm,xmin=0,xmax=1.12,ymin=.4,ymax=5.6,
+  ytick={1,2,3,4,5},yticklabels={Ring,Hohlkugel,Vollzylinder,Vollkugel,{Klotz, gleitet}},
+  yticklabel style={font=\fell\itshape\fontsize{10}{11}\selectfont,text=klink},
+  xtick={0,.5,1},xticklabels={0,$\frac12$,1},
+  xlabel={$a\,/\,g\sin\alpha = 1/(1+k)$},bar width=8pt,axis lines*=left]
+  \addplot[draw=klhi,line width=.6pt,pattern={dither50},pattern color=klhi] coordinates {(.5,1) (.6,2) (.6667,3) (.7143,4) (1,5)};
+  \node[anchor=west,text=klhi] at (axis cs:.5,1){\ $\frac12$};
+  \node[anchor=west,text=klhi] at (axis cs:.6,2){\ $\frac35$};
+  \node[anchor=west,text=klhi] at (axis cs:.6667,3){\ $\frac23$};
+  \node[anchor=west,text=klhi] at (axis cs:.7143,4){\ $\frac57$};
+  \node[anchor=west,text=klhi] at (axis cs:1,5){\ $1$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{Das Rennen: Vollkugel vor Vollzylinder vor Hohlkugel vor Ring, bei jeder Masse und jedem Radius. Nur ein reibungsfrei gleitender
+Klotz ist schneller, denn er steckt nichts in die Drehung.}
+
+\why{Warum entscheiden weder Masse noch Radius das Rennen?}{$a = g\sin\alpha/(1+k)$ hängt nur von $k = I_s/(MR^2)$ ab, und $k$ ist eine
+reine Zahl, die nur sagt, \emph{wie} die Masse verteilt ist: innen oder außen. Jedes Kilogramm bekommt dieselbe Energie $gh$. Der Ring steckt
+davon die Hälfte in die Drehung ($k/(1+k) = \frac12$), die Vollkugel nur $\frac27$. Was in der Drehung steckt, fehlt der Geschwindigkeit.}
+
+\why{Warum leistet die Haftreibung beim Rollen keine Arbeit, obwohl sie eine Kraft ist?}{Leistung ist $P = \vec F\cdot\vec v$, mit der
+Geschwindigkeit des \emph{Angriffspunkts}. Die Reibung greift am Auflagepunkt an, und der ruht: $P = 0$. Sie schiebt nur Energie um, von
+der Translation in die Drehung. Darum darfst du beim Rollen ohne Gleiten den Energiesatz benutzen. Gleitreibung dagegen greift an einem
+rutschenden Punkt an und verheizt.}
+
+\begin{example}{Vom Gleiten zum Rollen}
+Eine Billardkugel (Masse $M$, Radius $R$) wird so angestoßen, dass sie mit $v_0$ ohne Drehung über den Tisch gleitet. Die Gleitreibung bremst
+sie und dreht sie an, bis sie rollt. Wie schnell rollt sie dann?
+\step{Verstehen} Die Reibung greift am Auflagepunkt an, ist unbekannt (kein $\mu$ gegeben) und verheizt Energie. Gesucht: $v$ am Ende.
+\step{Plan} Energie geht nicht. Kraft und Moment gingen, mit $\mu$, das sich herauskürzen müsste. Kürzer: Drehimpuls um einen raumfesten
+Punkt $Q$ auf der Tischplatte. Die Reibung wirkt entlang der Tischplatte, durch $Q$ hindurch gedacht, also ohne Hebelarm. Gewicht und
+Normalkraft sind gleich groß, entgegengesetzt und liegen auf derselben Senkrechten; ihre Momente heben sich auf. Also: $\vec L_Q$ bleibt.
+\step{Rechnung} Mit der Keystone-Zerlegung ist $L_Q = Mv_sR+I_s\omega$ (Bahnanteil plus Eigendrehung; beide drehen im selben Sinn).
+Anfangs $Mv_0R$. Am Ende rollt sie, $\omega = v/R$: $MvR+\frac25MR^2\cdot\frac vR = \frac75MvR$. Also
+\[
+  v = \tfrac57\,v_0 .
+\]
+\step{Rückschau} Das $\mu$ bestimmt nur, \emph{wie lange} sie rutscht, nicht wie schnell sie am Ende rollt. Allgemein $v = v_0/(1+k)$. Energie:
+am Ende $\frac12\cdot\frac75Mv^2 = \frac57\cdot\frac12Mv_0^2$. Zwei Siebtel sind Wärme geworden.
+\end{example}
+
+% ======================================================================
+\section{Das physikalische Pendel}
+
+\opening{H}{äng einen} beliebigen Körper an einer waagrechten Achse $A$ auf, mit dem Schwerpunkt im Abstand $d$ darunter, und lenk ihn um
+$\varphi$ aus. Die Schwerkraft greift in $S$ an und hat den Hebelarm $d\sin\varphi$: $D_z = -Mgd\sin\varphi$. Feste Achse, also
+\[
+  I_A\,\ddot\varphi = -Mgd\sin\varphi \quad\stackrel{\varphi\ \mathrm{klein}}{\Longrightarrow}\quad
+  \ddot\varphi = -\frac{Mgd}{I_A}\,\varphi,\qquad T = 2\pi\sqrt{\frac{I_A}{Mgd}},\qquad I_A = I_s+Md^2 .
+\]
+Ein mathematisches Pendel der Länge $\ell_r = I_A/(Md)$, die reduzierte Pendellänge, hat dieselbe Periode. Der Stab am Ende aufgehängt:
+$I_A = \frac13M\ell^2$, $d = \frac\ell2$, also $\ell_r = \frac23\ell$ und $T = 2\pi\sqrt{2\ell/(3g)}$. Kürzer als $\ell$, weil ein Teil der
+Masse nah an der Achse hängt und schneller schwingen will.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,width=.84\linewidth,height=52mm,xmin=0,xmax=4.2,ymin=0,ymax=2.2,xlabel={$d\,/\,k_s$},ylabel={$T/T_{\min}$},
+  ylabel style={rotate=-90},xtick={0,1,2,3,4},ytick={0,1,2},domain=.12:4.2,samples=160]
+  \addplot[klhi]{sqrt((1/x+x)/2)} node[pos=.03,right=3pt]{$T(d)$};
+  \addplot[kldim,dashed,domain=0:4.2]{sqrt(x/2)};
+  \draw[kldim,dashed,line width=.5pt] (axis cs:1,0)--(axis cs:1,1);
+  \node[anchor=north west,text=kldim] at (axis cs:2.3,1.0){\fell\itshape math.\ Pendel, $\ell = d$};
+  \node[anchor=west,text=klink] at (axis cs:1,.45){$d = k_s$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{Periode gegen Aufhängeabstand, mit dem Trägheitsradius $k_s = \sqrt{I_s/M}$. Bei $d\to0$ wird $T$ unendlich (im Schwerpunkt
+aufgehängt: indifferent, Teil III). Weit draußen wird es ein mathematisches Pendel. Dazwischen ein Minimum bei $d = k_s$.}
+
+Woher das Minimum: $T^2\propto I_A/(Md) = k_s^2/d + d$, und $k_s^2/d+d$ ist am kleinsten bei $d = k_s$. Jede Periode über dem Minimum wird
+zweimal getroffen, bei $d$ und bei $d' = k_s^2/d$, und dann ist $d+d' = \ell_r$.
+
+\aside{Kater hat 1817 genau damit $g$ gemessen: zwei Schneiden mit gleicher Periode, ihr Abstand ist $\ell_r$. Kein $I$ nötig. Ich war beeindruckt; das passiert selten.}
+
+% ======================================================================
+\section{Kreisel}
+
+\opening{H}{ier zahlt} sich der wichtigste Satz des Kapitels aus: Ein Drehmoment ändert nicht die Lage, es ändert $\vec L$, und zwar in
+\emph{seine} Richtung, $\dd\vec L = \vec D\,\dd t$.
+
+\subsection{Präzession}
+Ein Rad dreht sich schnell um seine Achse, Drehimpuls $\vec L = I_3\omega_3\,\hat e$ entlang der Achse. Die Achse ist waagrecht und
+nur an einem Ende aufgehängt, der Schwerpunkt im Abstand $d$ davon. Die Schwerkraft gibt um den Aufhängepunkt $\vec D = \vec r\times M\vec g$:
+waagrecht und senkrecht zu $\vec L$. In der Zeit $\dd t$ kommt $\dd\vec L = \vec D\,\dd t$ dazu, seitwärts. $\vec L$ wird nicht länger,
+nicht kürzer, und kippt nicht nach unten: Es dreht sich in der Waagrechten. Die Achse folgt $\vec L$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3]
+  \draw[kldim,line width=.5pt] (-.6,2.2)--(.6,2.2);
+  \foreach \x in {-.5,-.25,...,.5} \draw[kllow] (\x,2.2)--++(.15,.15);
+  \draw[klink,line width=.6pt] (0,2.2)--(0,0);
+  \draw[vec,klink] (-.45,.5)--(-.45,1.5) node[left]{$\vec\Omega$};
+  \draw[klink,line width=1.4pt] (0,0)--(2.75,0);
+  \fill[klhi] (0,0) circle (1.8pt);
+  \draw[klhi,line width=.9pt,fill=klpage,fill opacity=.85] plot[smooth cycle,samples=48,domain=0:360,variable=\t]
+    ({2.2+.5*.9*cos(\t)},{.35*.9*cos(\t)+.9*sin(\t)});
+  \draw[klink,line width=1.4pt] (2.2,0)--(2.75,0);
+  \fill[klhi] (2.2,0) circle (1.8pt);
+  \draw[vec,klhi,line width=1.1pt] (2.75,0)--(3.95,0) node[above left=1pt]{$\vec L$};
+  \draw[vec,klhi] (2.2,0)--(2.2,-1.35) node[below]{$M\vec g$};
+  \draw[vec,klink,line width=1pt] (3.95,0)--(4.55,.42) node[right]{$\dd\vec L = \vec D\,\dd t$};
+  \draw[kldim,dashed,line width=.5pt] plot[smooth,samples=20,domain=-14:24,variable=\t] ({3.95*cos(\t)+.5*3.95*sin(\t)},{.35*3.95*sin(\t)});
+  \draw[kldim,line width=.4pt] (0,-.12)--(0,-.3) (2.2,-.12)--(2.2,-.3); \draw[kldim,<->,line width=.4pt] (0,-.22)--(2.2,-.22);
+  \node[kldim,below] at (1.1,-.22){$d$};
+\end{tikzpicture}
+\end{center}
+\plotcaption{Das Drehmoment der Schwerkraft zeigt waagrecht in die Tiefe des Bildes, senkrecht zu $\vec L$. Also wandert die Spitze von $\vec L$
+in die Tiefe, auf dem gestrichelten Kreis. Von oben gesehen dreht sich die Achse gegen den Uhrzeigersinn, mit $\vec\Omega$ nach oben.}
+
+In der Zeit $\dd t$ dreht sich $\vec L$ um den Winkel $\dd\phi = |\dd\vec L|/L = D\,\dd t/L$. Die Präzessionsgeschwindigkeit:
+\[
+  \Omega = \frac DL = \frac{Mgd}{I_3\,\omega_3}, \qquad\text{vektoriell}\quad \vec\Omega\times\vec L = \vec D .
+\]
+Schneller drehen heißt langsamer präzedieren. Die Rechnung nimmt an, dass $\vec L$ fast ganz aus der Eigendrehung besteht, also
+$\Omega\ll\omega_3$ (schneller Kreisel); der kleine Drehimpuls der Präzessionsbewegung selbst ist vernachlässigt.
+
+Und das Loslassen? Die Schwerkraft hat um den Aufhängepunkt kein Drehmoment um die Senkrechte ($\vec D\perp\vec g$), also bleibt
+$L_z$ erhalten. Am Anfang ist $L_z = 0$. Damit die Präzession (die ein wenig Drehimpuls nach oben trägt) anlaufen kann, muss die Achse
+ein Stück nach unten nicken, sodass die Eigendrehung ein wenig nach unten zeigt und das ausgleicht. Sie nickt über das Ziel hinaus und
+zurück: die Nutation \de{(nutation)}. Reibung dämpft das Nicken weg, die ruhige Präzession bleibt.
+
+\subsection{Die Euler-Gleichungen}
+Für die volle Dynamik rechnet man im mitdrehenden System der Hauptachsen, wo $I$ konstant und diagonal ist. Für jeden Vektor gilt
+\[
+  \Big(\frac{\dd\vec A}{\dd t}\Big)_{\text{Raum}} = \Big(\frac{\dd\vec A}{\dd t}\Big)_{\text{Körper}}+\vec\omega\times\vec A
+\]
+(für einen im Körper festen Vektor ist das $\vec v = \vec\omega\times\vec r$). Mit $\vec A = \vec L = (I_1\omega_1,I_2\omega_2,I_3\omega_3)$ wird
+$\dot{\vec L} = \vec D$ zu den Euler-Gleichungen
+\begin{align*}
+  I_1\dot\omega_1-(I_2-I_3)\,\omega_2\omega_3 &= D_1,\\
+  I_2\dot\omega_2-(I_3-I_1)\,\omega_3\omega_1 &= D_2,\\
+  I_3\dot\omega_3-(I_1-I_2)\,\omega_1\omega_2 &= D_3 .
+\end{align*}
+
+\begin{theorem}{Stabile und instabile Drehachsen}{tennis racket theorem}
+Ein kräftefreier Körper mit $I_1>I_2>I_3$ dreht sich stabil um die Achse des größten und um die des kleinsten Hauptträgheitsmoments,
+instabil um die mittlere.
+\end{theorem}
+\begin{proof}[Beweis, linearisiert]
+Drehung fast um Achse 2: $\omega_2\approx\Omega$, $\omega_1,\omega_3$ klein, $\vec D = 0$. Die erste und dritte Euler-Gleichung, Produkte
+kleiner Größen weggelassen: $I_1\dot\omega_1 = (I_2-I_3)\,\Omega\,\omega_3$ und $I_3\dot\omega_3 = (I_1-I_2)\,\Omega\,\omega_1$. Ableiten und
+einsetzen:
+\[
+  \ddot\omega_1 = \frac{(I_2-I_3)(I_1-I_2)}{I_1I_3}\,\Omega^2\,\omega_1 .
+\]
+Beide Klammern sind positiv: $\omega_1$ wächst exponentiell, die Drehung kippt. Für Achse 1 oder 3 ergibt dieselbe Rechnung einen
+negativen Faktor, also eine Schwingung um die Achse: stabil.
+\end{proof}
+
+\aside{Dschanibekow sah es 1985 auf Saljut~7 an einer Flügelmutter, die sich in der Schwerelosigkeit alle paar Sekunden umdrehte. Die Gleichung stand seit 220 Jahren bei Euler.}Probier es mit einem Buch (mit Gummiband zu) oder deinem Handy: hochwerfen, um jede der drei Achsen drehen. Um die längste und die kürzeste
+Achse dreht es ruhig. Um die mittlere überschlägt es sich jedes Mal mit einer halben Drehung. Beim symmetrischen Kreisel ($I_1 = I_2$)
+gibt es keine mittlere Achse; wirfst du ihn schief, läuft seine Figurenachse auf einem Kegel um das feste $\vec L$, die kräftefreie Nutation.
+
+
+% ======================================================================
+\begin{triggers}
+\trigger{Ausgedehnter Körper im homogenen Schwerefeld}{$M\vec g$ im Schwerpunkt angreifen lassen}
+\trigger{Gleichgewicht, Kräfte an mehreren Stellen}{$\sum\vec F = 0$, $\sum\vec D = 0$ um den Punkt, an dem die meisten Unbekannten angreifen}
+\trigger{Unbekannte Kraft in Gelenk, Lager oder Auflagepunkt}{Moment bzw. Drehimpuls um genau diesen Punkt}
+\trigger{Drehung um eine feste Achse}{$D_z = I\dot\omega$ mit $I$ um genau diese Achse}
+\trigger{Achse parallel zu einer Schwerpunktsachse}{Steiner, $I = I_s+Md^2$, immer über $S$}
+\trigger{Integral für $I$}{Symmetrie zuerst: Zylinderkoordinaten, $I_x+I_y+I_z = 2\int r^2\dd m$, Spiegelebenen töten Deviationsmomente}
+\end{triggers}
+
+\begin{triggers}
+\trigger{Rollen ohne Gleiten}{$v_s = \omega R$; Haftreibung leistet keine Arbeit, also Energiesatz mit $\frac12(1+k)Mv^2$}
+\trigger{Seil über einer Rolle mit Masse}{verschiedene Seilkräfte, $(T_2-T_1)R = I\dot\omega$, $a = \dot\omega R$}
+\trigger{Stoß gegen einen gelagerten Körper}{Drehimpuls um das Lager; Impuls und Energie meist nicht}
+\trigger{Etwas zieht sich zusammen, kein äußeres Moment}{$I\omega$ konstant, $E = L^2/2I$ ändert sich}
+\trigger{Gleiten geht in Rollen über}{Drehimpuls um einen Punkt auf der Unterlage}
+\trigger{Lager werden belastet, Körper eiert}{$\vec L\nparallel\vec\omega$: keine Hauptachse}
+\trigger{Drehmoment senkrecht zu einem großen $\vec L$}{Präzession, $\Omega = D/L$}
+\trigger{Ausgedehnter Körper schwingt}{$T = 2\pi\sqrt{I_A/(Mgd)}$}
+\end{triggers}
+
+\needspace{.42\textheight}
+\marginkael{proud}
+\begin{deck}
+\card{Def}{Trägheitstensor: Komponenten, und wie er $\vec L$ und $E$ gibt.}{$I_{ij} = \int(r^2\delta_{ij}-x_ix_j)\,\dd m$, \ $\vec L = I\vec\omega$, \ $E = \frac12\vec\omega\cdot I\vec\omega$}
+\card{Def}{Steiner: $I_A = $ \{\{$I_s+Md^2$\}\}, wenn die Bezugsachse \{\{durch $S$\}\} geht und \{\{parallel\}\} zu $A$ ist.}{Von $A$ nach $B$ immer über $S$.}
+\card{Warum}{Warum braucht ein Rad mit Unwucht Lagerkräfte, obwohl $\omega$ konstant ist?}{$\vec L\nparallel\vec\omega$ läuft mit dem Rad um. $\dot{\vec L}\ne0$ braucht ein Drehmoment: die Lager.}
+\card{Warum}{Warum gewinnt die Vollkugel gegen den Ring, bei jeder Masse und jedem Radius?}{$a = g\sin\alpha/(1+k)$; $k = I_s/MR^2$ ist eine reine Formzahl: Kugel $\frac25$, Ring $1$.}
+\card{Trigger}{Unbekannte Kraft in einem Gelenk oder Auflagepunkt. Wozu greifst du?}{Moment oder Drehimpuls um genau diesen Punkt.}
+\end{deck}
+
+\end{document}

@@ -20,6 +20,7 @@ gets tested against them.
 | Grimoire re-attempts: 7 entries from ANA UE01 | 2026-10-15 |
 | Debrief variants: ANA UE01, 8 problems (`Debriefs/analysis/2026-10-12-ue01.pdf`, last pages) | 2026-10-19 |
 | First review of the 10 concepts met in ANA UE01 | 2026-10-19 |
+| First review of the 12 rigid-body concepts (EP1, folio physics 01) | 2026-11-16 |
 
 ## Analysis
 
@@ -63,7 +64,40 @@ Lineare Algebra 1 (LA).
 
 Experimentalphysik 1 (EP1).
 
-*No concepts yet.*
+```mermaid
+flowchart LR
+  subgraph RB[Rigid bodies]
+    COM[Centre of mass] --> RBD[Rigid body]
+    RBD --> AV[Angular velocity]
+    TQ[Torque] --> AM[Angular momentum]
+    AV --> AM
+    AV --> MI[Moment of inertia]
+    MI --> PAT[Parallel-axis theorem]
+    AM --> IT[Inertia tensor]
+    MI --> IT
+    IT --> PA[Principal axes]
+    AV --> ROL[Rolling]
+    PAT --> ROL
+    PAT --> PP[Physical pendulum]
+    TQ --> PP
+    AM --> PRE[Precession]
+  end
+```
+
+| Concept | Level | Next | Folio | Last evidence |
+|---|---|---|---|---|
+| [[Rigid body]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 EP1 notes + folio 01 |
+| [[Angular velocity]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 EP1 notes: $\vec v_i = \vec v_s+\vec\omega\times\vec r_{si}$ written down |
+| [[Centre of mass]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 EP1 notes: gravity torque $= M\vec R_s\times\vec g$, stability stated |
+| [[Torque]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 EP1 notes + folio 01 |
+| [[Moment of inertia]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 EP1 notes: cylinder $I_{zz} = \frac12MR^2$ computed |
+| [[Parallel-axis theorem]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 folio 01 |
+| [[Angular momentum]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 EP1 notes + folio 01 |
+| [[Inertia tensor]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 EP1 notes: derived; sign slip in $L_1$ (fixed in folio) |
+| [[Principal axes]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 folio 01 |
+| [[Rolling]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 folio 01 + video |
+| [[Physical pendulum]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 folio 01 |
+| [[Precession]] | 1 | 2026-11-16 | [[01-starrer-koerper.pdf]] | 2026-11-09 folio 01 |
 
 ## Methods
 

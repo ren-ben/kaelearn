@@ -43,7 +43,7 @@ dithered plates for scenery, and Kael'thos as a phosphor hologram. All of it liv
 ## Components
 
 ```latex
-\documentclass{kaelearn}
+\documentclass{kaelearn}            % [deutsch]: German labels and hyphenation; \de{} then marks the English term
 \subject{Analysis I}  \folio{03}  \title{Cauchy\\Sequences}  \shorttitle{Cauchy sequences}
 \subtitle{One line on what this buys you.}  \sources{Cummings ch.~4 · Skript §2.3}
 \readtime{2 min view · 14 min folio}  \filed{2026-10-11}

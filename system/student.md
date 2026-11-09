@@ -58,6 +58,11 @@ the way olympiad medalists describe it. And less time spent for more learned.
 - Visual work: show rendered options and let the student pick.
 - A handwritten exercise sheet (e.g. `ANA Übung 1`) becomes two things: a faithful transcript note in the vault,
   and a debrief PDF that explains the principles and learnings (asked 2026-10-12).
+- Asked for the rigid-body folio in German (2026-11-09), Feynman-intuitive and complete enough to solve problems
+  without taking own notes. German folios use `\documentclass[deutsch]{kaelearn}`. Ask whether physics folios
+  should be German from now on.
+- EP1 treats rigid bodies mathematically (inertia tensor from $\vec L=\int\vec r\times(\vec\omega\times\vec r)\,\mathrm dm$,
+  cylindrical coordinates), reached by 2026-11-09. Notes are typed on a black Notability page.
 - In Notability: grey ink for side notes and own insights, red for corrections and emphasis, a lamp mark on key
   insights. Crossed-out work stays visible (seen 2026-10-12).
 

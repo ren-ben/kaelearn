@@ -2,6 +2,11 @@
 % LED-dot frames, dither only in scenery. See system/design.md.
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{kaelearn}[2026/10/11 Kaelearn Night Console]
+% [deutsch]: German labels and hyphenation; \de{} then marks the English term
+\newif\ifkl@de
+\DeclareOption{deutsch}{\kl@detrue}
+\DeclareOption*{}
+\ProcessOptions\relax
 \LoadClass[11pt,oneside]{article}
 \providecommand\KLROOT{./}% engine/ with a trailing slash; kl.py passes it
 
@@ -15,6 +20,7 @@
 \RequirePackage{etoolbox,needspace,graphicx,tikz,pgfplots,enumitem,fancyhdr,titlesec,tabularx,array,lastpage,refcount}
 \RequirePackage[most]{tcolorbox}
 \usetikzlibrary{patterns.meta,decorations.pathmorphing,calc,arrows.meta,positioning}
+\ifkl@de\RequirePackage[ngerman]{babel}\usetikzlibrary{babel}\fi
 \usepgfplotslibrary{fillbetween}
 \pgfplotsset{compat=1.18}
 \graphicspath{{./}{figs/}{\KLROOT art/}}
@@ -64,6 +70,29 @@
 \newcommand\kael[1]{\def\kl@kael{#1}}
 \subject{}\folio{00}\shorttitle{}\subtitle{}\sources{}\readtime{}\filed{\today}\kael{reading}
 
+% ---- labels (English, or German with [deutsch]) -------------------------------
+\ifkl@de
+  \def\kl@L@part{Teil}\def\kl@L@problem{Aufgabe}\def\kl@L@plate{Tafel}
+  \def\kl@L@twomin{Die Zwei-Minuten-Sicht}\def\kl@L@twominsub{zuerst lesen}
+  \def\kl@L@guess{Erst raten}\def\kl@L@guesssub{falsch ist erlaubt, raten ist der Sinn}
+  \def\kl@L@terms{Begriffe \de{· Terms}}\def\kl@L@colA{Deutsch}\def\kl@L@colB{English}\def\kl@L@colC{In einer Zeile}
+  \def\kl@L@def{Definition}\def\kl@L@thm{Satz}\def\kl@L@ex{Beispiel}\def\kl@L@why{Warum?}
+  \def\kl@L@trig{Trigger}\def\kl@L@trigsub{siehst du das, greif zu dem}\def\kl@L@see{Du siehst}\def\kl@L@reach{Greif zu}
+  \def\kl@L@deck{Fürs Deck}\def\kl@L@decksub{mach sie selbst, das Machen ist das Lernen}
+  \def\kl@L@anim{Animation}\def\kl@L@tap{tippen zum Abspielen}\def\kl@L@proof{Beweis}
+  \def\kl@L@kfolio{Folio}\def\kl@L@ksubject{Fach}\def\kl@L@ksources{Quellen}\def\kl@L@kread{Lesezeit}\def\kl@L@kfiled{Abgelegt}
+\else
+  \def\kl@L@part{Part}\def\kl@L@problem{Problem}\def\kl@L@plate{Plate}
+  \def\kl@L@twomin{The two-minute view}\def\kl@L@twominsub{read this first}
+  \def\kl@L@guess{Guess first}\def\kl@L@guesssub{wrong is fine, guessing is the point}
+  \def\kl@L@terms{Terms \de{· Begriffe}}\def\kl@L@colA{English}\def\kl@L@colB{Deutsch}\def\kl@L@colC{In one line}
+  \def\kl@L@def{Definition}\def\kl@L@thm{Theorem}\def\kl@L@ex{Example}\def\kl@L@why{Why?}
+  \def\kl@L@trig{Triggers}\def\kl@L@trigsub{if you see this, reach for that}\def\kl@L@see{You see}\def\kl@L@reach{Reach for}
+  \def\kl@L@deck{For the deck}\def\kl@L@decksub{make these yourself, the making is the learning}
+  \def\kl@L@anim{Animation}\def\kl@L@tap{tap to play}\def\kl@L@proof{Proof}
+  \def\kl@L@kfolio{Folio}\def\kl@L@ksubject{Subject}\def\kl@L@ksources{Sources}\def\kl@L@kread{Read}\def\kl@L@kfiled{Filed}
+\fi
+
 % ---- running head, LED page meter --------------------------------------------
 \newcommand\kl@leds{%
   \edef\kl@n{\getpagerefnumber{LastPage}}%
@@ -83,8 +112,8 @@
 
 % ---- headings ----------------------------------------------------------------
 % sections are "Part I"; a sheet that goes problem by problem (debriefs) says \problemparts
-\newcommand\kl@part{Part \Roman{section}}
-\newcommand\problemparts{\renewcommand\kl@part{Problem \twodigit{\arabic{section}}}}
+\newcommand\kl@part{\kl@L@part\ \Roman{section}}
+\newcommand\problemparts{\renewcommand\kl@part{\kl@L@problem\ \twodigit{\arabic{section}}}}
 \titleformat{\section}[display]{\color{klhi}}{\color{kldim}\pix{\kl@part}}{1pt}{\goth\fontsize{25}{28}\selectfont}
 \titlespacing*{\section}{0pt}{16pt}{9pt}
 \titleformat{\subsection}{\fell\fontsize{14}{16}\selectfont\color{klhi}}{}{0pt}{}
@@ -106,20 +135,21 @@
 % [tcolorbox options], #2 kind, #3 name, #4 German name; either name may be empty.
 % [unbreakable] keeps a short panel in one piece.
 \newtcolorbox{panel}[4][]{klframe,title={\kl@title{#2}{#3}{#4}},#1}
-\newtcolorbox{twominute}{klframe,title={\kl@title{The two-minute view}{read this first}{}}}
-\newtcolorbox{guessfirst}{klframe,title={\kl@title{Guess first}{wrong is fine, guessing is the point}{}}}
+\newtcolorbox{twominute}{klframe,title={\kl@title{\kl@L@twomin}{\kl@L@twominsub}{}}}
+\newtcolorbox{guessfirst}{klframe,title={\kl@title{\kl@L@guess}{\kl@L@guesssub}{}}}
 \newcounter{klitem}
-\newenvironment{definition}[2]{\refstepcounter{klitem}\begin{panel}{Definition \kl@folio.\theklitem}{#1}{#2}}{\end{panel}}
-\newenvironment{theorem}[2]{\refstepcounter{klitem}\begin{panel}{Theorem \kl@folio.\theklitem}{#1}{#2}}{\end{panel}}
-\newenvironment{example}[1]{\refstepcounter{klitem}\begin{panel}{Example \kl@folio.\theklitem}{#1}{}}{\end{panel}}
+\newenvironment{definition}[2]{\refstepcounter{klitem}\begin{panel}{\kl@L@def\ \kl@folio.\theklitem}{#1}{#2}}{\end{panel}}
+\newenvironment{theorem}[2]{\refstepcounter{klitem}\begin{panel}{\kl@L@thm\ \kl@folio.\theklitem}{#1}{#2}}{\end{panel}}
+\newenvironment{example}[1]{\refstepcounter{klitem}\begin{panel}{\kl@L@ex\ \kl@folio.\theklitem}{#1}{}}{\end{panel}}
 % the keystone: the one theorem the folio exists for, sealed in wax (once per folio)
-\newenvironment{keystone}[2]{\refstepcounter{klitem}\begin{tcolorbox}[klframe,title={\kl@title{Theorem \kl@folio.\theklitem}{#1}{#2}},
+\newenvironment{keystone}[2]{\refstepcounter{klitem}\begin{tcolorbox}[klframe,title={\kl@title{\kl@L@thm\ \kl@folio.\theklitem}{#1}{#2}},
   overlay unbroken and first app={\node at ([xshift=-22pt,yshift=-14pt]frame.north east){\waxseal};}]}{\end{tcolorbox}}
 \renewcommand\qedsymbol{\textcolor{kldim}{\rule{1.1ex}{1.1ex}}}
-\renewcommand\proofname{\textsc{Proof}}
+\renewcommand\proofname{\textsc{\kl@L@proof}}
+\ifkl@de\AtBeginDocument{\renewcommand\proofname{\textsc{\kl@L@proof}}}\fi% babel resets it
 
 % Why: the question in the open, the word in the margin
-\newcommand\why[2]{\par\medskip\needspace{5\baselineskip}\noindent\marginpar{\vspace{-3pt}\goth\fontsize{19}{19}\selectfont\color{klhi}Why?}%
+\newcommand\why[2]{\par\medskip\needspace{5\baselineskip}\noindent\marginpar{\vspace{-3pt}\goth\fontsize{19}{19}\selectfont\color{klhi}\kl@L@why}%
   {\fell\itshape\fontsize{12.5}{15}\selectfont\color{klhi}#1}\par\smallskip\noindent\hangindent=1.1em\hangafter=0 #2\par\medskip}
 
 \setlist{nosep,leftmargin=1.2em}
@@ -129,15 +159,15 @@
 % ---- tables: terms, triggers, cards -----------------------------------------
 \newcommand\kl@rule[1]{\noalign{\vskip2pt}\multicolumn{#1}{@{}l@{}}{\ledline{\linewidth}}\\\noalign{\vskip1pt}}
 \newcommand\term[3]{#1 & \de{#2} & #3\\\kl@rule{3}}
-\newenvironment{terms}{\subsection{Terms \de{· Begriffe}}\noindent\begin{tabular}{@{}>{\raggedright}p{33mm}>{\raggedright}p{33mm}%
+\newenvironment{terms}{\subsection{\kl@L@terms}\noindent\begin{tabular}{@{}>{\raggedright}p{33mm}>{\raggedright}p{33mm}%
   >{\raggedright\arraybackslash}p{\dimexpr\linewidth-66mm-4\tabcolsep\relax}@{}}
-  {\color{kldim}\pix{English}} & {\color{kldim}\pix{Deutsch}} & {\color{kldim}\pix{In one line}}\\\kl@rule{3}}{\end{tabular}\par}
+  {\color{kldim}\pix{\kl@L@colA}} & {\color{kldim}\pix{\kl@L@colB}} & {\color{kldim}\pix{\kl@L@colC}}\\\kl@rule{3}}{\end{tabular}\par}
 \newcommand\trigger[2]{#1 & #2\\\kl@rule{2}}
-\newenvironment{triggers}{\begin{panel}{Triggers}{if you see this, reach for that}{}\noindent
+\newenvironment{triggers}{\begin{panel}{\kl@L@trig}{\kl@L@trigsub}{}\noindent
   \begin{tabular}{@{}>{\raggedright}p{58mm}>{\raggedright\arraybackslash}p{\dimexpr\linewidth-58mm-2\tabcolsep\relax}@{}}
-  {\color{kldim}\pix{You see}} & {\color{kldim}\pix{Reach for}}\\\kl@rule{2}}
+  {\color{kldim}\pix{\kl@L@see}} & {\color{kldim}\pix{\kl@L@reach}}\\\kl@rule{2}}
   {\end{tabular}\end{panel}}
-\newtcolorbox{deck}{klframe,title={\kl@title{For the deck}{make these yourself, the making is the learning}{}}}
+\newtcolorbox{deck}{klframe,title={\kl@title{\kl@L@deck}{\kl@L@decksub}{}}}
 \newcommand\card[3]{\par\smallskip\noindent\begin{tabularx}{\linewidth}{@{}p{14mm}X@{\hspace{8pt}}X@{}}
   {\color{kldim}\pix{#1}} & #2 & {\color{kldim}#3}\end{tabularx}\par\smallskip}
 
@@ -154,7 +184,7 @@
 % ---- animations: the poster frame; a tap plays the video from R2 --------------
 % \anim{slug}{what to watch for}: anims/slug.png here, anims/slug.mp4 in the bucket
 \providecommand\KLANIMS{}
-\newcommand\anim[2]{\begin{panel}[unbreakable]{Animation}{#1}{tap to play}
+\newcommand\anim[2]{\begin{panel}[unbreakable]{\kl@L@anim}{#1}{\kl@L@tap}
   \noindent\href{\KLANIMS #1.mp4}{\includegraphics[width=\linewidth]{anims/#1.png}}\par\smallskip
   {\fell\itshape\fontsize{10.5}{13}\selectfont\color{kldim}#2}\end{panel}}
 
@@ -188,7 +218,7 @@
     \node[anchor=north west,inner sep=0] (plate) at ([yshift=-7mm]P){\includegraphics[width=182mm]{\kl@plate}};
     \draw[kllow,leds](P) rectangle ([xshift=.5mm,yshift=-.5mm]plate.south east);
     \draw[kllow,leds]([yshift=-7mm]P)--++(182.5mm,0);
-    \node[anchor=west,text=kldim] at ([xshift=4mm,yshift=-3.5mm]P){\pix{Plate // \kl@platename}};
+    \node[anchor=west,text=kldim] at ([xshift=4mm,yshift=-3.5mm]P){\pix{\kl@L@plate\ // \kl@platename}};
     \fill[kldim]([xshift=178mm,yshift=-3.5mm]P) ++(-2.6pt,-2.6pt) rectangle ++(5.2pt,5.2pt);
     \node[anchor=north west,text=kldim] at ([yshift=-8mm]P |- plate.south){\pix{Kaelearn // \kl@subject\ // Folio \kl@folio}};
     \node[anchor=north west,text=klhi,align=left,inner sep=0,font=\goth\fontsize{50}{50}\selectfont] (t)
@@ -196,7 +226,7 @@
     \node[anchor=north west,text=klink,align=left,inner sep=0,font=\fell\itshape\fontsize{15}{18}\selectfont] (s)
       at ([yshift=-5mm]t.south west){\kl@subtitle};
     \node[anchor=north west,inner sep=0] at ([yshift=-9mm]s.south west){\begin{tabular}{@{}l@{\hspace{8mm}}l@{}}
-      \kl@kv{Folio}{\kl@folio}\kl@kv{Subject}{\kl@subject}\kl@kv{Sources}{\kl@sources}\kl@kv{Read}{\kl@read}\kl@kv{Filed}{\kl@filed}\end{tabular}};
+      \kl@kv{\kl@L@kfolio}{\kl@folio}\kl@kv{\kl@L@ksubject}{\kl@subject}\kl@kv{\kl@L@ksources}{\kl@sources}\kl@kv{\kl@L@kread}{\kl@read}\kl@kv{\kl@L@kfiled}{\kl@filed}\end{tabular}};
     \node[anchor=south east,inner sep=0] at ([xshift=-12mm,yshift=17mm]current page.south east){\includegraphics[width=58mm]{\kl@kael}};
     \draw[kllow,leds]([xshift=14mm,yshift=17.5mm]current page.south west)--([xshift=-14mm,yshift=17.5mm]current page.south east);
   \end{tikzpicture}%
