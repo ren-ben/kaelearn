@@ -1,0 +1,343 @@
+% LA multiple-choice test prep: the 27-question pool (LA_Musterantworten.pdf) as a 100-box drill.
+\documentclass{kaelearn}
+\subject{Linear Algebra I}  \folio{MC Prep}  \title{Tick or Trap}
+\shorttitle{LA test · MC drill}
+\subtitle{All 27 pool questions as a 100-box drill, the traps behind the distractors, and the key.}
+
+% a box to tick in Notability, options in one column (mc) or a 2x2 grid (\two)
+\newsavebox\kboxbox
+\AtBeginDocument{\sbox\kboxbox{\tikz[baseline=-.1ex]\draw[kldim,line width=.5pt](0,0) rectangle (2.4mm,2.4mm);}}
+\newcommand\kbox{\usebox\kboxbox}
+\newcommand\opt[2]{\kbox\enspace{\color{kldim}\fell\itshape #1}\enspace #2}
+\newenvironment{mc}{\begin{enumerate}[label={\kbox\enspace{\color{kldim}\fell\itshape\alph*}},
+  leftmargin=3.3em,itemsep=2pt,topsep=4pt]}{\end{enumerate}}
+\newcommand\two[4]{\par\smallskip\noindent\hspace{1.15em}\begin{tabular}{@{}p{58mm}@{\hspace{8mm}}p{58mm}@{}}
+  \opt a{#1} & \opt b{#2}\\[3pt] \opt c{#3} & \opt d{#4}\end{tabular}\par\vspace{4pt}}
+\newcommand\q{\par\needspace{7\baselineskip}\medskip\noindent\refstepcounter{klproblem}%
+  {\tek\fontsize{11}{11}\selectfont\color{klhi}\twodigit{\theklproblem}}\hspace{8pt}}
+% key line: number, true boxes, pool numbers, why the false ones are false
+\newcommand\key[4]{\par\smallskip\noindent\hangindent=2.4em\hangafter=1%
+  \makebox[2.4em][l]{\tek\fontsize{10}{10}\selectfont\color{klhi}#1}{\color{klhi}\textbf{#2}}%
+  \quad{\color{kldim}\pix{Pool #3}}\quad #4\par}
+
+\begin{document}
+\makeheader
+\marginkael{keeper}
+
+\begin{panel}{How to use it}{25 minutes}{}
+\begin{enumerate}
+  \item Part I cold: no notes, no Musterantworten, 25 minutes. Tick every true statement. Any
+        number of boxes per question can be true, from none to all four.
+  \item Score with the key in Part III: one point per box, for a tick on a true statement or a
+        blank on a false one. 100 points.
+  \item Every miss: write the true statement in the margin, then find its trap in Part II.
+  \item Two days before the test, Part I again, cold. Only the boxes you missed matter.
+\end{enumerate}
+\end{panel}
+
+\section{The Drill}
+
+\q Let $f\colon\mathbb R\to\mathbb R$, $x\mapsto x^2+1$.
+\begin{mc}
+  \item $f(-1)=0$.
+  \item The image \de{(Bild)} of $f$ is $[1,\infty)$.
+  \item $f$ is surjective.
+  \item $f$ is injective.
+\end{mc}
+
+\q Vectors $v_1,\dots,v_k$ in a real vector space are linearly independent \de{(linear unabhängig)}
+if and only if
+\begin{mc}
+  \item $\lambda_1v_1+\dots+\lambda_kv_k=0$ holds only for $\lambda_1=\dots=\lambda_k=0$.
+  \item $\lambda_1v_1+\dots+\lambda_kv_k=0$ holds for $\lambda_1=\dots=\lambda_k=0$.
+  \item every $v_i$ is nonzero.
+  \item (for $k\ge2$) no $v_i$ is a linear combination of the others.
+\end{mc}
+
+\q Let $G$ be a set with an operation $*\colon G\times G\to G$.
+\begin{mc}
+  \item $(G,*)$ is a group \de{(Gruppe)} if $*$ is associative, has a neutral element, and every
+        element has an inverse.
+  \item In every group, $a*b=b*a$ for all $a,b$.
+  \item $(\mathbb N,+)$ is a group.
+  \item $(\mathbb R\setminus\{0\},\cdot)$ is a group.
+\end{mc}
+
+\q Lines \de{(Geraden)} in $\mathbb R^n$, $n\ge2$.
+\begin{mc}
+  \item Two points $p\neq q$ determine exactly one line, $\{p+t(q-p)\mid t\in\mathbb R\}$.
+  \item Any two points determine a line.
+  \item A line through the origin is $\operatorname{span}(v)$ for a single vector $v\neq0$.
+  \item $\{t(1,2)\mid t\in\mathbb R\}$ and $\{t(2,4)\mid t\in\mathbb R\}$ are different lines.
+\end{mc}
+
+\q Let $A=\{1,2,3\}$ and $B=\{3,4\}$.
+\two{$A\cup B=\{1,2,3,4\}$}{$A\cap B=\{3\}$}{$3\notin A\cup B$, as ``or'' excludes ``both''}{$A\cap\emptyset=A$}
+
+\q Let $z=1+2i$ and $w=1-i$.
+\two{$z+w=2+i$}{$zw=-1+i$}{$z/w=(-1+3i)/2$}{$i^2=1$}
+
+\q Which are real vector spaces \de{(reelle Vektorräume)}, with the usual addition and scalar
+multiplication?
+\begin{mc}
+  \item $\mathbb R^3$
+  \item $P_2(\mathbb R)$, the real polynomials of degree at most $2$
+  \item the real polynomials of degree exactly $2$
+  \item $\{(x,y)\in\mathbb R^2\mid x+y=1\}$
+\end{mc}
+
+\q Which maps are injective but not surjective?
+\two{$\mathbb R\to\mathbb R$, $x\mapsto e^x$}{$\mathbb R\to(0,\infty)$, $x\mapsto e^x$}%
+  {$\mathbb N\to\mathbb N$, $n\mapsto n+1$}{$\mathbb R\to\mathbb R$, $x\mapsto x^3$}
+
+\q Which sets are linearly dependent over $\mathbb R$? Here $e_1=(1,0,\dots,0)\in\mathbb R^8$.
+\two{$\{(1,2),(2,4)\}\subset\mathbb R^2$}{$\{1,2\}\subset\mathbb R$}%
+  {$\{e_1,2e_1\}\subset\mathbb R^8$}{$\{(1,1),(1,-1)\}\subset\mathbb R^2$}
+
+\q Fields \de{(Körper)}.
+\begin{mc}
+  \item In a field, every element has a multiplicative inverse.
+  \item $\mathbb R$ and $\mathbb C$, with $+$ and $\cdot$, are fields.
+  \item $\mathbb Q$ is a field.
+  \item In every field, $0\neq1$.
+\end{mc}
+
+\q Planes and hyperplanes \de{(Ebenen und Hyperebenen)}.
+\begin{mc}
+  \item A hyperplane in $\mathbb R^n$ has dimension $n-1$.
+  \item In $\mathbb R^3$, the hyperplanes are exactly the planes.
+  \item In $\mathbb R^2$, the hyperplanes are exactly the lines.
+  \item In $\mathbb R^4$, every plane is a hyperplane.
+\end{mc}
+
+\q Let $f\colon X\to Y$ be a map.
+\begin{mc}
+  \item $f$ is injective $\iff$ for all $x_1,x_2\in X$: $f(x_1)=f(x_2)\Rightarrow x_1=x_2$.
+  \item $f$ is injective $\iff$ for all $x_1,x_2\in X$: $x_1=x_2\Rightarrow f(x_1)=f(x_2)$.
+  \item $f$ is surjective $\iff$ $f(X)=Y$.
+  \item $f$ is bijective $\iff$ every $y\in Y$ has exactly one preimage \de{(Urbild)}.
+\end{mc}
+
+\q The Euclidean norm \de{(Norm)} on $\mathbb R^n$.
+\begin{mc}
+  \item $\|(3,4)\|_2=5$.
+  \item $\|\cdot\|_2$ is a map $\mathbb R^n\to\mathbb R_{\ge0}$: every $x$ gets exactly one number $\ge0$.
+  \item $\|x+y\|_2\le\|x\|_2+\|y\|_2$ for all $x,y\in\mathbb R^n$.
+  \item $\|\lambda x\|_2=\lambda\|x\|_2$ for all $\lambda\in\mathbb R$, $x\in\mathbb R^n$.
+\end{mc}
+
+\q Two or three vectors.
+\begin{mc}
+  \item Two vectors in $\mathbb R$ (over $\mathbb R$) can be linearly independent.
+  \item Two vectors in $\mathbb R^2$ can be linearly independent.
+  \item Three vectors in $\mathbb R^2$ can be linearly independent.
+  \item $u,v\in\mathbb R^n$ are linearly dependent $\iff$ one of them is a multiple of the other.
+\end{mc}
+
+\q Maps $f\colon A\to B$, $g\colon B\to C$ and $h\colon A\to C$ form a triangle.
+\begin{mc}
+  \item The triangle is a commutative diagram \de{(kommutatives Diagramm)} $\iff$ $h=g\circ f$.
+  \item $g\circ f$ means: first $g$, then $f$.
+  \item ``Commutative'' means $g\circ f=f\circ g$.
+  \item Commutative means: any two directed paths with the same start and end give the same map.
+\end{mc}
+
+\q Which are abelian groups \de{(abelsche Gruppen)}?
+\two{$(\mathbb Z,+)$}{$(\mathbb Z,\cdot)$}{$(\mathbb R,\cdot)$}{$(\mathbb C,+)$}
+
+\q Planes in $\mathbb R^3$.
+\begin{mc}
+  \item Any three points determine exactly one plane.
+  \item Three non-collinear points $p,q,r$ determine exactly one plane,
+        $\{p+s(q-p)+t(r-p)\mid s,t\in\mathbb R\}$.
+  \item A plane through the origin is $\operatorname{span}(u,v)$ for linearly independent $u,v$.
+  \item $p+\operatorname{span}(u,v)$ is a plane whenever $u\neq0$ and $v\neq0$.
+\end{mc}
+
+\q Let $z=a+bi$ with $a,b\in\mathbb R$, and $\bar z=a-bi$.
+\two{$z\bar z=a^2-b^2$}{$1/i=i$}{$|z|=a+b$}{$i^3=i$}
+
+\q Which maps are surjective but not injective?
+\two{$\mathbb R\to[0,\infty)$, $x\mapsto x^2$}{$\mathbb R\to\mathbb R$, $x\mapsto x^2$}%
+  {$[0,\infty)\to[0,\infty)$, $x\mapsto x^2$}{$\mathbb R\to[-1,1]$, $x\mapsto\sin x$}
+
+\q Linear combinations \de{(Linearkombinationen)} and the span \de{(lineare Hülle)}.
+\begin{mc}
+  \item A linear combination of $v_1,\dots,v_k$ is $\lambda_1v_1+\dots+\lambda_kv_k$ with
+        $\lambda_i\in\mathbb R$.
+  \item $\operatorname{span}(v_1,\dots,v_k)$ is the set of all linear combinations of $v_1,\dots,v_k$.
+  \item $0$ is a linear combination of any $v_1,\dots,v_k$.
+  \item $(3,0)\in\operatorname{span}\bigl((1,0),(2,0)\bigr)$.
+\end{mc}
+
+\q Rings and fields \de{(Ringe und Körper)}.
+\begin{mc}
+  \item Every field is a ring.
+  \item Every ring is a field.
+  \item $(\mathbb Z,+,\cdot)$ is a ring but not a field.
+  \item $\mathbb Z_2=\{0,1\}$, with $+$ and $\cdot$ modulo $2$, is a field.
+\end{mc}
+
+\q Let $a\in\mathbb R^n$ with $a\neq0$, let $b\in\mathbb R$, and $H=\{x\in\mathbb R^n\mid a\cdot x=b\}$.
+\begin{mc}
+  \item $H$ is a hyperplane.
+  \item $H$ is a subspace \de{(Unterraum)} of $\mathbb R^n$, for every $b$.
+  \item $H=p+\operatorname{span}(v_1,\dots,v_{n-1})$ for some $p\in H$ and some linearly independent
+        $v_1,\dots,v_{n-1}$.
+  \item If $v_1,\dots,v_{n-1}$ are linearly dependent, $p+\operatorname{span}(v_1,\dots,v_{n-1})$ still
+        has dimension $n-1$.
+\end{mc}
+
+\q The notation $f\colon M\to N$, $m\mapsto f(m)$.
+\begin{mc}
+  \item $M$ is the domain \de{(Definitionsmenge)}, $N$ the codomain \de{(Zielmenge)}.
+  \item Every $m\in M$ is assigned exactly one element $f(m)\in N$.
+  \item Every $n\in N$ equals $f(m)$ for some $m\in M$.
+  \item $\to$ goes between sets, $\mapsto$ between elements.
+\end{mc}
+
+\q Linear independence in $\mathbb R^n$.
+\begin{mc}
+  \item Every set that contains the zero vector is linearly dependent.
+  \item Every subset of a linearly independent set is linearly independent.
+  \item Every subset of a linearly dependent set is linearly dependent.
+  \item A linearly independent subset of $\mathbb R^n$ has at most $n$ elements.
+\end{mc}
+
+\q Image and codomain.
+\begin{mc}
+  \item For every map $f\colon M\to N$: $f(M)\subseteq N$.
+  \item For $f\colon\mathbb R\to\mathbb R$, $x\mapsto x^2$, the image is a proper subset
+        \de{(echte Teilmenge)} of the codomain.
+  \item If the image of $f$ is a proper subset of its codomain, $f$ is not surjective.
+  \item If the image of $f$ is a proper subset of its codomain, $f$ is not injective.
+\end{mc}
+
+\section{The Traps}
+
+\opening{E}{very distractor} on a multiple-choice sheet is a true statement with one thing broken. Here
+is what breaks, by topic. The pool numbers point into the Musterantworten.
+\aside{I have read every exam since there were examiners. The distractors come in four kinds: a
+reversed arrow, a dropped absolute value, a forgotten zero, a rule without its domain.}
+
+\begin{panel}[unbreakable]{Maps}{Abbildungen}{Pool 1--8}
+\begin{itemize}
+  \item \textbf{The rule is not the map.} Domain and codomain decide. $x\mapsto x^2$ is neither
+        injective nor surjective on $\mathbb R\to\mathbb R$, surjective on $\mathbb R\to[0,\infty)$,
+        bijective on $[0,\infty)\to[0,\infty)$.
+  \item \textbf{Injective runs backwards:} $f(x_1)=f(x_2)\Rightarrow x_1=x_2$. The forward
+        direction holds for every map, which makes it the favourite distractor.
+  \item \textbf{Image $\subseteq$ codomain, always;} equal exactly when $f$ is surjective. A proper
+        image says nothing about injectivity: $e^x$ on $\mathbb R\to\mathbb R$.
+        \de{Wertebereich} means the codomain in the Musterantworten, the image in some books. Read
+        which one the question means.
+  \item \textbf{$g\circ f$ means $f$ first.} A diagram commutes when all directed paths with the
+        same start and end give the same map. It has nothing to do with $g\circ f=f\circ g$.
+  \item \textbf{``Or'' is inclusive:} $x\in A\cup B$ allows $x$ in both.
+\end{itemize}
+\end{panel}
+
+\begin{panel}[unbreakable]{Algebra}{groups, rings, fields}{Pool 9--12, 19}
+\begin{itemize}
+  \item \textbf{A group has three axioms:} associativity, a neutral element, inverses. Closure is
+        built into $*\colon G\times G\to G$. Commutativity is extra; with it the group is abelian.
+  \item \textbf{The usual non-groups:} $(\mathbb N,+)$ (no $-1$), $(\mathbb Z,\cdot)$ (no
+        $\tfrac12$), $(\mathbb R,\cdot)$ ($0$ has no inverse). Remove the zero and
+        $(\mathbb R\setminus\{0\},\cdot)$ is a group.
+  \item \textbf{A field inverts everything except $0$}, and has $0\neq1$. Fields: $\mathbb Q$,
+        $\mathbb R$, $\mathbb C$, $\mathbb Z_2$. Not a field: $\mathbb Z$.
+  \item \textbf{Field $\Rightarrow$ ring.} Never the converse.
+  \item \textbf{In $\mathbb C$, $i^2=-1$.} Multiply out, then replace $i^2$ by $-1$. To divide,
+        multiply top and bottom by the conjugate: $\frac zw=\frac{z\bar w}{|w|^2}$ with
+        $|w|^2=w\bar w=c^2+d^2$ for $w=c+di$. So $1/i=-i$ and $i^3=-i$.
+\end{itemize}
+\end{panel}
+
+\begin{panel}[unbreakable]{Vector spaces}{Vektorräume}{Pool 25}
+\begin{itemize}
+  \item \textbf{Check the zero vector first.} No zero, no vector space: $\{x+y=1\}$, and the
+        polynomials of degree exactly $2$ (also not closed: $x^2+(-x^2)=0$).
+  \item \textbf{Examples to name:} $\mathbb R^n$, $P_2(\mathbb R)$, all functions
+        $\mathbb R\to\mathbb R$, $\mathbb C$ over $\mathbb R$, $\{0\}$.
+\end{itemize}
+\end{panel}
+
+\begin{panel}[unbreakable]{Independence}{lineare Unabhängigkeit}{Pool 13--14, 18, 20--22, 26--27}
+\begin{itemize}
+  \item \textbf{The word is ``only'':} $\sum\lambda_iv_i=0$ \emph{only} for all $\lambda_i=0$.
+        That zero coefficients give $0$ is true for every family of vectors.
+  \item \textbf{The zero vector makes any set dependent:} $1\cdot0=0$ is a nontrivial combination.
+        All vectors nonzero is still not enough: $(1,0),(2,0)$.
+  \item \textbf{Two vectors are dependent} exactly when one of them is a multiple of the other.
+        ``One of them'' matters: $0$ is a multiple of every $v$, but $v\neq0$ is no multiple of $0$.
+  \item \textbf{Count:} at most $n$ independent vectors in $\mathbb R^n$. Two numbers in
+        $\mathbb R$ are always dependent; three vectors in $\mathbb R^2$ too.
+  \item \textbf{Inheritance:} subsets of independent sets are independent, supersets of dependent
+        sets are dependent. Not the other way round.
+  \item \textbf{Linear combinations are finite sums;} the span is the set of all of them, and $0$
+        is always in it.
+\end{itemize}
+\end{panel}
+
+\begin{panel}[unbreakable]{Geometry}{Geraden, Ebenen, Hyperebenen, Norm}{Pool 15--17, 23--24}
+\begin{itemize}
+  \item \textbf{Line:} two \emph{distinct} points, or a point and a direction $\neq0$. Through the
+        origin: one vector $\neq0$. Parallel direction vectors give the same line.
+  \item \textbf{Plane:} three \emph{non-collinear} points, or a point and two \emph{independent}
+        directions. Through the origin: two independent vectors.
+  \item \textbf{Hyperplane: dimension $n-1$. Plane: dimension $2$.} The two agree only in
+        $\mathbb R^3$. In $\mathbb R^2$ a hyperplane is a line; in $\mathbb R^4$ it is
+        3-dimensional.
+  \item \textbf{$\{a\cdot x=b\}$ with $a\neq0$} is a hyperplane, and a subspace only when $b=0$.
+        Written as $p+\operatorname{span}(v_1,\dots,v_{n-1})$, the $v_i$ must be independent, or the
+        span has fewer than $n-1$ dimensions.
+  \item \textbf{Norm:} $\|x\|_2=\sqrt{x_1^2+\dots+x_n^2}\ge0$, $\|x\|=0\iff x=0$,
+        $\|\lambda x\|=|\lambda|\,\|x\|$ with the absolute value, and $\|x+y\|\le\|x\|+\|y\|$.
+\end{itemize}
+\end{panel}
+
+\section{The Key}
+
+Bold: the true boxes. Then why each false box is false.
+
+\key{01}{b}{3}{(a) $(-1)^2+1=2$: the square eats the sign. (c) $0$ is never reached. (d) $f(1)=f(-1)=2$.}
+\key{02}{a, d}{13, 27}{(b) True for every family; the definition says \emph{only}. (c) Necessary, not
+  sufficient: $(1,0),(2,0)$.}
+\key{03}{a, d}{9}{(b) That is the extra axiom of an abelian group. (c) $1$ has no inverse: $1+n=0$ has no
+  solution in $\mathbb N$.}
+\key{04}{a, c}{15}{(b) $p=q$ gives no direction. (d) $(2,4)=2(1,2)$: same direction through the same
+  point, same line.}
+\key{05}{a, b}{1}{(c) ``Or'' is inclusive: $3$ is in both. (d) $A\cap\emptyset=\emptyset$.}
+\key{06}{a, c}{19}{(b) $(1+2i)(1-i)=1-i+2i-2i^2=3+i$; $-1+i$ comes from $i^2=+1$. (d) $i^2=-1$.
+  Check (c): $(1-i)\cdot\frac{-1+3i}{2}=\frac{2+4i}{2}=1+2i$.}
+\key{07}{a, b}{25}{(c) $x^2+(-x^2)=0$ has degree $\neq2$: not closed, no zero vector. (d)
+  $(0,0)\notin$ the set.}
+\key{08}{a, c}{5}{(b) Same rule, smaller codomain: now bijective. (c) The smallest natural number
+  ($0$ or $1$, by your convention) is never hit. (d) Bijective, with inverse $\sqrt[3]{x}$.}
+\key{09}{a, b, c}{14, 18, 21, 22}{(a) $2(1,2)-(2,4)=0$. (b) $2\cdot1-1\cdot2=0$. (c) $2e_1-1\cdot(2e_1)=0$.
+  (d) $\lambda+\mu=0$ and $\lambda-\mu=0$ force $\lambda=\mu=0$.}
+\key{10}{b, c, d}{11}{(a) Every element \emph{except} $0$.}
+\key{11}{a, b, c}{17}{(d) A plane in $\mathbb R^4$ has dimension $2$, a hyperplane $3$.}
+\key{12}{a, c, d}{4}{(b) Holds for every map; the arrow points the wrong way.}
+\key{13}{a, b, c}{24}{(d) $\|\lambda x\|=|\lambda|\,\|x\|$. With $\lambda=-1$ the right side would be
+  negative.}
+\key{14}{b, d}{14}{(a) $\dim\mathbb R=1$. (c) At most $2$ independent vectors in $\mathbb R^2$.}
+\key{15}{a, d}{8}{(b) $(g\circ f)(a)=g(f(a))$: $f$ acts first. (c) $f\circ g$ is not even defined
+  here: $g$ lands in $C$, $f$ starts in $A$.}
+\key{16}{a, d}{10}{(b) $2x=1$ has no solution in $\mathbb Z$. (c) $0$ has no inverse.}
+\key{17}{b, c}{16}{(a) Three collinear points lie on infinitely many planes. (d) $u=(1,0,0)$,
+  $v=(2,0,0)$ span a line.}
+\key{18}{none}{19}{(a) $z\bar z=a^2+b^2$. (b) $i\cdot(-i)=1$, so $1/i=-i$. (c) $|z|=\sqrt{a^2+b^2}$.
+  (d) $i^3=i^2\cdot i=-i$.}
+\key{19}{a, d}{6}{(b) Neither: $-1$ is never hit, and $f(1)=f(-1)$. (c) Bijective, with inverse
+  $\sqrt{x}$.}
+\key{20}{a, b, c, d}{26}{(c) Take every $\lambda_i=0$. (d) $(3,0)=3(1,0)+0\cdot(2,0)$.}
+\key{21}{a, c, d}{12}{(b) $\mathbb Z$ is a ring and not a field. (d) The only nonzero element, $1$, is
+  its own inverse.}
+\key{22}{a, c}{17, 23}{(b) For $b\neq0$, $0\notin H$. (d) Dependent vectors span fewer than $n-1$
+  dimensions; that is why independence appears in the description.}
+\key{23}{a, b, d}{2}{(c) That is surjectivity, not part of being a map.}
+\key{24}{a, b, d}{13, 27}{(c) $\{(1,0)\}\subset\{(1,0),(2,0)\}$: dependent set, independent subset.}
+\key{25}{a, b, c}{7}{(d) $e^x$ on $\mathbb R\to\mathbb R$: injective, image $(0,\infty)$.}
+
+\end{document}

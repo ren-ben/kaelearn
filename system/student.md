@@ -27,6 +27,12 @@ Self-study codes: `CUM` is Jay Cummings, *Real Analysis: A Long-Form Mathematics
 worked through with its exercises (goes to `analysis`). `PRF` is a Udemy course on proofs
 (`proofs`). `ODE` is a Udemy course on differential equations (`odes`). YouTube is a supplement.
 
+Exams known so far:
+
+- **LA test:** multiple choice (learned 2026-11-10). The question pool is `LA Fragen.pdf`, 27
+  questions, with German sample answers in `LA_Musterantworten.pdf`. Prep sheet:
+  `subjects/linear-algebra/exams/la-mc-prep/`. Date not known yet.
+
 Homework is discussed in the exercise classes (UE). Several have the student present solutions
 at the board, so a solved problem must be explainable out loud.
 

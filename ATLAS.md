@@ -20,7 +20,9 @@ gets tested against them.
 | Grimoire re-attempts: 7 entries from ANA UE01 | 2026-10-15 |
 | Debrief variants: ANA UE01, 8 problems (`Debriefs/analysis/2026-10-12-ue01.pdf`, last pages) | 2026-10-19 |
 | First review of the 10 concepts met in ANA UE01 | 2026-10-19 |
+| LA MC drill (`la-mc-prep.pdf`): Part I cold, then again two days before the test | now |
 | First review of the 14 rigid-body concepts (EP1, folios physics 01 and 02) | 2026-11-16 |
+| First review of the 10 LA concepts (test pool) | 2026-11-17 |
 
 ## Analysis
 
@@ -56,9 +58,38 @@ Homework solved on paper counts as "met". Level 2 needs a teach-back or a clean 
 
 ## Linear algebra
 
-Lineare Algebra 1 (LA).
+Lineare Algebra 1 (LA). Multiple-choice test from a 27-question pool; drill:
+[[la-mc-prep.pdf]] (`Exams/linear-algebra/`). Maps (injective, surjective) and fields are
+mapped under Analysis.
 
-*No concepts yet.*
+```mermaid
+flowchart LR
+  subgraph AS[Algebraic structures]
+    GR[Group] --> RI[Ring]
+    RI --> CX[Complex numbers]
+  end
+  subgraph VS[Vector spaces]
+    VSP[Vector space] --> LC[Linear combination and span]
+    LC --> LI[Linear independence]
+    LI --> LP[Lines and planes]
+    LP --> HP[Hyperplane]
+    VSP --> NO[Norm]
+  end
+  CD[Commutative diagram]
+```
+
+| Concept | Level | Next | Folio | Last evidence |
+|---|---|---|---|---|
+| [[Commutative diagram]] | 1 | 2026-11-17 | | 2026-11-10 LA pool Q8; drill not taken yet |
+| [[Group]] | 1 | 2026-11-17 | | 2026-11-10 LA pool Q9, Q10; drill not taken yet |
+| [[Ring]] | 1 | 2026-11-17 | | 2026-11-10 LA pool Q12; drill not taken yet |
+| [[Complex numbers]] | 1 | 2026-11-17 | | 2026-11-10 LA pool Q19; drill not taken yet |
+| [[Vector space]] | 1 | 2026-11-17 | | 2026-11-10 LA pool Q25; drill not taken yet |
+| [[Linear combination and span]] | 1 | 2026-11-17 | | 2026-11-10 LA pool Q26; drill not taken yet |
+| [[Linear independence]] | 1 | 2026-11-17 | | 2026-11-10 LA pool Q13, Q14, Q18, Q20 to Q22, Q27; drill not taken yet |
+| [[Lines and planes]] | 1 | 2026-11-17 | | 2026-11-10 LA pool Q15, Q16; drill not taken yet |
+| [[Hyperplane]] | 1 | 2026-11-17 | | 2026-11-10 LA pool Q17, Q23; drill not taken yet |
+| [[Norm]] | 1 | 2026-11-17 | | 2026-11-10 LA pool Q24; drill not taken yet |
 
 ## Physics
 
