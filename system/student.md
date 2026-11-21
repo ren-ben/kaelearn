@@ -32,6 +32,11 @@ Exams known so far:
 - **LA test:** multiple choice (learned 2026-11-10). The question pool is `LA Fragen.pdf`, 27
   questions, with German sample answers in `LA_Musterantworten.pdf`. Prep sheet:
   `subjects/linear-algebra/exams/la-mc-prep/`. Date not known yet.
+- **ANA Übungstest** (learned 2026-11-21): open questions, the first time this professor does not use multiple
+  choice, so no old exams exist. The professor is known for hard exams; speed matters. Scope: Skript chapters 1–4
+  (up to and including continuity), Erwartungshorizont items 1–45, and the sheet "Vorbereitung Übungstest" with 16
+  Kernfähigkeiten. Roughly two weeks after 2026-11-21; exact date not known yet. Playbook: folio 01 (Sixteen Moves).
+  The sources sit in the repo root, untracked.
 
 Homework is discussed in the exercise classes (UE). Several have the student present solutions
 at the board, so a solved problem must be explainable out loud.
@@ -69,6 +74,10 @@ the way olympiad medalists describe it. And less time spent for more learned.
   should be German from now on.
 - EP1 treats rigid bodies mathematically (inertia tensor from $\vec L=\int\vec r\times(\vec\omega\times\vec r)\,\mathrm dm$,
   cylindrical coordinates), reached by 2026-11-09. Notes are typed on a black Notability page.
+- Analysis (2026-11-21): understands the concepts and can state the definitions, but cannot yet solve the homework
+  alone; the gap is turning a definition into a proof. Says they are good at maths.
+- Documents (2026-11-21): engaging, intuitive, to the point, but with room to breathe. No long lines crammed with
+  symbols: one relation per line, chains as aligned displays.
 - In Notability: grey ink for side notes and own insights, red for corrections and emphasis, a lamp mark on key
   insights. Crossed-out work stays visible (seen 2026-10-12).
 

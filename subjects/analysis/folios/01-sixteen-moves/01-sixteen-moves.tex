@@ -1,0 +1,1690 @@
+% Folio 01, analysis: the Übungstest playbook. Skript ch. 1-4 (Erwartungshorizont items 1-45).
+% The Vorbereitung's 16 Kernfähigkeiten as 16 moves (skeleton, fresh worked example, traps, tasks),
+% the theorem catalogue, the counterexamples, exam craft, a 14-day plan, and a key that gives
+% answers and first moves only.
+\documentclass{kaelearn}
+\subject{Analysis I}
+\folio{01}
+\title{Sixteen\\Moves}
+\shorttitle{Test playbook}
+\subtitle{Everything the Übungstest can ask,\\and the move that answers it.}
+\sources{Skript ch.~1--4 · Erwartungshorizont 1--45 · Vorbereitung Übungstest · UE~1--5}
+\readtime{2 min view · 3 h folio · 14 days of drills}
+\filed{2026-11-21}
+\plate{plate.png}{Zeno's nave}
+\kael{keeper}
+
+\makeatletter
+% tasks T01, T02, ... carry labels, so the key always matches
+\newcounter{task}
+\renewcommand\thetask{T\twodigit{\arabic{task}}}
+\newcommand\task[1]{\par\smallskip\noindent\refstepcounter{task}\label{#1}%
+  {\tek\fontsize{9.5}{10}\selectfont\color{klhi}\thetask}\hspace{7pt}}
+\newenvironment{yourturn}{\begin{panel}{Your turn}{answers and first moves in the key}{}}{\end{panel}}
+\newcommand\keyline[1]{\par\smallskip\noindent\hangindent=2.7em\hangafter=1%
+  \makebox[2.7em][l]{\tek\fontsize{9.5}{10}\selectfont\color{klhi}\ref{#1}}}
+% move furniture
+\newcommand\when[1]{\par\smallskip\noindent\hangindent=3.2em\hangafter=1%
+  \makebox[3.2em][l]{\color{kldim}\pix{When}}#1\par\smallskip}
+\newcommand\trap[1]{\par\smallskip\noindent\hangindent=3.2em\hangafter=1%
+  \makebox[3.2em][l]{\color{kldim}\pix{Trap}}#1\par}
+% the two documents of an epsilon proof, side by side
+\newenvironment{twodocs}{\par\smallskip\noindent\tabularx{\linewidth}{@{}X@{\hspace{7mm}}X@{}}%
+  {\color{kldim}\pix{Scratch // backwards}} & {\color{kldim}\pix{Proof // forwards}}\\\kl@rule{2}}%
+  {\endtabularx\par\smallskip}
+% tables as rows of minipages, so a page may break between any two rows
+\newlength\klcolw
+\newcommand\kl@cell[2]{\begin{minipage}[t]{#1}\raggedright\strut#2\strut\end{minipage}}
+\newcommand\kl@sep{\par\nopagebreak\vspace{1pt}\noindent\ledline{\linewidth}\par\vspace{2pt}}
+% definitions and their negations
+\newenvironment{negtable}{\par}{\par}
+\newcommand\negrow[3]{\par\needspace{4\baselineskip}\noindent{\color{klhi}#1}\par\nopagebreak
+  \noindent\makebox[11mm][l]{\color{kldim}\pix{says}}$#2$\par\nopagebreak
+  \noindent\makebox[11mm][l]{\color{kldim}\pix{fails}}$#3$\kl@sep}
+% two-column tables: #1 width of the left column, #2 and #3 the headers
+\newenvironment{twocol}[3]{\par\needspace{6\baselineskip}\setlength\klcolw{#1}\row{\color{kldim}\pix{#2}}{\color{kldim}\pix{#3}}\nopagebreak}{\par}
+\newcommand\row[2]{\noindent\kl@cell{\klcolw}{#1}\hspace{8pt}\kl@cell{\dimexpr\linewidth-\klcolw-8pt\relax}{#2}\kl@sep}
+% the plan
+\newenvironment{plan}{\par\pday{\color{kldim}\pix{Day}}{\color{kldim}\pix{Do}}{\color{kldim}\pix{Done when}}}{\par}
+\newcommand\pday[3]{\noindent\kl@cell{8mm}{{\tek\color{klhi}#1}}\hspace{6pt}\kl@cell{78mm}{#2}\hspace{6pt}%
+  \kl@cell{\dimexpr\linewidth-86mm-12pt\relax}{{\color{kldim}#3}}\kl@sep}
+\renewenvironment{triggers}{\begin{panel}{Triggers}{if you see this, reach for that}{}\par
+  \setlength\klcolw{58mm}\row{\color{kldim}\pix{You see}}{\color{kldim}\pix{Reach for}}}{\end{panel}}
+\renewcommand\trigger[2]{\row{#1}{#2}}
+\pretocmd{\section}{\needspace{14\baselineskip}}{}{}
+\pretocmd{\subsection}{\needspace{8\baselineskip}}{}{}
+\makeatother
+% dictionary entries and the theorem catalogue
+\newcommand\entry[2]{\par\needspace{3\baselineskip}\smallskip\noindent{\color{klhi}#1}\enspace\de{(#2)}\enspace}
+\newcommand\eg{\enspace{\color{kldim}\pix{e.g.}}\enspace}
+\newcommand\nonex{\enspace{\color{kldim}\pix{not}}\enspace}
+\newcommand\satz[2]{\par\needspace{5\baselineskip}\medskip\noindent{\color{klhi}\textbf{#1}}\enspace\de{(#2)}\par\nopagebreak\noindent\ignorespaces}
+\newcommand\idea{\par\nopagebreak\smallskip\noindent\hangindent=2.8em\hangafter=1\makebox[2.8em][l]{\color{kldim}\pix{Idea}}}
+\newcommand\N{\mathbb N}
+\newcommand\Q{\mathbb Q}
+\newcommand\R{\mathbb R}
+\newcommand\eps{\varepsilon}
+\newcommand\cmd[1]{{\mono\fontsize{9}{11}\selectfont #1}}
+
+\begin{document}
+\makecover
+
+% =====================================================================================
+\section{Knowing is not solving}
+
+\opening{Y}{ou can recite} the $\eps$-criterion. Ask you to prove $\frac{n^2+2n}{2n^2-5}\to\frac12$ with it, and the pen
+stops. That is not a gap in knowledge. It is a gap in \emph{moves}: the small set of standard manoeuvres that turn a definition
+into a proof. Nobody invents them during an exam. They are learned, the way a chess player learns openings instead of deriving
+every game from the rules.
+\aside{I have read every analysis exam ever set. They are the same forty ideas wearing different numbers.}
+
+Your professor has been more generous than he may have meant to be. The Erwartungshorizont lists every item he can ask, and
+it says what an answer to each kind looks like:
+\begin{itemize}
+  \item a \textbf{term} \de{(Begriff)}: the definition, an example, a counterexample;
+  \item a \textbf{theorem} \de{(Satz)}: the statement with every hypothesis, and the proof or its idea;
+  \item a \textbf{formula}: the formula, and the methods of computing with it from the exercises.
+\end{itemize}
+The Vorbereitung sheet names sixteen core skills \de{(Kernfähigkeiten)} up to the end of chapter~4. They are the sixteen moves
+of this folio, in the same order, so the two documents lie side by side. Each move gets the question shapes that call for it,
+a skeleton you can write half asleep, a worked example that is \emph{not} the one on the sheet, its traps, and problems for
+you. Part~VII holds every theorem in the shape the test wants, Part~VIII every counterexample, Part~IX the craft of the exam
+itself, Part~X your fourteen days.
+
+One thing I will not do: hand you full solutions to the problems marked T. The key gives the answer and the first move. The
+road from there to the proof is the exact skill the test measures, and it only grows when you walk it yourself.
+
+\begin{twominute}
+\begin{itemize}
+  \item \textbf{The test.} Open questions on Skript chapters 1--4: Erwartungshorizont items 1--45, in the shapes of the
+        Vorbereitung's sixteen core skills.
+  \item \textbf{Three answer shapes.} Term: definition, example, counterexample. Theorem: every hypothesis, then the proof
+        idea. Computation: the method from the exercises.
+  \item \textbf{Every $\eps$-proof is written twice.} Scratch work runs backwards, from the goal $|a_n-a|<\eps$ to a condition
+        on $n$. The proof runs forwards: choose $N$, then one chain of inequalities that ends in $<\eps$.
+  \item \textbf{Estimates do the work.} Make the expression simpler and bigger until it reads $\frac Cn$ or $C\,|x-x_0|$.
+        Crude is fine. Nobody grades the size of your $N$.
+  \item \textbf{To refute, negate.} Flip every quantifier, then build one counterexample. For functions it is usually two
+        sequences.
+  \item \textbf{One axiom carries the course.} Archimedes, $\sqrt a$, nested intervals, monotone convergence,
+        Bolzano--Weierstraß, Cauchy, the intermediate and extreme value theorems: the supremum axiom in costumes.
+  \item \textbf{Skript tools only.} No derivatives, no L'Hospital, no $(1+\frac1n)^n\to e$. If you need a fact the Skript
+        lacks, prove it in two lines or take another road.
+\end{itemize}
+\end{twominute}
+
+\begin{guessfirst}
+\begin{enumerate}
+  \item A sequence has exactly one accumulation point \de{(Häufungspunkt)}. Must it converge?
+  \item $x\mapsto x^2$ is continuous on $\R$. Is it uniformly continuous there? And $x\mapsto\sqrt x$ on $[0,\infty)$?
+  \item Let $a_1=1$ and $a_{n+1}=2a_n$. If $a_n\to L$, then $L=2L$, so $L=0$. Where is the mistake?
+\end{enumerate}
+\end{guessfirst}
+
+\begin{terms}
+\term{supremum}{Supremum}{least upper bound; need not lie in the set}
+\term{Archimedean property}{Archimedische Eigenschaft}{every real number is exceeded by some $n\in\N$}
+\term{nested intervals}{Intervallschachtelung}{closed, bounded, each inside the last}
+\term{accumulation point}{Häufungspunkt}{the limit of some subsequence}
+\term{Cauchy sequence}{Cauchy-Folge}{late terms close to each other}
+\term{absolutely convergent}{absolut konvergent}{$\sum|a_n|$ converges}
+\term{uniformly continuous}{gleichmäßig stetig}{one $\delta$ serves every point}
+\term{intermediate value theorem}{Zwischenwertsatz}{continuous on $[a,b]$: every value in between is hit}
+\end{terms}
+
+% =====================================================================================
+\section{The engine}
+
+\subsection{Quantifiers are a game}
+\opening{E}{very definition} in this course is a game against an opponent. Read $\forall$ as \emph{he chooses} and $\exists$
+as \emph{you choose}, strictly from left to right:
+\[
+  \forall\eps>0\ \ \exists N\in\N\ \ \forall n\ge N:\quad |a_n-a|<\eps .
+\]
+He names an $\eps$, as small as he likes. You answer with an $N$, knowing his $\eps$. He picks any $n\ge N$. You win if
+$|a_n-a|<\eps$. A proof is a strategy that wins every time: a recipe $\eps\mapsto N$. That is the whole reason $N$ may depend
+on $\eps$ and never on $n$. You move before he picks $n$.
+\aside{Weierstraß turned limits into this game in his Berlin lectures around 1860. Nearly two centuries of quarrelling about
+infinitesimals ended there.}
+
+To \emph{refute} a statement, switch sides. The negation flips every quantifier and negates the last line. An implication
+$A\Rightarrow B$ fails exactly when $A$ holds and $B$ does not. Every ``zeigen Sie, dass \dots\ nicht'' in the test is one of
+these rows.
+
+\begin{panel}{Table}{definitions and their negations}{Verneinung}
+\begin{negtable}
+\negrow{Convergence $a_n\to a$ \de{(Konvergenz)}}
+ {\forall\eps>0\ \exists N\ \forall n\ge N:\ |a_n-a|<\eps}
+ {\exists\eps>0\ \forall N\ \exists n\ge N:\ |a_n-a|\ge\eps}
+\negrow{Cauchy sequence}
+ {\forall\eps>0\ \exists N\ \forall m,n\ge N:\ |a_m-a_n|<\eps}
+ {\exists\eps>0\ \forall N\ \exists m,n\ge N:\ |a_m-a_n|\ge\eps}
+\negrow{$M$ bounded above \de{(nach oben beschränkt)}}
+ {\exists K\ \forall x\in M:\ x\le K}
+ {\forall K\ \exists x\in M:\ x>K}
+\negrow{An upper bound $s$ of $M$ is the supremum}
+ {\forall\eps>0\ \exists x\in M:\ x>s-\eps}
+ {\exists\eps>0\ \forall x\in M:\ x\le s-\eps}
+\negrow{$f$ continuous at $x_0$ \de{(stetig in $x_0$)}}
+ {\forall\eps>0\ \exists\delta>0\ \forall x\in D:\ |x-x_0|<\delta\Rightarrow|f(x)-f(x_0)|<\eps}
+ {\exists\eps>0\ \forall\delta>0\ \exists x\in D:\ |x-x_0|<\delta\ \text{and}\ |f(x)-f(x_0)|\ge\eps}
+\negrow{$f$ uniformly continuous on $D$}
+ {\forall\eps>0\ \exists\delta>0\ \forall x,y\in D:\ |x-y|<\delta\Rightarrow|f(x)-f(y)|<\eps}
+ {\exists\eps>0\ \forall\delta>0\ \exists x,y\in D:\ |x-y|<\delta\ \text{and}\ |f(x)-f(y)|\ge\eps}
+\negrow{$f$ injective}
+ {\forall x_1,x_2:\ f(x_1)=f(x_2)\Rightarrow x_1=x_2}
+ {\exists x_1\ne x_2:\ f(x_1)=f(x_2)}
+\negrow{$f\colon M\to N$ surjective}
+ {\forall y\in N\ \exists x\in M:\ f(x)=y}
+ {\exists y\in N\ \forall x\in M:\ f(x)\ne y}
+\end{negtable}
+\end{panel}
+
+\why{Why does the order $\forall\eps\ \exists N$ matter so much?}{Swap it to $\exists N\ \forall\eps$ and you must name one
+$N$ that works for every $\eps$ at once. Then $|a_n-a|<\eps$ for all $\eps>0$, so $a_n=a$ for every $n\ge N$: the sequence is
+eventually constant. Same symbols, a different statement. The order is the content.}
+
+\subsection{Every proof is written twice}
+Here is the difficulty you described, in one sentence: the proof must \emph{choose} $N$ in its second line, but you only learn
+which $N$ works at the end of the computation. So you compute twice. The scratch work runs backwards, from the goal to a
+condition on $n$. The proof runs forwards and looks like magic, because the magic happened on the scratch paper. In the exam you
+may show the scratch as a \emph{Vorüberlegung}; the proof must still stand on its own.
+
+\par\needspace{78mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,width=.88\linewidth,height=52mm,xmin=0,xmax=41,ymin=0.6,ymax=2.45,
+  xlabel={$n$},ylabel={$a_n$},xtick={1,10,21,30,40},ytick={1,1.7,2,2.3},
+  yticklabels={$1$,$2-\varepsilon$,$2$,$2+\varepsilon$},ylabel style={rotate=-90}]
+  \fill[pattern={dither25},pattern color=klink] (axis cs:21,1.7) rectangle (axis cs:41,2.3);
+  \draw[klink,line width=.5pt] (axis cs:21,1.7)--(axis cs:41,1.7) (axis cs:21,2.3)--(axis cs:41,2.3);
+  \draw[kldim,dashed,line width=.5pt] (axis cs:0,2)--(axis cs:41,2);
+  \draw[kldim,dashed,line width=.5pt] (axis cs:21,0.6)--(axis cs:21,2.45) node[above,text=klink]{$N=21$};
+  \addplot[only marks,mark=square*,mark size=1.4pt,color=klhi,samples at={21,...,40}] {(2*x^2+1)/(x^2+3*x)};
+  \addplot[only marks,mark=square,mark size=1.4pt,color=kldim,samples at={1,...,20}] {(2*x^2+1)/(x^2+3*x)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{The example below, $a_n=\frac{2n^2+1}{n^2+3n}\to2$, with $\eps=0.3$. The proof's $N=21$ works: every later
+term sits in the band. The sequence actually enters the band
+at $n=17$. Nobody cares. The definition asks for \emph{some} $N$, so crude estimates are allowed, and they are faster.}
+
+\begin{panel}[unbreakable]{Example}{two documents}{}
+Claim: $a_n=\dfrac{2n^2+1}{n^2+3n}\to 2$.
+\begin{twodocs}
+Goal: $|a_n-2|<\eps$. Make one fraction:
+\[\begin{aligned}
+|a_n-2|&=\left|\frac{2n^2+1-2n^2-6n}{n^2+3n}\right|\\
+&=\frac{6n-1}{n^2+3n}.
+\end{aligned}\]
+Bigger and simpler:
+\[ \frac{6n-1}{n^2+3n}<\frac{6n}{n^2}=\frac6n . \]
+Enough: $\frac6n<\eps$, that is, $n>\frac6\eps$.
+&
+Let $\eps>0$. By the Archimedean property there is $N\in\N$ with $N>\frac6\eps$. For every $n\ge N$,
+\[\begin{aligned}
+|a_n-2|&=\frac{6n-1}{n^2+3n}\\
+&<\frac6n\le\frac6N<\eps .
+\end{aligned}\]
+Hence $a_n\to2$.\hfill\qedsymbol
+\end{twodocs}
+\end{panel}
+
+
+\subsection{The toolbox}
+Nearly every estimate in chapters 2--4 is one of these. When you are stuck, go down the list.
+
+\medskip
+\begin{twocol}{66mm}{Tool}{Reach for it when}
+\row{$|x+y|\le|x|+|y|$ \ and \ $\bigl||x|-|y|\bigr|\le|x-y|$}{a difference must be split; $|a_n|\to|a|$}
+\row{numerator up, denominator down}{$\frac{6n-1}{n^2+3n}<\frac{6n}{n^2}$: simpler and bigger}
+\row{$n^2-5\ge\frac{n^2}{2}$ for $n\ge4$}{a minus sign in a denominator: keep half of the top power}
+\row{$\sqrt a-\sqrt b=\dfrac{a-b}{\sqrt a+\sqrt b}$}{a difference of roots}
+\row{$x^n-y^n=(x-y)(x^{n-1}+x^{n-2}y+\dots+y^{n-1})$}{powers; $\frac{x^N-1}{x-1}$; monotonicity of $x^n$}
+\row{$(1+h)^n\ge1+nh$ \ for $h\ge-1$}{$q^n\to0$ for $|q|<1$; $(1+\frac1n)^n\ge2$}
+\row{$(1+h)^n\ge\binom n2h^2$ \ for $h\ge0$, $n\ge2$}{$\sqrt[n]n\to1$}
+\row{$a_nb_n-ab=(a_n-a)b_n+a(b_n-b)$}{products; then $\frac\eps2+\frac\eps2$}
+\row{$a_n\to a>0\ \Rightarrow\ a_n>\frac a2$ for large $n$}{quotients: play $\eps=\frac a2$}
+\row{restrict $\delta\le1$}{$\eps$-$\delta$: it freezes the other factor, e.g.\ $|x+x_0|<1+2|x_0|$}
+\row{$\frac1{k^2}\le\frac1{k(k-1)}=\frac1{k-1}-\frac1k$}{bounding $\sum\frac1{k^2}$ by a telescope}
+\row{$(1+\frac1n)^n\le3$}{the Skript has no limit $e$; this bound replaces it}
+\row{$\exp x\ge1+x+\frac{x^2}2$ for $x\ge0$}{$\frac{x}{\exp x}\to0$: exp beats every power}
+\end{twocol}
+
+\medskip
+Four of these need a line of proof, because the test will not let you assume them.
+
+\emph{Reverse triangle inequality.} $|x|=|(x-y)+y|\le|x-y|+|y|$, so $|x|-|y|\le|x-y|$. Swap $x$ and $y$.
+
+\emph{Keep half.} $n^2-5\ge\frac{n^2}2\iff n^2\ge10$, which holds for $n\ge4$.
+
+\emph{Binomial lower bound.} In $(1+h)^n=\sum_k\binom nk h^k$ every term is $\ge0$. Keep only $k=2$.
+
+\emph{The bound $(1+\frac1n)^n\le3$.} By the binomial theorem $(1+\frac1n)^n=\sum_{k=0}^n\binom nk\frac1{n^k}$, and for $k\ge1$
+\[
+  \binom nk\frac1{n^k}=\frac{n(n-1)\cdots(n-k+1)}{k!\;n^k}\le\frac1{k!}\le\frac1{2^{k-1}} .
+\]
+So the sum is at most $1+\bigl(1+\frac12+\frac14+\cdots\bigr)=3$.
+
+% =====================================================================================
+\section{The real numbers}
+
+\opening{T}{he Skript builds} $\R$ in three layers. The field axioms K1--K9 give you arithmetic. The order axioms O1--O4 give
+you inequalities. $\Q$ satisfies both layers and is useless for analysis, because it is full of holes. The third layer is one
+sentence, and it fills them.
+\aside{Dedekind invented the cuts of your Skript's Exkurs in 1858, teaching calculus in Zürich, because he refused to prove that
+bounded increasing sequences converge by pointing at a drawing.}
+
+\begin{keystone}{Completeness}{Vollständigkeit}
+\textbf{The supremum axiom.} Every nonempty subset of $\R$ that is bounded above has a least upper bound, its supremum.
+
+\smallskip\noindent
+Everything hard in chapters 1--4 stands on this sentence, and every item below is \emph{false} in $\Q$: $\sqrt2$ exists; nested
+intervals share a point; monotone bounded sequences converge; bounded sequences have convergent subsequences; Cauchy sequences
+converge; a continuous $f$ on $[a,b]$ takes every value between $f(a)$ and $f(b)$, attains a maximum and a minimum, and is
+uniformly continuous.
+\end{keystone}
+
+\par\needspace{100mm}
+\begin{center}
+\begin{tikzpicture}[x=1mm,y=1mm,
+  box/.style={draw=kllow,leds,align=center,font=\fell\fontsize{9}{10.5}\selectfont,text=klink,
+    minimum width=27mm,minimum height=8.5mm,inner sep=2pt},
+  top/.style={box,text=klhi,draw=kldim},
+  arr/.style={-{Stealth[length=4pt]},kldim,line width=.5pt}]
+  \node[top] (S) at (64,0) {Supremum axiom};
+  \node[box] (A) at (15,-16) {Archimedes};
+  \node[box] (I) at (48,-16) {Nested intervals};
+  \node[box] (M) at (81,-16) {Monotone\\convergence};
+  \node[box] (R) at (114,-16) {$\sqrt a$ exists};
+  \node[box] (D) at (15,-32) {$\mathbb Q$ is dense};
+  \node[box] (B) at (48,-32) {Bolzano--\\Weierstraß};
+  \node[box] (L) at (81,-32) {Leibniz};
+  \node[box] (Z) at (114,-32) {Intermediate\\value theorem};
+  \node[box] (C) at (15,-48) {Cauchy\\criterion};
+  \node[box] (E) at (48,-48) {Extreme\\value theorem};
+  \node[box] (H) at (81,-48) {Heine--Cantor};
+  \node[box] (U) at (114,-48) {Inverse\\function theorem};
+  \node[box] (T) at (15,-64) {Absolute conv.,\\majorant, ratio};
+  \node[box] (F) at (48,-64) {Continuous\\extension};
+  \node[box] (P) at (81,-64) {Step-function\\approximation};
+  \node[box] (X) at (114,-64) {$\exp$ and $\log$\\bijective};
+  \foreach \a/\b in {S/A,S/I,S/M,S/R,A/D,I/B,M/L,M/Z,B/C,B/E,B/H,Z/U,C/T,C/F,H/P,E/P,U/X}
+    \draw[arr] (\a)--(\b);
+\end{tikzpicture}
+\end{center}
+\plotcaption{Each arrow reads ``is proved with''. Asked to prove a theorem, first ask which arrow points into it. That is the
+idea, and the idea is most of the marks.}
+
+\why{Why is the Archimedean property not on the list of things that fail in $\Q$?}{Because it holds in $\Q$: for
+$r=\frac pm>0$ with $p,m\in\N$, the integer $p+1$ exceeds $r$. The Skript derives it from the supremum axiom only because a
+real number is not known to be a fraction. What $\Q$ lacks is completeness: $\{q\in\Q: q^2<2\}$ is bounded and has no least
+upper bound \emph{in} $\Q$, and every theorem on the list falls into that hole.}
+
+\subsection{The terms of chapter 1}
+The cheapest points on the test. For each: the definition, an example, a non-example.
+
+\entry{Sets}{Mengen}
+$M\subseteq N$ means $x\in M\Rightarrow x\in N$. $M=N$ means both inclusions, so equality is proved as two inclusions, or as a
+chain of $\iff$ on membership. De Morgan: $(M\cup N)^c=M^c\cap N^c$ and $(M\cap N)^c=M^c\cup N^c$.
+
+\entry{Map}{Abbildung}
+assigns to each $x\in M$ exactly one $f(x)\in N$. Image $f(A)=\{f(x):x\in A\}$. Preimage $f^{-1}(B)=\{x\in M: f(x)\in B\}$;
+it exists for every map, inverse or not.
+\eg $f(x)=x^2$ on $\R$: $f([-1,2])=[0,4]$ and $f^{-1}([1,4])=[-2,-1]\cup[1,2]$.
+
+\entry{Injective, surjective, bijective}{injektiv, surjektiv, bijektiv}
+$f(x_1)=f(x_2)\Rightarrow x_1=x_2$; every $y\in N$ is hit; both. $f$ is bijective iff some $g$ has $g\circ f=\mathrm{id}_M$
+and $f\circ g=\mathrm{id}_N$. Then $g=f^{-1}$, and $(g\circ f)^{-1}=f^{-1}\circ g^{-1}$.
+\eg $x\mapsto x^2$ from $[0,\infty)$ to $[0,\infty)$. \nonex the same rule from $\R$ to $\R$: neither.
+
+\entry{Field}{Körper}
+a set with $+$ and $\cdot$ and elements $0\ne1$ satisfying K1--K9: associativity, commutativity, neutral elements, inverses,
+distributivity. Inverses are then unique, and $0\cdot x=0$ follows from $0x=(0+0)x=0x+0x$.
+\eg $\Q$, $\R$, $\mathbb C$, $\mathbb Z_2=\{0,1\}$. \nonex $\mathbb Z$, where $2$ has no inverse.
+
+\entry{Ordered field}{angeordneter Körper}
+a field with $<$ satisfying O1--O4: trichotomy, transitivity, and $<$ survives adding $z$ and multiplying by $z>0$. Then
+$x^2>0$ for $x\ne0$, in particular $1>0$. Multiplying by $z<0$ flips an inequality; $0\le x<y$ gives $x^2<y^2$; and
+$|x|\le K\iff-K\le x\le K$. \nonex $\mathbb C$: in any order $i^2=-1$ would be positive.
+
+\entry{Absolute value}{Betrag}
+$|x|=x$ for $x\ge0$ and $-x$ otherwise. $|xy|=|x||y|$, $|x+y|\le|x|+|y|$, and the workhorse
+\[ |x-a|<r\iff a-r<x<a+r . \]
+\eg $|2x-1|<3\iff-1<x<2$.
+
+\entry{Interval}{Intervall}
+a set $I$ with: $x,y\in I$ and $x\le z\le y$ imply $z\in I$.
+\eg $[0,1]$, $(0,\infty)$, $\{a\}$. \nonex $\{0,1\}$ and $[0,1]\cup[2,3]$.
+
+\entry{Bounds, maximum, minimum}{Schranken, Maximum, Minimum}
+$K$ is an upper bound of $M$ if $x\le K$ for all $x\in M$. A maximum is an upper bound that lies \emph{in} $M$. $M$ is bounded
+iff $|x|\le K$ for all $x\in M$, for some $K$.
+\eg $\max\{1,3,5\}=5$. \nonex $(0,1)$ has no maximum.
+
+\entry{Supremum, infimum}{Supremum, Infimum}
+$\sup M$ is the least upper bound: an upper bound $s$ such that
+\[ \forall\eps>0\ \ \exists x\in M:\ x>s-\eps . \]
+$\inf M=-\sup(-M)$. If $\max M$ exists, it is $\sup M$.
+\eg $\sup(0,1)=1\notin(0,1)$. \nonex $\N$ has no supremum in $\R$.
+
+\entry{Archimedean property}{Archimedische Eigenschaft}
+for every $r\in\R$ some $n\in\N$ has $n>r$; equivalently, for every $\eps>0$ some $\frac1n<\eps$. Every $N$ in Part~IV is
+produced by this sentence.
+
+\entry{Countable}{abzählbar}
+$M$ is countably infinite if a bijection $\N\to M$ exists; ``countable'' often also admits finite sets.
+\eg $\mathbb Z$, $\Q$, $\N\times\N$. \nonex $\R$ and $[0,1]$ are uncountable \de{(überabzählbar)}.
+
+\entry{Nested intervals}{Intervallschachtelung}
+closed bounded intervals $I_n=[a_n,b_n]$ with $I_{n+1}\subseteq I_n$. Their intersection is never empty, and it is a single point
+when $b_n-a_n\to0$. \nonex $(0,\frac1n)$: open, and the intersection is empty.
+
+\entry{Complex numbers}{komplexe Zahlen}
+$z=x+iy$ with $i^2=-1$, $\bar z=x-iy$, $|z|=\sqrt{x^2+y^2}$, $z\bar z=|z|^2$. To divide, multiply by the conjugate:
+$\frac1{1-2i}=\frac{1+2i}{5}$.
+
+% ------------------------------------------------------------------------------------
+\subsection{Move 01\quad Induction}
+\when{``Zeigen Sie für alle $n\in\N$ (bzw.\ $n\ge n_0$)'': a sum formula, an inequality, a divisibility, anything indexed by $n$.}
+
+\begin{panel}[unbreakable]{Skeleton}{induction}{vollständige Induktion}
+\begin{enumerate}
+  \item State $A(n)$ exactly, with its starting index $n_0$.
+  \item \textbf{Base} \de{(Induktionsanfang)}: check $A(n_0)$ by computing both sides.
+  \item \textbf{Hypothesis} \de{(Induktionsvoraussetzung)}: $A(n)$ holds for one fixed $n\ge n_0$.
+  \item \textbf{Step} \de{(Induktionsschritt)}: start from one side of $A(n+1)$, find $A(n)$ inside it, use the hypothesis,
+        walk to the other side. For an inequality, replace the $A(n)$-part by its bound and prove the small leftover
+        inequality separately.
+  \item Close: ``Nach dem Induktionsprinzip gilt $A(n)$ für alle $n\ge n_0$.''
+\end{enumerate}
+\end{panel}
+
+\begin{example}{an inequality by induction}
+Claim: $2^n\ge n^2$ for all $n\ge4$.
+
+\emph{Base.} $2^4=16=4^2$.
+
+\emph{Step.} Let $n\ge4$ with $2^n\ge n^2$. Then $2^{n+1}=2\cdot2^n\ge2n^2$. Leftover: is $2n^2\ge(n+1)^2$? That is
+$n^2\ge2n+1$, that is $(n-1)^2\ge2$, true because $n\ge4$ gives $(n-1)^2\ge9$. So
+\[ 2^{n+1}\ge2n^2\ge(n+1)^2 . \]
+The claim fails for $n=3$ ($8<9$). The base is not decoration: it is where $n_0$ comes from.
+\end{example}
+
+\trap{Opening the step with the goal $2^{n+1}\ge(n+1)^2$ and manipulating it until something true appears. That proves the
+converse. Start on one side and walk to the other. (Your UE01/8.)}
+\trap{Using the step where it fails. Say where $n\ge n_0$ enters; here the leftover needed $n\ge3$.}
+
+\begin{yourturn}
+\task{t:fac}$\sum_{k=1}^n k\cdot k!=(n+1)!-1$ for all $n\in\N$.
+\task{t:fac2}$n!>2^n$ for all $n\ge4$.
+\par\smallskip\noindent Then Vorbereitung~§1 with the sheet closed.
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{Move 02\quad Supremum and infimum}
+\when{``Bestimmen Sie Supremum, Infimum, Maximum und Minimum (falls existent)''; ``Zeigen Sie $\sup(A+B)=\sup A+\sup B$''.}
+
+\begin{panel}[unbreakable]{Skeleton}{supremum}{Supremum nachweisen}
+\begin{enumerate}
+  \item \textbf{Guess.} Compute the first elements, split by parity, draw the number line.
+  \item \textbf{Upper bound.} Show $x\le s$ for every $x\in M$.
+  \item \textbf{Least.} For every $\eps>0$ produce an $x\in M$ with $x>s-\eps$. The Archimedean property picks the index.
+  \item \textbf{Attained?} If $s\in M$, then $s=\max M$. If not, say so and why (a strict inequality for every element).
+  \item \textbf{Infimum:} the mirror image, $x<i+\eps$.
+\end{enumerate}
+\end{panel}
+
+\begin{example}{a set with neither maximum nor minimum}
+$M=\bigl\{(-1)^n\frac{n}{n+1}: n\in\N\bigr\}=\{-\frac12,\ \frac23,\ -\frac34,\ \frac45,\dots\}$.
+
+\emph{Guess.} Even indices climb towards $1$, odd ones fall towards $-1$.
+
+\emph{Bounds.} $\bigl|(-1)^n\frac n{n+1}\bigr|=\frac n{n+1}<1$, so every element lies strictly between $-1$ and $1$. So $1$ is
+an upper bound and $-1$ a lower bound, and neither is attained: no maximum, no minimum.
+
+\emph{Least.} Let $\eps>0$. Choose $N\in\N$ with $N>\frac1\eps$ and take the even index $n=2N$. Then
+\[ \frac{n}{n+1}=1-\frac1{n+1}>1-\frac1N>1-\eps . \]
+So $\sup M=1$. The odd index $n=2N+1$ gives $-\frac n{n+1}<-1+\eps$ the same way, so $\inf M=-1$.
+\end{example}
+
+\par\needspace{40mm}
+\begin{center}
+\begin{tikzpicture}[x=50mm,y=1mm]
+  \fill[pattern={dither25},pattern color=klink] (0.75,-2.2) rectangle (1,2.2);
+  \draw[kldim,line width=.6pt] (-1.18,0)--(1.18,0);
+  \foreach \n in {1,...,16}{\pgfmathsetmacro\v{(-1)^\n*\n/(\n+1)}\fill[klhi] (\v,0) circle (1.3pt);}
+  \draw[klink] (1,-3)--(1,3) node[above]{$\sup M=1$};
+  \draw[klink] (-1,-3)--(-1,3) node[above]{$\inf M=-1$};
+  \draw[kldim,dashed] (0.75,-3)--(0.75,3) node[above]{$1-\eps$};
+  \draw[kldim] (0,-1.5)--(0,1.5) node[below=4mm]{$0$};
+\end{tikzpicture}
+\end{center}
+\plotcaption{For $\eps=\frac14$ the window $(1-\eps,1]$ contains elements of $M$, here every even-indexed one from $n=4$ on.
+That is what step 3 proves for every $\eps$. The window never contains $1$ itself.}
+
+\begin{example}{supremum of a sum}
+Let $A,B\subseteq\R$ be nonempty and bounded above, $A+B=\{a+b: a\in A,\ b\in B\}$. Then $\sup(A+B)=\sup A+\sup B$.
+
+\emph{Upper bound.} $a+b\le\sup A+\sup B$ for all $a,b$.
+
+\emph{Least.} Let $\eps>0$. Pick $a\in A$ with $a>\sup A-\frac\eps2$ and $b\in B$ with $b>\sup B-\frac\eps2$. Then
+$a+b>\sup A+\sup B-\eps$.\hfill\qedsymbol
+
+\noindent The $\frac\eps2$-split appears here for the first time. It will not be the last.
+\end{example}
+
+\trap{Stopping after the upper bound. ``$1$ is an upper bound and the terms get close'' describes; step 3 proves, and step 3 is
+where the marks are.}
+\trap{Confusing supremum and maximum. A bounded nonempty set always has a supremum, a maximum only if the supremum belongs to
+it.}
+
+\begin{yourturn}
+\task{t:supmn}$M=\{\frac1m+\frac1n: m,n\in\N\}$. Find $\sup M$, $\inf M$, $\max M$, $\min M$ and prove each.
+\task{t:supc}$A\ne\emptyset$ bounded above and $c>0$. Show $\sup(cA)=c\sup A$, where $cA=\{ca: a\in A\}$.
+\par\smallskip\noindent Then Vorbereitung~§2 cold, and your Übung~2, Aufgabe~2 cold.
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{Move 03\quad Bijectivity and the inverse}
+\when{``Untersuchen Sie $f$ auf Injektivität, Surjektivität und Bijektivität und bestimmen Sie gegebenenfalls $f^{-1}$.''}
+
+\begin{panel}[unbreakable]{Skeleton}{bijectivity}{Bijektivität}
+\begin{enumerate}
+  \item Write down the domain and the codomain first. The same formula between other sets is another function.
+  \item \textbf{Injective:} assume $f(x_1)=f(x_2)$ and derive $x_1=x_2$. Or show $f$ strictly monotone.
+  \item \textbf{Surjective:} take an arbitrary $y$ in the codomain, solve $f(x)=y$, then check that this $x$ lies in the domain.
+  \item \textbf{Inverse:} the $x$ from step 3 is $f^{-1}(y)$. Check $f(f^{-1}(y))=y$.
+  \item \textbf{To refute:} two points with the same value; one $y$ that nobody hits.
+\end{enumerate}
+\end{panel}
+
+\begin{example}{a rational function between punctured lines}
+$f\colon\R\setminus\{-1\}\to\R\setminus\{1\}$, $f(x)=\dfrac{x-1}{x+1}$.
+
+First, the codomain is honest: $f(x)=1-\frac2{x+1}$, and $\frac2{x+1}\ne0$, so $f(x)\ne1$.
+
+\emph{Injective.} $f(x_1)=f(x_2)\Rightarrow\frac2{x_1+1}=\frac2{x_2+1}\Rightarrow x_1=x_2$.
+
+\emph{Surjective.} Let $y\ne1$. For $x\ne-1$:
+\[\begin{aligned}
+\frac{x-1}{x+1}=y&\iff x-1=yx+y\\
+&\iff x(1-y)=1+y\\
+&\iff x=\frac{1+y}{1-y},
+\end{aligned}\]
+allowed because $y\ne1$. And this $x$ is not $-1$: $\frac{1+y}{1-y}=-1$ would mean $1+y=y-1$.
+
+\emph{Inverse.} $f^{-1}\colon\R\setminus\{1\}\to\R\setminus\{-1\}$, $f^{-1}(y)=\dfrac{1+y}{1-y}$.
+\end{example}
+
+\trap{Solving $f(x)=y$ without checking the domain. List every condition the formula needs (no zero denominator, nothing
+negative under a root, the interval) and translate each into a condition on $y$. (Your UE01/5c.)}
+\trap{Reading $f^{-1}(B)$ as an inverse map. The preimage exists for every $f$; the inverse only for bijections.}
+
+\begin{yourturn}
+\task{t:bij}$g\colon[0,\infty)\to[1,\infty)$, $g(x)=x^2+2x+1$. Bijective? If so, find $g^{-1}$.
+\task{t:comp}$f\colon M\to N$, $g\colon N\to P$. Show: $g\circ f$ injective $\Rightarrow f$ injective, and $g\circ f$
+surjective $\Rightarrow g$ surjective. Find an example with $g\circ f$ bijective but $g$ not injective.
+\end{yourturn}
+
+% =====================================================================================
+\section{Sequences}
+
+\opening{A}{sequence} is a map $a\colon\N\to\R$, and convergence is the game of Part~II. Chapter~2 adds three ways to win it
+without knowing the limit in advance: monotonicity, subsequences, and the Cauchy property. All three are the supremum axiom
+again.
+
+\subsection{The terms of chapter 2}
+
+\entry{Sequence}{Folge}
+a map $\N\to\R$, $n\mapsto a_n$, possibly defined recursively. \eg $a_1=1$, $a_{n+1}=\sqrt{1+a_n}$.
+
+\entry{Subsequence}{Teilfolge}
+$(a_{n_k})_k$ with $n_1<n_2<\cdots$. Then $n_k\ge k$, the fact behind every subsequence proof.
+\eg $(a_{2k})$. \nonex $(a_1,a_1,a_2,a_2,\dots)$: the indices do not strictly increase.
+
+\entry{Convergence, null sequence}{Konvergenz, Nullfolge}
+$a_n\to a$ iff $\forall\eps>0\ \exists N\ \forall n\ge N: |a_n-a|<\eps$; a null sequence converges to $0$. $a_n\to a$ iff
+$(a_n-a)$ is a null sequence. The limit is unique. \nonex $(-1)^n$.
+
+\entry{Accumulation point of a sequence}{Häufungspunkt einer Folge}
+the limit of some subsequence. A convergent sequence has exactly one, its limit.
+\eg $(-1)^n$ has $\pm1$. Not to be confused with an accumulation point of a \emph{set} $D$ (Part~VI).
+
+\entry{Bounded, monotone}{beschränkt, monoton}
+$|a_n|\le K$ for all $n$; $a_n\le a_{n+1}$ for all $n$ (increasing). Convergent $\Rightarrow$ bounded, never the reverse.
+
+\entry{Cauchy sequence}{Cauchy-Folge}
+$\forall\eps>0\ \exists N\ \forall m,n\ge N: |a_m-a_n|<\eps$. In $\R$: Cauchy $\iff$ convergent.
+\eg $\frac1n$. \nonex $\sqrt n$, although $\sqrt{n+1}-\sqrt n\to0$.
+
+\entry{Definite divergence}{bestimmte Divergenz}
+$a_n\to+\infty$ iff $\forall K\ \exists N\ \forall n\ge N: a_n>K$. This is a kind of divergence, not convergence: $\infty\notin\R$.
+
+\begin{panel}{Table}{limits you may quote, with their one-line reason}{Standardgrenzwerte}
+\begin{twocol}{44mm}{Limit}{Reason}
+\row{$\frac cn\to0$}{Archimedes: $n>\frac c\eps$}
+\row{$q^n\to0$ \ for $|q|<1$}{write $\frac1{|q|}=1+h$; Bernoulli gives $|q|^n\le\frac1{1+nh}$}
+\row{$\sqrt[n]a\to1$ \ for $a>0$}{Skript: $\sqrt[n]a=\exp\bigl(\frac{\log a}{n}\bigr)\to\exp0$}
+\row{$\sqrt[n]n\to1$}{$h_n=\sqrt[n]n-1$: $n\ge\binom n2h_n^2$, so $0\le h_n\le\sqrt{\frac2{n-1}}$}
+\row{$n^kq^n\to0$, \ $\frac{c^n}{n!}\to0$}{their series converge by the ratio test, so the terms tend to $0$}
+\row{$\sqrt{n+1}-\sqrt n\to0$}{conjugate: $=\frac1{\sqrt{n+1}+\sqrt n}<\frac1{2\sqrt n}$}
+\end{twocol}
+\end{panel}
+
+% ------------------------------------------------------------------------------------
+\subsection{\texorpdfstring{Move 04\quad Convergence with $\eps$ and $N$}{Move 04: convergence with epsilon and N}}
+\when{``Zeigen Sie mit der Definition (dem $\eps$-Kriterium), dass $a_n\to a$.'' If the question says only ``Bestimmen Sie
+den Grenzwert'', the limit laws are allowed: divide by the highest power and cite the Rechenregeln.}
+
+\begin{panel}[unbreakable]{Skeleton}{epsilon-N}{Konvergenz nach Definition}
+\begin{twodocs}
+\begin{enumerate}
+  \item Write $|a_n-a|$ as one fraction; simplify.
+  \item Estimate upwards to $\frac Cn$ (or $\frac C{\sqrt n}$, or $Cq^n$). Record every condition you impose, such as $n\ge3$.
+  \item Solve $\frac Cn<\eps$ for $n$.
+\end{enumerate}
+&
+``Sei $\eps>0$. Wähle $N\in\N$ mit $N\ge n_0$ und $N>\frac C\eps$ (Archimedes). Für alle $n\ge N$ gilt
+\[ |a_n-a|=\dots\le\frac Cn\le\frac CN<\eps .\text{''} \]
+\end{twodocs}
+\end{panel}
+
+\begin{example}{a minus sign in the denominator}
+Claim: $a_n=\dfrac{n^2+2n}{2n^2-5}\to\dfrac12$.
+
+\emph{Scratch.} For $n\ge2$ the denominator is positive, and
+\[ \Bigl|a_n-\frac12\Bigr|=\frac{|2n^2+4n-2n^2+5|}{2(2n^2-5)}=\frac{4n+5}{4n^2-10}. \]
+Numerator up: $4n+5\le6n$ for $n\ge3$. Denominator down, keeping half: $4n^2-10\ge2n^2$ for $n\ge3$. So for $n\ge3$
+\[ \Bigl|a_n-\frac12\Bigr|\le\frac{6n}{2n^2}=\frac3n . \]
+\emph{Proof.} Let $\eps>0$. Choose $N\in\N$ with $N\ge3$ and $N>\frac3\eps$. For every $n\ge N$:
+\[ \Bigl|a_n-\frac12\Bigr|=\frac{4n+5}{4n^2-10}\le\frac3n\le\frac3N<\eps .\]
+\end{example}
+
+\noindent Roots go the same way after the conjugate. For $b_n=\sqrt{n+1}-\sqrt n$:
+\[ |b_n-0|=\frac1{\sqrt{n+1}+\sqrt n}<\frac1{2\sqrt n}<\eps\quad\text{as soon as}\quad n>\frac1{4\eps^2}. \]
+
+\trap{$N$ depending on $n$ (``wähle $N=n+1$''). $N$ is chosen before any $n$ exists.}
+\trap{A chain that changes direction. Every link is $=$, $\le$ or $<$, all pointing the same way, and the chain ends in $<\eps$.}
+\trap{Forgetting your side conditions. You used $n\ge3$, so $N\ge3$ as well.}
+
+\begin{yourturn}
+\task{t:epsA}With the definition: $\dfrac{3n-2}{n+4}\to3$.
+\task{t:epsB}With the definition: $\dfrac{n+(-1)^n}{n^2}\to0$.
+\task{t:abs}$a_n\to a\Rightarrow|a_n|\to|a|$. Does the converse hold?
+\task{t:sqrt}$a_n\ge0$ and $a_n\to a$ $\Rightarrow$ $\sqrt{a_n}\to\sqrt a$ (your Übung~3/5, cold).
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{Move 05\quad Subsequences and accumulation points}
+\when{``Bestimmen Sie alle Häufungspunkte''; ``Ist die Folge konvergent?'' for anything that oscillates: $(-1)^n$, case
+distinctions, periodic patterns.}
+
+\begin{panel}[unbreakable]{Skeleton}{accumulation points}{Häufungspunkte}
+\begin{enumerate}
+  \item Find the period $p$ of the pattern (parity: $p=2$).
+  \item For each remainder class $r$, compute $\lim_k a_{pk+r}$. Each such limit is an accumulation point.
+  \item No others: a convergent subsequence has infinitely many indices in some class; the part of it in that class tends to
+        that class's limit, and a subsequence of a convergent sequence keeps the limit.
+  \item Two different accumulation points $\Rightarrow$ divergent.
+\end{enumerate}
+\end{panel}
+
+\begin{example}{a sign pattern of period four}
+$a_n=(-1)^{n(n+1)/2}\cdot\dfrac n{n+1}$. The signs for $n=1,2,3,\dots$ run $-,-,+,+,-,-,+,+,\dots$ Write $n=4k+r$ and look at
+the parity of $\frac{n(n+1)}2$:
+\[
+\begin{array}{c|c|c}
+n & \frac{n(n+1)}2 & \text{sign}\\\hline
+4k+1 & (4k+1)(2k+1) & \text{odd: }-\\
+4k+2 & (2k+1)(4k+3) & \text{odd: }-\\
+4k+3 & (4k+3)(2k+2) & \text{even: }+\\
+4k+4 & (2k+2)(4k+5) & \text{even: }+
+\end{array}
+\]
+Since $\frac n{n+1}\to1$, the four classes tend to $-1,-1,1,1$. The accumulation points are exactly $\pm1$, and the sequence
+diverges.
+\end{example}
+
+\trap{``Only one accumulation point, so it converges.'' False when the sequence is unbounded: $a_n=n^{(-1)^n}$ is $\frac1n$
+for odd $n$ and $n$ for even $n$. Its only accumulation point is $0$. For \emph{bounded} sequences the statement is true
+(Part~VII).}
+
+\begin{yourturn}
+\task{t:hp}$a_n=(-1)^n\dfrac n{n+1}+\dfrac{1+(-1)^n}2$. All accumulation points? Convergent?
+\par\smallskip\noindent Then Vorbereitung~§5 cold.
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{Move 06\quad Monotone convergence and Cauchy}
+\when{a recursive sequence $a_{n+1}=g(a_n)$; ``Zeigen Sie, dass $(a_n)$ konvergiert'' with no limit in sight; partial sums of
+positive terms; ``Zeigen Sie direkt, dass $(a_n)$ eine Cauchy-Folge ist''.}
+
+\begin{panel}[unbreakable]{Skeleton}{recursive sequences}{rekursive Folgen}
+\begin{enumerate}
+  \item \textbf{Guess} $L$ from $L=g(L)$; compute three terms to see which root, and whether the sequence climbs or falls.
+  \item \textbf{Bound} by induction, for example $0<a_n<L$.
+  \item \textbf{Monotone:} factor $a_{n+1}-a_n$ and read off its sign from step 2, or induct.
+  \item Monotone and bounded $\Rightarrow$ convergent \de{(Monotoniekriterium)}. Call the limit $L$.
+  \item Only now: $a_{n+1}\to L$ as well, so $L=g(L)$ by the limit laws. The bound from step 2 picks the root.
+\end{enumerate}
+\end{panel}
+
+\begin{example}{a recursion with two candidate limits}
+$a_1=\frac12$, $a_{n+1}=\dfrac{a_n^2+2}3$.
+
+\emph{Guess.} $L=\frac{L^2+2}3\iff L^2-3L+2=0\iff L\in\{1,2\}$. Terms: $0.5,\ 0.75,\ 0.85,\ 0.91$. Climbing towards $1$.
+
+\emph{Bound.} Claim $0<a_n<1$. True for $n=1$. If $0<a_n<1$, then $a_n^2<1$, so $0<a_{n+1}<\frac{1+2}3=1$.
+
+\emph{Monotone.}
+\[ a_{n+1}-a_n=\frac{a_n^2-3a_n+2}3=\frac{(a_n-1)(a_n-2)}3>0, \]
+because both factors are negative by the bound.
+
+\emph{Limit.} Increasing and bounded above, so $a_n\to L$. From $a_{n+1}=\frac{a_n^2+2}3$ in the limit, $L\in\{1,2\}$. Since
+$a_n<1$ for all $n$, $L\le1$. So $L=1$.
+\end{example}
+
+\why{Why is step 5 alone not a proof?}{It assumes the limit exists. For $a_1=1$, $a_{n+1}=2a_n$ the same computation gives
+$L=2L$, so $L=0$, while $a_n=2^{n-1}\to\infty$. The equation $L=g(L)$ says what the limit must be \emph{if} there is one. Steps
+2 to 4 prove that there is.}
+
+\noindent\textbf{Cauchy, directly.} Bound $|a_m-a_n|$ for $m>n$ by something that depends on $n$ alone. For the partial sums
+$s_n=\sum_{k=1}^n\frac1{k^2}$ the telescope tool does it:
+\[ |s_m-s_n|=\sum_{k=n+1}^m\frac1{k^2}\le\sum_{k=n+1}^m\Bigl(\frac1{k-1}-\frac1k\Bigr)=\frac1n-\frac1m<\frac1n . \]
+So $N>\frac1\eps$ wins, and $\sum\frac1{k^2}$ converges without anyone knowing its value.
+
+\trap{``It obviously climbs.'' Compute $a_{n+1}-a_n$ and factor it, or induct.}
+\trap{Cauchy concerns \emph{all} pairs $m,n\ge N$, not neighbours: $\sqrt{n+1}-\sqrt n\to0$, yet $\sqrt n\to\infty$.}
+
+\begin{yourturn}
+\task{t:rec}$a_1=0$, $a_{n+1}=\sqrt{6+a_n}$. Convergent? Limit?
+\task{t:heron}$a>0$, $x_1>0$, $x_{n+1}=\frac12\bigl(x_n+\frac a{x_n}\bigr)$: your Übung~3/7, cold.
+\task{t:cauchy}Show directly that $s_n=\sum_{k=0}^n2^{-k}$ is a Cauchy sequence.
+\end{yourturn}
+
+% =====================================================================================
+\section{Series}
+
+\opening{A}{series is not} a new object. It is the sequence of its partial sums, $S_k=\sum_{n=0}^ka_n$, and it converges when
+that sequence does. So every series question is a sequence question in disguise, and the tests of chapter~3 are Part~IV's
+theorems in working clothes.
+\aside{Euler summed $1-1+1-\cdots$ to $\frac12$, and by his rules he was not wrong. Yours are stricter.}
+
+\subsection{The terms of chapter 3}
+
+\entry{Series}{Reihe}
+the sequence $(S_k)$ of partial sums; $\sum_{n=0}^\infty a_n$ also names its limit when it exists.
+
+\entry{Geometric series}{geometrische Reihe}
+$\sum_{n=0}^\infty x^n=\frac1{1-x}$ for $|x|<1$; divergent for $|x|\ge1$, because then $x^n\not\to0$. Shifted:
+$\sum_{n=n_0}^\infty x^n=\frac{x^{n_0}}{1-x}$.
+
+\entry{Harmonic series}{harmonische Reihe}
+$\sum\frac1n$ diverges, although $\frac1n\to0$. $\sum\frac1{n^\alpha}$ converges for $\alpha>1$ and diverges for $\alpha\le1$
+(compare with $\frac1n$).
+
+\entry{Absolute and conditional convergence}{absolute, bedingte Konvergenz}
+absolutely: $\sum|a_n|$ converges, which implies convergence. Conditionally: convergent, not absolutely.
+\eg $\sum\frac{(-1)^{n-1}}n$ is conditionally convergent.
+
+\entry{Cauchy product}{Cauchy-Produkt}
+$c_n=\sum_{k=0}^na_kb_{n-k}$. If $\sum a_n$ and $\sum b_n$ converge \emph{absolutely}, then $\sum c_n$ converges absolutely to
+$\bigl(\sum a_n\bigr)\bigl(\sum b_n\bigr)$.
+\eg $\bigl(\sum x^n\bigr)^2=\sum(n+1)x^n=\frac1{(1-x)^2}$ for $|x|<1$; $\exp(x)\exp(y)=\exp(x+y)$.
+
+\entry{Exponential function}{Exponentialfunktion}
+$\exp x=\sum_{n=0}^\infty\frac{x^n}{n!}$, absolutely convergent for every $x$; $e=\exp1>\frac52$.
+
+% ------------------------------------------------------------------------------------
+\subsection{Move 07\quad Series through their partial sums}
+\when{``Bestimmen Sie den Wert der Reihe''; rational terms with a product in the denominator; a geometric series with a shifted
+index or a constant factor.}
+
+\begin{panel}[unbreakable]{Skeleton}{telescoping}{Teleskopsumme}
+\begin{enumerate}
+  \item Partial fractions: $\dfrac1{(n+a)(n+b)}=\dfrac1{b-a}\Bigl(\dfrac1{n+a}-\dfrac1{n+b}\Bigr)$.
+  \item Write $S_N$ out, first and last few terms; cross out what cancels.
+  \item $S_N=$ (finite leftover) $-$ (terms containing $N$) $\to$ the value.
+  \item Geometric: pull out the constant until you see $c\sum_{n=n_0}^\infty q^n=c\,\frac{q^{n_0}}{1-q}$.
+\end{enumerate}
+\end{panel}
+
+\begin{example}{a telescope with a gap of two}
+$\displaystyle\sum_{n=1}^\infty\frac1{n(n+2)}$. Partial fractions: $\frac1{n(n+2)}=\frac12\bigl(\frac1n-\frac1{n+2}\bigr)$.
+\[
+S_N=\frac12\Bigl[\Bigl(1-\frac13\Bigr)+\Bigl(\frac12-\frac14\Bigr)+\Bigl(\frac13-\frac15\Bigr)+\cdots
++\Bigl(\frac1N-\frac1{N+2}\Bigr)\Bigr].
+\]
+Every $\frac1k$ with $3\le k\le N$ appears once with $+$ and once with $-$. Two terms survive at each end:
+\[ S_N=\frac12\Bigl(1+\frac12-\frac1{N+1}-\frac1{N+2}\Bigr)\ \longrightarrow\ \frac34 . \]
+\end{example}
+
+\begin{example}{a geometric series in disguise}
+$\displaystyle\sum_{n=2}^\infty\frac{3^n}{4^{n+1}}=\frac14\sum_{n=2}^\infty\Bigl(\frac34\Bigr)^n
+=\frac14\cdot\frac{(3/4)^2}{1-3/4}=\frac9{16}$.
+\end{example}
+
+\begin{yourturn}
+\task{t:tel}$\displaystyle\sum_{n=1}^\infty\frac1{4n^2-1}$.
+\task{t:geo}$\displaystyle\sum_{n=0}^\infty\frac{2^n+3^n}{6^n}$.
+\task{t:log}Show that $\sum_{n=1}^\infty\log\bigl(1+\frac1n\bigr)$ diverges, although its terms tend to $0$.
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{Move 08\quad Choosing a test}
+\when{``Untersuchen Sie auf Konvergenz''; with a parameter, ``Für welche $x\in\R$ konvergiert \dots?''}
+
+\begin{panel}{Skeleton}{the order of questions}{Kriterium wählen}
+\begin{enumerate}
+  \item \textbf{Do the terms tend to $0$?} If not, divergent \de{(notwendige Bedingung)}. Done.
+  \item \textbf{Alternating signs?} Test $\sum|a_n|$ first (Move~09). Leibniz only if that fails.
+  \item \textbf{Read the shape of $a_n$} and pick from the table.
+\end{enumerate}
+\medskip
+\begin{twocol}{40mm}{Shape of the term}{Reach for, with a one-line example}
+\row{$n!$ or $c^n$}{ratio test \de{(Quotientenkriterium)}: $\frac{2^n}{n!}$ has ratio $\frac2{n+1}\le\frac12$ for $n\ge3$}
+\row{everything under one $n$-th power}{root test \de{(Wurzelkriterium)}: $\bigl(\frac n{2n+1}\bigr)^n$ has root
+$\frac n{2n+1}<\frac12$}
+\row{a rational or root expression in $n$}{compare with $\frac1{n^\alpha}$, $\alpha=$ degree below minus degree above:
+$\frac n{n^3+1}\le\frac1{n^2}$; \ $\frac1{\sqrt{n^2+1}}\ge\frac1{\sqrt2\,n}$ diverges}
+\row{a product in the denominator}{partial sums (Move~07)}
+\row{a bounded factor times a summable one}{majorant: $\bigl|\frac{\cos n}{n^2}\bigr|\le\frac1{n^2}$}
+\end{twocol}
+\end{panel}
+
+\begin{panel}[unbreakable]{Three remarks}{the Skript's exact tools}{}
+\begin{itemize}
+  \item \textbf{The ratio test needs a fixed $\theta<1$}: $\bigl|\frac{a_{n+1}}{a_n}\bigr|\le\theta$ for all $n\ge n_0$. If you
+        computed a limit $\alpha<1$ of the ratios, convert it in one sentence:
+        \[ \text{``Da }\Bigl|\frac{a_{n+1}}{a_n}\Bigr|\to\alpha<1,\text{ gilt ab einem }n_0\text{: }
+           \Bigl|\frac{a_{n+1}}{a_n}\Bigr|\le\theta:=\frac{1+\alpha}2<1.\text{''} \]
+        That is the definition of the limit, played with $\eps=\frac{1-\alpha}2$.
+  \item \textbf{Divergence by ratio.} If $\bigl|\frac{a_{n+1}}{a_n}\bigr|\ge1$ from some $n_0$ on, then
+        $|a_n|\ge|a_{n_0}|>0$. The terms do not tend to $0$.
+  \item \textbf{Minorant.} The Skript names no such criterion, but it is the majorant criterion read backwards. If
+        $0\le c_n\le|a_n|$ and $\sum c_n$ diverges, then $\sum|a_n|$ diverges: otherwise it would be a convergent majorant
+        of $\sum c_n$.
+\end{itemize}
+\end{panel}
+
+\begin{example}{factorials over powers, with no $e$ in sight}
+$\displaystyle\sum_{n=1}^\infty\frac{n!}{n^n}$. The ratio:
+\[ \frac{a_{n+1}}{a_n}=\frac{(n+1)!}{(n+1)^{n+1}}\cdot\frac{n^n}{n!}=\Bigl(\frac n{n+1}\Bigr)^n=\frac1{(1+\frac1n)^n}. \]
+Bernoulli: $(1+\frac1n)^n\ge1+n\cdot\frac1n=2$. So the ratio is at most $\theta=\frac12$ for every $n$: absolutely convergent.
+\end{example}
+
+\begin{example}{a parameter, and the edges by hand}
+For which $x\in\R$ does $\sum_{n=1}^\infty\frac{x^n}n$ converge? For $x\ne0$ the ratio of absolute values is
+$|x|\frac n{n+1}$.
+\begin{itemize}
+  \item $|x|<1$: the ratio is $\le\theta=|x|<1$. Absolutely convergent.
+  \item $|x|>1$: the ratio is $\ge1$ once $n\ge\frac1{|x|-1}$. The terms do not tend to $0$: divergent.
+  \item $x=1$: harmonic, divergent. \ $x=-1$: Leibniz, convergent (conditionally).
+\end{itemize}
+Answer: exactly for $x\in[-1,1)$.
+\end{example}
+
+\trap{$|a_{n+1}/a_n|<1$ for every $n$ is not enough. For $\frac1n$ the ratio is $\frac n{n+1}<1$, and the series diverges. You
+need one fixed $\theta<1$.}
+\trap{A ratio or root limit equal to $1$ decides nothing: $\sum\frac1n$ and $\sum\frac1{n^2}$ both have limit $1$.}
+\trap{The edges of a parameter range are separate questions. Test them by hand.}
+
+\begin{yourturn}
+\task{t:ratio}$\displaystyle\sum\frac{n^2}{3^n}$.
+\task{t:root}$\displaystyle\sum\Bigl(\frac n{3n-1}\Bigr)^n$.
+\task{t:comp2}$\displaystyle\sum\frac1{\sqrt{n(n+1)}}$.
+\task{t:hard}$\displaystyle\sum\frac{3^n\,n!}{n^n}$. Use $(1+\frac1n)^n\le3$.
+\task{t:param}For which $x\in\R$ does $\sum_{n=1}^\infty n\,x^n$ converge?
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{Move 09\quad Absolute or conditional}
+\when{``Untersuchen Sie auf Konvergenz und absolute Konvergenz''; any alternating series.}
+
+\begin{panel}[unbreakable]{Skeleton}{absolute or conditional}{absolut oder bedingt}
+\begin{enumerate}
+  \item \textbf{Absolute first.} Test $\sum|a_n|$ with Move~08. If it converges: absolutely convergent, hence convergent. Done.
+  \item \textbf{Leibniz.} If $\sum|a_n|$ diverges, write $a_n=(-1)^nb_n$ and check all three conditions: $b_n\ge0$,
+        $b_n\to0$, $(b_n)$ decreasing. Prove the last one, by cross-multiplying; no derivatives.
+  \item \textbf{Verdict:} convergent, not absolutely: \de{bedingt konvergent}.
+\end{enumerate}
+\end{panel}
+
+\begin{example}{conditional convergence, monotonicity by algebra}
+$\displaystyle\sum_{n=1}^\infty(-1)^n\frac n{n^2+1}$.
+
+\emph{Absolute?} $\frac n{n^2+1}\ge\frac n{2n^2}=\frac1{2n}$. A harmonic minorant: $\sum|a_n|$ diverges.
+
+\emph{Leibniz.} $b_n=\frac n{n^2+1}\ge0$ and $b_n\le\frac1n\to0$. Decreasing:
+\[\begin{aligned}
+b_{n+1}\le b_n&\iff(n+1)(n^2+1)\le n\bigl((n+1)^2+1\bigr)\\
+&\iff n^3+n^2+n+1\le n^3+2n^2+2n\\
+&\iff 1\le n^2+n,
+\end{aligned}\]
+true for $n\ge1$. So the series converges, but not absolutely.
+\end{example}
+
+\why{Why does the Cauchy product need absolute convergence?}{Regrouping the products $a_kb_\ell$ along diagonals is harmless
+only when their absolute values are summable. Without it, square $\sum\frac{(-1)^n}{\sqrt{n+1}}$, which converges by Leibniz.
+Since $(k+1)(n-k+1)\le\bigl(\frac{n+2}2\bigr)^2$,
+\[ |c_n|=\sum_{k=0}^n\frac1{\sqrt{(k+1)(n-k+1)}}\ge\sum_{k=0}^n\frac2{n+2}=\frac{2(n+1)}{n+2}\ge1 . \]
+The terms do not tend to $0$: the product of two convergent series diverges.}
+
+\begin{yourturn}
+\task{t:leib1}$\displaystyle\sum\frac{(-1)^n}{2n+1}$.
+\task{t:leib2}$\displaystyle\sum(-1)^n\frac{n^2}{2^n}$.
+\task{t:leib3}$\displaystyle\sum(-1)^n\bigl(\sqrt{n+1}-\sqrt n\bigr)$.
+\end{yourturn}
+
+% =====================================================================================
+\section{Functions and continuity}
+
+\opening{C}{hapter 4 asks} one question in many costumes: if $x$ stays close to $x_0$, does $f(x)$ stay close to $f(x_0)$? The
+Skript answers it twice, with sequences and with $\eps$ and $\delta$, and proves the two answers agree. Use whichever is shorter.
+Sequences are usually shorter for \emph{dis}continuity; $\eps$-$\delta$ is what the question asks for when it says so.
+
+\subsection{The terms of chapter 4}
+
+\entry{Accumulation point of a set}{Häufungspunkt einer Menge}
+$y$ is one for $D$ if some sequence in $D\setminus\{y\}$ tends to $y$. A contact point \de{(Berührpunkt)} only needs a sequence
+in $D$. \eg $0$ for $D=(0,1)$, although $0\notin D$.
+
+\entry{Limit of a function}{Grenzwert einer Funktion}
+$\lim_{x\to y}f(x)=c$ iff $f(x_n)\to c$ for \emph{every} sequence $x_n\to y$ in $D\setminus\{y\}$. Equivalently (a theorem):
+$\forall\eps>0\ \exists\delta>0\ \forall x\in D: 0<|x-y|<\delta\Rightarrow|f(x)-c|<\eps$. One-sided: only $x_n>y$ (written
+$x\downarrow y$) or $x_n<y$ ($x\uparrow y$). At $\infty$: every sequence $x_n\to\infty$.
+
+\entry{Continuity}{Stetigkeit}
+$f$ is continuous at $y\in D$ iff $\forall\eps\ \exists\delta\ \forall x\in D: |x-y|<\delta\Rightarrow|f(x)-f(y)|<\eps$;
+equivalently $x_n\to y\Rightarrow f(x_n)\to f(y)$. $C(D)$ is the set of functions continuous on $D$.
+\eg polynomials, $\exp$, $\sin$, $\cos$, $|x|$. \nonex the Dirichlet function $D$, $1$ on $\Q$ and $0$ elsewhere: continuous
+nowhere.
+
+\entry{Uniform continuity}{gleichmäßige Stetigkeit}
+$\forall\eps\ \exists\delta\ \forall x,y\in D: |x-y|<\delta\Rightarrow|f(x)-f(y)|<\eps$. The $\delta$ may depend on $\eps$
+only. \eg $x$ on $\R$; every continuous $f$ on $[a,b]$. \nonex $x^2$ on $\R$; $\frac1x$ on $(0,1]$.
+
+\entry{Continuous extension}{stetige Fortsetzung}
+a continuous $\tilde f$ on a larger set that agrees with $f$ on $D$. At a single missing point $y$ it exists iff
+$\lim_{x\to y}f(x)$ exists; then $\tilde f(y)$ is that limit. \eg $\frac{x^2-4}{x-2}$ extends by the value $4$ at $2$.
+\nonex $\frac1x$ at $0$.
+
+\entry{Step function}{Treppenfunktion}
+$\varphi\colon[a,b]\to\R$ with a partition $a=t_0<\dots<t_n=b$ such that $\varphi$ is constant on each $(t_{k-1},t_k)$; the
+values at the $t_k$ are free. \eg $0$ on $[0,1)$, $1$ on $[1,2]$. \nonex $x$ on $[0,1]$.
+
+\entry{Image of a compact interval}{Bild kompakter Intervalle}
+for continuous $f$: $f([a,b])=[\min f,\max f]$, a closed bounded interval. The extreme value theorem gives the ends, the
+intermediate value theorem everything between.
+
+\entry{Power, root, logarithm}{Potenz, Wurzel, Logarithmus}
+$\sqrt[m]a$ is the unique $x>0$ with $x^m=a$; $a^{p/q}=\sqrt[q]{a^p}$. $\log=\exp^{-1}\colon(0,\infty)\to\R$;
+$a^x=\exp(x\log a)$ for $a>0$; $\log_a$ is the inverse of $x\mapsto a^x$ ($a\ne1$), and $\log_ay=\frac{\log y}{\log a}$.
+
+\entry{Sine and cosine}{Sinus, Kosinus}
+defined by their series; addition theorems; $\sin(-x)=-\sin x$, $\cos(-x)=\cos x$; $\lim_{x\to0}\frac{\sin x}x=1$. One line
+gives $\sin^2x+\cos^2x=1$, hence $|\sin x|\le1$:
+\[ 1=\cos0=\cos(x-x)=\cos x\cos(-x)-\sin x\sin(-x)=\cos^2x+\sin^2x . \]
+
+% ------------------------------------------------------------------------------------
+\subsection{Move 10\quad Exponential and logarithm}
+\when{equations or inequalities with $\exp$, $\log$, $a^x$; limits involving $\exp$.}
+
+\begin{panel}[unbreakable]{Rules}{everything you may use}{Rechenregeln}
+\begin{itemize}
+  \item $\exp(x+y)=\exp x\exp y$, \ $\exp(-x)=\frac1{\exp x}$, \ $\exp x>0$; strictly increasing, bijective $\R\to(0,\infty)$.
+  \item $\log(xy)=\log x+\log y$, \ $\log1=0$, \ $\log e=1$; strictly increasing and continuous.
+  \item $a^x=\exp(x\log a)$, so $a^{x+y}=a^xa^y$ and $\log(a^x)=x\log a$.
+  \item $\exp x\ge1+x$ for $x\ge0$; \ $e>\frac52$; \ $|\exp x-1|\le2|x|$ for $|x|\le1$.
+  \item Several of $\exp(x)$, $\exp(2x)$, $\exp(-x)$? Substitute $t=\exp x>0$ (Vorbereitung~§10).
+\end{itemize}
+\end{panel}
+
+\begin{example}{three small ones}
+\emph{Solve $2^{x+1}=3^x$.} $\log$ is strictly increasing, so taking it is an equivalence:
+\[\begin{aligned}
+(x+1)\log2=x\log3&\iff x(\log3-\log2)=\log2\\
+&\iff x=\frac{\log2}{\log\frac32}.
+\end{aligned}\]
+\emph{Solve $\log x+\log(x-1)=\log6$.} Domain first: $x>1$. There, $\log\bigl(x(x-1)\bigr)=\log6\iff x^2-x-6=0\iff
+x\in\{3,-2\}$. Only $x=3$ lies in the domain.
+
+\emph{Show $\lim_{x\to\infty}\frac x{\exp x}=0$.} For $x>0$, $\exp x\ge1+x+\frac{x^2}2>\frac{x^2}2$, so
+$0<\frac x{\exp x}<\frac2x\to0$.
+\end{example}
+
+\begin{yourturn}
+\task{t:exp1}Solve $\exp x+\exp(-x)=4$.
+\task{t:exp2}$\displaystyle\lim_{x\to\infty}\frac{\exp x-\exp(-x)}{\exp x+\exp(-x)}$ (your Übung~5/2b, cold).
+\task{t:exp3}$\displaystyle\lim_{x\to\infty}\frac{x^2}{\exp x}$, with Skript tools only.
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{\texorpdfstring{Move 11\quad Continuity and limits with $\eps$ and $\delta$}{Move 11: continuity and limits with epsilon and delta}}
+\when{``Zeigen Sie mit dem $\eps$-$\delta$-Kriterium, dass $f$ in $x_0$ stetig ist'' or ``dass $\lim_{x\to x_0}f(x)=c$''.}
+
+\begin{panel}[unbreakable]{Skeleton}{epsilon-delta}{Epsilon-Delta}
+\begin{twodocs}
+\begin{enumerate}
+  \item Factor $|x-x_0|$ out: $|f(x)-f(x_0)|=|x-x_0|\cdot|h(x)|$.
+  \item Restrict $\delta\le1$ (or $\delta\le\frac{x_0}2$ if $f$ blows up at $0$). Inside the window, bound $|h(x)|\le C$.
+  \item Then $C\delta\le\eps$ is enough: $\delta\le\frac\eps C$.
+\end{enumerate}
+&
+``Sei $\eps>0$. Setze $\delta:=\min\{1,\frac\eps C\}$. Für $x\in D$ mit $|x-x_0|<\delta$ ist $|x-x_0|<1$, also $|h(x)|\le
+C$, und
+\[ |f(x)-f(x_0)|\le C|x-x_0|<C\delta\le\eps .\text{''} \]
+\end{twodocs}
+For a limit, the window is $0<|x-x_0|<\delta$: simplify first, using $x\ne x_0$.
+\end{panel}
+
+\begin{example}{the square at an arbitrary point}
+$f(x)=x^2$ is continuous at every $x_0\in\R$. Factor: $|x^2-x_0^2|=|x-x_0|\,|x+x_0|$. If $|x-x_0|<1$, then
+\[ |x+x_0|\le|x-x_0|+2|x_0|<1+2|x_0|=:C . \]
+So $\delta:=\min\bigl\{1,\frac\eps{1+2|x_0|}\bigr\}$ works: $|x-x_0|<\delta\Rightarrow|x^2-x_0^2|<C\delta\le\eps$.
+\end{example}
+
+\begin{example}{the reciprocal, where the danger is at $0$}
+$f(x)=\frac1x$ on $(0,\infty)$, at $x_0>0$. Here $\bigl|\frac1x-\frac1{x_0}\bigr|=\frac{|x-x_0|}{x\,x_0}$, which is large
+when $x$ is near $0$. Restrict $\delta\le\frac{x_0}2$: then $x>\frac{x_0}2$ and
+\[ \Bigl|\frac1x-\frac1{x_0}\Bigr|<\frac{2}{x_0^2}\,|x-x_0| . \]
+So $\delta:=\min\bigl\{\frac{x_0}2,\frac{x_0^2\eps}2\bigr\}$. This was your Übung~5/3a. Look at how $\delta$ depends on $x_0$.
+\end{example}
+
+\par\needspace{95mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,width=.88\linewidth,height=62mm,xmin=0,xmax=2.2,ymin=0,ymax=5.4,
+  xlabel={$x$},ylabel={$\frac1x$},xtick={0.25,1,2},xticklabels={$\frac14$,$1$,$2$},ytick={1,4},ylabel style={rotate=-90}]
+  \fill[pattern={dither25},pattern color=klink] (axis cs:0,0.5) rectangle (axis cs:2.2,1.5);
+  \fill[pattern={dither25},pattern color=klink] (axis cs:0,3.5) rectangle (axis cs:2.2,4.5);
+  \fill[pattern={dither50},pattern color=klink] (axis cs:0.6667,0) rectangle (axis cs:1.3333,0.3);
+  \fill[pattern={dither50},pattern color=klink] (axis cs:0.2222,0) rectangle (axis cs:0.2778,0.3);
+  \addplot[klhi,domain=0.185:2.2,samples=200] {1/x};
+  \draw[kldim,dashed] (axis cs:1,0)--(axis cs:1,1);
+  \draw[kldim,dashed] (axis cs:0.25,0)--(axis cs:0.25,4);
+  \node[anchor=west,text=klink] at (axis cs:1.36,0.17) {$\delta=\frac13$};
+  \node[anchor=west,text=klink] at (axis cs:0.30,0.17) {$\delta=\frac1{36}$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{The same $\eps=\frac12$ at two points: the bands are $f(x_0)\pm\eps$, the strips on the axis are the windows
+$x_0\pm\delta$ that land inside them. At $x_0=1$ any $\delta\le\frac13$ works; at $x_0=\frac14$ you need $\delta\le\frac1{36}$. As
+$x_0\to0$ the admissible $\delta$ shrinks to $0$. Continuous at every point, yet no single $\delta$ serves them all: that is the
+failure of uniform continuity (Move~15).}
+
+\noindent\textbf{Discontinuity and non-existence, with sequences.} One sequence $x_n\to x_0$ with $f(x_n)\not\to f(x_0)$ kills
+continuity; two sequences with different limits of $f$ kill a limit. The Dirichlet function at any $x_0$: rationals
+$q_n\to x_0$ and irrationals $r_n\to x_0$ exist by density, and $D(q_n)=1$, $D(r_n)=0$.
+
+\trap{$\delta$ depending on $x$, as in $\delta=\frac\eps{|x+x_0|}$. It may depend on $\eps$ and $x_0$, never on $x$.}
+\trap{For a limit, forgetting $0<|x-x_0|$. The value at $x_0$ is irrelevant to the limit, and may not exist.}
+
+\begin{yourturn}
+\task{t:ed1}$f(x)=x^3$ is continuous at $x_0=1$, with $\eps$ and $\delta$.
+\task{t:ed2}$\displaystyle\lim_{x\to2}\frac{x^2-4}{x-2}=4$, with $\eps$ and $\delta$.
+\task{t:ed3}$f(x)=\frac1x$ is continuous at $x_0=2$, with $\eps$ and $\delta$.
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{Move 12\quad One-sided limits, limits at infinity, glue points}
+\when{piecewise definitions; $|x|$ or the Gauß bracket $[x]$; ``Für welches $a$ ist $f$ stetig?''; $x\to\pm\infty$.}
+
+\begin{panel}[unbreakable]{Skeleton}{one-sided limits}{einseitige Grenzwerte}
+\begin{enumerate}
+  \item From one side you know the sign of $x-x_0$. Use it to resolve $|x|$, $[x]$, or the case split.
+  \item The two-sided limit exists iff both one-sided limits exist and agree. At a point of $D$, continuity means both equal
+        $f(x_0)$.
+  \item At $\infty$: $\forall\eps\ \exists M: x>M\Rightarrow|f(x)-c|<\eps$. Estimate as in Move~04, with $x$ for $n$.
+\end{enumerate}
+\end{panel}
+
+\begin{example}{choose the parameter}
+For which $a\in\R$ is $f$ continuous on $\R$?
+\[ f(x)=\begin{cases}\dfrac{x^2-1}{x-1}, & x<1,\\[6pt] ax+1, & x\ge1.\end{cases} \]
+Away from $1$, each piece is continuous by the rules (the denominator $x-1$ does not vanish for $x<1$). At $1$: from the left,
+$f(x)=x+1\to2$. From the right and at the point, $ax+1\to a+1=f(1)$. Continuous at $1$ iff $2=a+1$. So $a=1$.
+\end{example}
+
+\begin{yourturn}
+\task{t:ext}$f(x)=\dfrac{\sqrt{1+x}-1}{x}$ on $[-1,0)\cup(0,\infty)$. Which value at $0$ makes $f$ continuous?
+\task{t:inf}$\displaystyle\lim_{x\to\infty}\frac{2x^2+x}{x^2-3}=2$, from the definition (find $M$ for each $\eps$).
+\par\smallskip\noindent Then your Übung~5/4 ($[x]$ and $[x]+\sqrt{x-[x]}$ on $(0,2)$) cold.
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{Move 13\quad Continuity by the rules}
+\when{``Zeigen Sie, dass $f$ stetig ist'' for a formula assembled from known functions.}
+
+\begin{panel}[unbreakable]{Skeleton}{the rules}{Rechenregeln}
+\begin{enumerate}
+  \item Name the bricks: polynomials, $\exp$, $\log$, $\sin$, $\cos$, $|\cdot|$, $\sqrt{\cdot}$ (continuous on $[0,\infty)$ as an
+        inverse function).
+  \item Name the rule at each joint: sum, product, quotient (check that the denominator never vanishes), composition.
+  \item Where no rule applies (glue points, zeros of a denominator): one-sided limits, or a squeeze
+        $|f(x)-f(x_0)|\le g(x)\to0$.
+\end{enumerate}
+\end{panel}
+
+\begin{example}{a squeeze at the glue point}
+$f(x)=x\sin\frac1x$ for $x\ne0$, $f(0)=0$, is continuous on $\R$. On $\R\setminus\{0\}$: $\frac1x$ is a quotient with nonzero
+denominator, $\sin$ is continuous, so is the composition, and so is the product with $x$. At $0$: $|\sin t|\le1$ for all $t$,
+so
+\[ |f(x)-f(0)|=|x|\,\Bigl|\sin\frac1x\Bigr|\le|x|<\eps\quad\text{for }|x|<\delta:=\eps . \]
+\end{example}
+
+\trap{``Quotient of continuous functions'' without checking that the denominator never vanishes on the domain.}
+\trap{``Composition of continuous functions'' for a piecewise $f$. The pieces are covered; the glue point is not.}
+
+\begin{yourturn}
+\task{t:sq}$f(x)=\sqrt x\,\sin\frac1x$ on $(0,\infty)$. Can it be continuously extended to $[0,\infty)$? (Übung~5/8b, cold.)
+\task{t:dir}$g(x)=x\,D(x)$, with $D$ the Dirichlet function, is continuous at $0$ and nowhere else.
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{Move 14\quad The intermediate value theorem}
+\when{``Zeigen Sie, dass die Gleichung \dots\ (mindestens / genau) eine Lösung in \dots\ besitzt''; fixed points; polynomials of
+odd degree.}
+
+\begin{panel}[unbreakable]{Skeleton}{zeros}{Nullstellen}
+\begin{enumerate}
+  \item Move everything to one side: $h=f-g$, or $h=f-c$, or $h(x)=f(x)-x$ for a fixed point.
+  \item $h$ is continuous on the \emph{closed} interval $[a,b]$: say why.
+  \item Compute $h(a)$ and $h(b)$: opposite signs, or one of them $0$.
+  \item IVT: some $p\in[a,b]$ has $h(p)=0$; with strict signs, $p\in(a,b)$.
+  \item ``Genau eine'': $h$ strictly monotone, shown by algebra. ``Mindestens drei'': three sign changes on disjoint intervals.
+\end{enumerate}
+\end{panel}
+
+\begin{example}{existence and uniqueness}
+$\exp x=3-x$ has exactly one real solution, and it lies in $(0,1)$. Let $h(x)=\exp x+x-3$, continuous on $\R$ as a sum.
+\[ h(0)=1-3=-2<0,\qquad h(1)=e-2>\tfrac52-2>0 . \]
+The IVT gives a zero in $(0,1)$. Unique: $\exp$ and $x\mapsto x$ are strictly increasing, so $h$ is strictly increasing on $\R$
+and takes the value $0$ at most once.
+\end{example}
+
+\par\needspace{85mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,width=.88\linewidth,height=60mm,xmin=0,xmax=1.12,ymin=-2.05,ymax=1.25,
+  xlabel={$x$},ylabel={$f$},xtick={0,0.5,0.625,0.75,1},xticklabels={$0$,$\frac12$,$\frac58$,$\frac34$,$1$},ytick={-1,0,1},
+  ylabel style={rotate=-90}]
+  \draw[kldim,dashed] (axis cs:0,0)--(axis cs:1.05,0);
+  \addplot[klhi,domain=0:1,samples=100] {x^3+x-1};
+  \draw[klink,line width=1.3pt] (axis cs:0,-1.3)--(axis cs:1,-1.3) node[right]{$I_0$};
+  \draw[klink,line width=1.3pt] (axis cs:0.5,-1.5)--(axis cs:1,-1.5) node[right]{$I_1$};
+  \draw[klink,line width=1.3pt] (axis cs:0.5,-1.7)--(axis cs:0.75,-1.7) node[right]{$I_2$};
+  \draw[klink,line width=1.3pt] (axis cs:0.625,-1.9)--(axis cs:0.75,-1.9) node[right]{$I_3$};
+  \fill[klhi] (axis cs:0.6823,0) circle (1.7pt);
+  \node[anchor=south east,text=klhi] at (axis cs:0.6823,0.02) {$p$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{The proof of the IVT is a hunt by halves, here for $f(x)=x^3+x-1$ on $[0,1]$. Keep the half where $f$ is $\le0$ on
+the left end and $\ge0$ on the right. The left ends climb, the right ends fall, both converge (monotone convergence) to one
+$p$, and continuity squeezes $f(p)\le0\le f(p)$.}
+
+\trap{Applying the IVT on an open interval, or on a set with a hole. It needs $[a,b]$ and continuity on all of it.
+$x^2-2$ changes sign on $[0,2]\cap\Q$ and has no zero there.}
+\trap{Existence is all the IVT gives. Uniqueness is a separate argument.}
+
+\begin{yourturn}
+\task{t:ivt3}$x^5-3x+1=0$ has at least three real solutions.
+\task{t:chord}$f\colon[0,1]\to\R$ continuous with $f(0)=f(1)$. Show: some $x\in[0,\frac12]$ has $f(x)=f(x+\frac12)$.
+\task{t:odd}Every polynomial of odd degree has a real zero (your Übung~5/5a, cold).
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{Move 15\quad Uniform continuity}
+\when{``Ist $f$ gleichmäßig stetig auf $D$?'' On a closed bounded interval the answer is always yes (Heine--Cantor). The
+question is only interesting on open or unbounded sets.}
+
+\begin{panel}[unbreakable]{Skeleton}{uniform continuity}{gleichmäßige Stetigkeit}
+\textbf{To show it:}
+\begin{enumerate}
+  \item $D=[a,b]$ and $f$ continuous: Heine--Cantor. Done.
+  \item Lipschitz: $|f(x)-f(y)|\le L|x-y|$ for all $x,y\in D$. Then $\delta:=\frac\eps L$.
+  \item Otherwise find $|f(x)-f(y)|\le\varphi(|x-y|)$ with $\varphi(t)\to0$. Example: $|\sqrt x-\sqrt y|\le\sqrt{|x-y|}$, so
+        $\delta:=\eps^2$.
+\end{enumerate}
+\textbf{To refute it:}
+\begin{enumerate}
+  \setcounter{enumi}{3}
+  \item Two sequences in $D$ with $|x_n-y_n|\to0$ but $|f(x_n)-f(y_n)|\ge\eps_0$. Look where $f$ is steepest: at $\infty$ for
+        $x^2$, near $0$ for $\frac1x$.
+  \item Shortcut: uniformly continuous on a bounded $(a,b)$ implies bounded, because $f$ then extends continuously to $[a,b]$.
+        So a continuous, unbounded $f$ on a bounded open interval is not uniformly continuous.
+\end{enumerate}
+\end{panel}
+
+\begin{example}{the square on a half-line, refuted}
+$x^2$ on $[0,\infty)$: take $x_n=n$, $y_n=n+\frac1n$. Then $|x_n-y_n|=\frac1n\to0$, but
+\[ y_n^2-x_n^2=2+\frac1{n^2}\ge2 . \]
+With $\eps_0=1$: whatever $\delta>0$ the opponent offers, choose $n>\frac1\delta$. The pair is closer than $\delta$ and its
+values differ by more than $1$.
+\end{example}
+
+\begin{example}{the root on a half-line, proved}
+$\sqrt x$ on $[0,\infty)$ is uniformly continuous. Let $0\le y\le x$. Since $\sqrt x\sqrt y\ge\sqrt y\sqrt y=y$,
+\[ \bigl(\sqrt x-\sqrt y\bigr)^2=x-2\sqrt x\sqrt y+y\le x-2y+y=x-y . \]
+So $|\sqrt x-\sqrt y|\le\sqrt{|x-y|}$, and $\delta:=\eps^2$ serves every point. Yet $\sqrt x$ is not Lipschitz:
+$\frac{|\sqrt x-\sqrt0|}{|x-0|}=\frac1{\sqrt x}$ is unbounded. Steep at one point is allowed, as long as it is steep in a bounded
+way.
+\end{example}
+
+\why{Why does Heine--Cantor need a closed bounded interval?}{The proof assumes bad pairs $x_n,y_n$ and needs a subsequence that
+converges to a point \emph{of the domain}, where continuity can be used. Bolzano--Weierstraß supplies the subsequence only for
+bounded sequences, and the limit stays in the domain only if the interval is closed. Drop ``bounded'': $x^2$ on $[0,\infty)$.
+Drop ``closed'': $\frac1x$ on $(0,1]$.}
+
+\begin{yourturn}
+\task{t:uc1}$\frac1{1+x^2}$ is uniformly continuous on $\R$: show it is Lipschitz with $L=1$.
+\task{t:uc2}$\frac1x$ is not uniformly continuous on $(0,1]$ (Übung~5/3b, cold), but it is on $[1,\infty)$.
+\task{t:uc3}$\exp$ is not uniformly continuous on $\R$.
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{Move 16\quad Inverting strictly monotone functions}
+\when{``Zeigen Sie, dass $f$ bijektiv ist und $f^{-1}$ stetig''; ``Bestimmen Sie $f^{-1}(c)$''; roots, $\log$, $a^x$.}
+
+\begin{panel}[unbreakable]{Skeleton}{the inverse chain}{Umkehrfunktion}
+\begin{enumerate}
+  \item \textbf{Continuous:} by the rules.
+  \item \textbf{Strictly monotone:} $f(y)-f(x)>0$ for $x<y$, factored, or as a sum of increasing pieces. Hence injective.
+  \item \textbf{Image:} values or limits at the ends of the interval, then the IVT: $f(I)$ is the interval between them.
+  \item \textbf{The theorem} \de{(Satz über die Umkehrfunktion)}: $f\colon I\to f(I)$ is bijective, and $f^{-1}$ is continuous
+        and strictly monotone in the same direction.
+  \item \textbf{Values of $f^{-1}$:} guess $x$ with $f(x)=c$. Injectivity makes the guess the answer.
+\end{enumerate}
+\end{panel}
+
+\begin{example}{the chain, run once}
+$f\colon\R\to\R$, $f(x)=x+\exp x$.
+\begin{enumerate}
+  \item Continuous, as a sum.
+  \item Strictly increasing, as a sum of strictly increasing functions.
+  \item Image. Let $c\in\R$, $a=-|c|-1<0$, $b=|c|+1>0$. Since $0<\exp a<1$, $f(a)<a+1=-|c|\le c$. And $f(b)>b>c$. The IVT
+        on $[a,b]$ gives $f(x)=c$. So $f(\R)=\R$.
+  \item So $f^{-1}\colon\R\to\R$ exists, is continuous and strictly increasing.
+  \item $f(0)=0+1=1$, so $f^{-1}(1)=0$.
+\end{enumerate}
+\end{example}
+
+\begin{yourturn}
+\task{t:inv}$f\colon[0,\infty)\to[0,\infty)$, $f(x)=\frac{x^2}{1+x}$. Bijective? Find $f^{-1}$.
+\par\smallskip\noindent Then Vorbereitung~§16 cold.
+\end{yourturn}
+
+% =====================================================================================
+\section{The theorems}
+
+\opening{F}{or every Satz} the test wants two things: the statement with \emph{every} hypothesis, and the proof or its idea.
+Below, each theorem in that shape, in the Skript's order. The drill: cover the Idea lines, write them from memory on a blank
+page, then compare. A missing hypothesis costs as much as a missing step.
+
+\subsection{Chapter 1}
+
+\satz{Inverses are unique; $0\cdot x=0$}{Eindeutigkeit der Inversen}
+In a field the additive and multiplicative inverses are unique, and $0\cdot x=0$, $(-1)x=-x$.
+\idea If $y,z$ are both additive inverses of $x$: $y=y+0=y+(x+z)=(y+x)+z=0+z=z$. Then $0x=(0+0)x=0x+0x$; add $-(0x)$. And
+$x+(-1)x=(1-1)x=0$, so $(-1)x$ is the inverse of $x$.
+
+\satz{$\sqrt2$ is irrational}{Irrationalität}
+No $r\in\Q$ has $r^2=2$.
+\idea Suppose $r=\frac pq>0$ in lowest terms. $p^2=2q^2$, so $p^2$ is even, so $p$ is even (an odd $m=2k+1$ has odd square).
+Then $p=2k$, $q^2=2k^2$, so $q$ is even too. Contradiction.
+
+\satz{Bernoulli's inequality}{Bernoulli-Ungleichung}
+For $h\ge-1$ and $n\in\N$: $(1+h)^n\ge1+nh$.
+\idea Induction. The step multiplies the hypothesis by $1+h$, which is allowed because $1+h\ge0$: this is where $h\ge-1$ is
+used. Then $(1+nh)(1+h)=1+(n+1)h+nh^2\ge1+(n+1)h$.
+
+\satz{Geometric sum}{geometrische Summenformel}
+For $q\ne1$: $\sum_{k=0}^nq^k=\frac{1-q^{n+1}}{1-q}$.
+\idea Telescope: $(1-q)\sum_{k=0}^nq^k=\sum_{k=0}^nq^k-\sum_{k=1}^{n+1}q^k=1-q^{n+1}$. Or induction.
+
+\satz{Binomial theorem}{binomischer Lehrsatz}
+$(a+b)^n=\sum_{k=0}^n\binom nka^kb^{n-k}$.
+\idea Induction. Multiply by $a+b$, shift the index in one sum, and merge with Pascal: $\binom n{k-1}+\binom nk=\binom{n+1}k$.
+
+\satz{Archimedean property}{Archimedische Eigenschaft}
+For every $r\in\R$ there is $n\in\N$ with $n>r$.
+\idea Otherwise $\N$ is bounded above by $r$, so $s=\sup\N$ exists. $s-1$ is not an upper bound, so some $n>s-1$. Then
+$n+1>s$ and $n+1\in\N$. Contradiction.
+
+\satz{$\Q$ is countable}{Abzählbarkeit von $\Q$}
+There is a bijection $\N\to\Q$.
+\idea List the positive fractions $\frac nm$ along the diagonals $n+m=2,3,4,\dots$, skipping those not in lowest terms. That is a
+bijection $\varphi\colon\N\to\Q^+$. Then $0,\ \varphi(1),\ -\varphi(1),\ \varphi(2),\ -\varphi(2),\dots$
+
+\satz{$\R$ is uncountable}{Überabzählbarkeit}
+No sequence $x_1,x_2,\dots$ contains every point of $[0,1]$. (On the Erwartungshorizont; not in your Skript excerpt.)
+\idea Split $[0,1]$ into three closed thirds. A point lies in at most two of them, so one third $I_1$ misses $x_1$. Split $I_1$
+into thirds and pick one, $I_2$, that misses $x_2$; and so on. The nested intervals share a point $x$. It is no $x_n$, because
+$x\in I_n$ and $x_n\notin I_n$.
+
+\satz{Existence of the square root}{Existenz der Quadratwurzel}
+For $a\ge0$ there is exactly one $x\ge0$ with $x^2=a$.
+\idea Unique: $x^2=y^2$ with $x,y\ge0$ gives $(x-y)(x+y)=0$. Exists: $M=\{z\ge0: z^2<a\}$ is nonempty and bounded by $1+a$; let
+$s=\sup M$. If $s^2<a$, then $s+\delta\in M$ for small $\delta$, with
+$\delta<\min\{1,\frac{a-s^2}{2s+1}\}$: $s$ is no upper bound. If $s^2>a$, then $s-\delta$ is still an upper bound, with
+$\delta<\min\{s,\frac{s^2-a}{2s+1}\}$: $s$ is not the least. So $s^2=a$. The $m$-th root goes the same way.
+
+\satz{Nested intervals}{Intervallschachtelungsprinzip}
+Closed bounded $I_n=[a_n,b_n]$ with $I_{n+1}\subseteq I_n$ have a common point; exactly one if $b_n-a_n\to0$.
+\idea $(a_n)$ increases and every $b_m$ bounds it. $x=\sup_na_n$ satisfies $a_n\le x\le b_n$ for all $n$. Two common points
+$x,y$ have $|x-y|\le b_n-a_n\to0$.
+
+\satz{$\Q$ is dense}{Dichtheit von $\Q$}
+Between any two reals $x<y$ lie a rational and an irrational number.
+\idea Archimedes: $n(y-x)>1$. Then some integer $m$ satisfies $nx<m<ny$, so $x<\frac mn<y$. For an irrational, find a rational
+between $x$ and $y-\frac{\sqrt2}M$ and add $\frac{\sqrt2}M$.
+
+\subsection{Chapter 2}
+
+\satz{The limit is unique}{Eindeutigkeit des Grenzwerts}
+\idea $a_n\to a$ and $a_n\to b$: $a-b=(a-a_n)+(a_n-b)$ is a constant null sequence, so $a=b$.
+
+\satz{Convergent implies bounded}{konvergent $\Rightarrow$ beschränkt}
+\idea Play $\eps=1$: $|a_n|<|a|+1$ for $n\ge N$. Take the maximum with the finitely many $|a_1|,\dots,|a_{N-1}|$.
+
+\satz{Limit laws}{Rechenregeln}
+$a_n\to a$, $b_n\to b$ $\Rightarrow$ $a_n+b_n\to a+b$, $ca_n\to ca$, $a_nb_n\to ab$; and $\frac{a_n}{b_n}\to\frac ab$ if
+$b\ne0$.
+\idea Sums: $\frac\eps2+\frac\eps2$. Products: $a_nb_n-ab=(a_n-a)b_n+a(b_n-b)$ with $(b_n)$ bounded. Quotients: $|b_n|>\frac{|b|}2$
+eventually.
+
+\satz{Comparison for null sequences}{Vergleichskriterium}
+$|a_n|\le b_n$ for $n\ge N$ and $b_n\to0$ $\Rightarrow$ $a_n\to0$.
+\idea Take the larger of the two thresholds: $|a_n|\le b_n<\eps$.
+
+\satz{Monotone convergence}{Monotoniekriterium}
+Increasing and bounded above $\Rightarrow$ convergent, with limit $\sup\{a_n\}$.
+\idea $a=\sup\{a_n\}$. $a-\eps$ is not an upper bound, so $a_N>a-\eps$; monotone, so $a-\eps<a_n\le a$ for all $n\ge N$.
+
+\satz{Bolzano--Weierstraß}{Satz von Bolzano--Weierstraß}
+Every bounded sequence in $\R$ has a convergent subsequence.
+\idea Bisect $[A,B]$ and keep a half that contains infinitely many terms. The nested intervals have lengths $2^{-k}(B-A)\to0$ and
+shrink to one point $x$. Pick $n_1<n_2<\cdots$ with $a_{n_k}\in I_k$. Then $|a_{n_k}-x|\le2^{-k}(B-A)\to0$.
+
+\satz{Subsequences keep the limit}{Teilfolgen}
+If $a_n\to a$, every subsequence tends to $a$. Hence two different accumulation points mean divergence.
+\idea $n_k\ge k$, so $k\ge N$ gives $|a_{n_k}-a|<\eps$.
+
+\satz{Bounded with one accumulation point}{beschränkt, ein Häufungspunkt}
+A bounded sequence with exactly one accumulation point $h$ converges to $h$.
+\idea Otherwise infinitely many terms stay $\eps_0$ away from $h$. Bolzano--Weierstraß on those gives a second accumulation
+point. Unbounded, it fails: $n^{(-1)^n}$.
+
+\satz{Cauchy criterion}{Cauchy-Kriterium}
+A sequence in $\R$ converges iff it is a Cauchy sequence.
+\idea $\Rightarrow$: $|a_n-a_m|\le|a_n-a|+|a-a_m|<\frac\eps2+\frac\eps2$. $\Leftarrow$: Cauchy $\Rightarrow$ bounded (play
+$\eps=1$) $\Rightarrow$ Bolzano--Weierstraß gives $a_{n_k}\to a$ $\Rightarrow$ $|a_n-a|\le|a_n-a_{n_k}|+|a_{n_k}-a|<\eps$ for a
+large $k$.
+
+\subsection{Chapter 3}
+
+\satz{Terms of a convergent series tend to 0}{notwendige Bedingung}
+\idea $a_n=S_n-S_{n-1}\to S-S=0$. The converse is false: $\sum\frac1n$.
+
+\satz{Cauchy criterion for series}{Cauchy-Kriterium für Reihen}
+$\sum a_n$ converges iff $\forall\eps\ \exists N\ \forall n>m\ge N: \bigl|\sum_{k=m+1}^na_k\bigr|<\eps$.
+\idea That sum is $S_n-S_m$: this is the Cauchy property of the partial sums.
+
+\satz{Nonnegative terms}{Reihen mit nichtnegativen Gliedern}
+If $a_n\ge0$, then $\sum a_n$ converges iff the partial sums are bounded.
+\idea The partial sums increase. Monotone convergence.
+
+\satz{The harmonic series diverges}{harmonische Reihe}
+\idea Group: $S_{2^k}=1+\frac12+\bigl(\frac13+\frac14\bigr)+\bigl(\frac15+\cdots+\frac18\bigr)+\cdots\ge1+\frac k2$. Each group has
+$2^{j-1}$ terms of size at least $2^{-j}$.
+
+\satz{$\sum\frac1{n^\alpha}$ converges for $\alpha>1$}{$p$-Reihe}
+\idea The block $2^j\le n<2^{j+1}$ has $2^j$ terms, each at most $2^{-j\alpha}$, so the block is at most $(2^{1-\alpha})^j$. The
+partial sums are bounded by the geometric series $\frac1{1-2^{1-\alpha}}$.
+
+\satz{Leibniz criterion}{Leibniz-Kriterium}
+$(a_n)$ decreasing, $a_n\ge0$, $a_n\to0$ $\Rightarrow$ $\sum(-1)^na_n$ converges.
+\idea Even partial sums decrease, odd ones increase, and $S_{2k+1}\le S_{2k}$. Both converge by monotone convergence, and they
+differ by $a_{2k+1}\to0$.
+
+\satz{Absolute convergence implies convergence}{absolute Konvergenz}
+\idea $\bigl|\sum_{k=m+1}^na_k\bigr|\le\sum_{k=m+1}^n|a_k|<\eps$. Cauchy criterion.
+
+\satz{Majorant criterion}{Majorantenkriterium}
+$|a_n|\le c_n$ for large $n$ and $\sum c_n$ convergent $\Rightarrow$ $\sum a_n$ converges absolutely.
+\idea $\sum_{k=m+1}^n|a_k|\le\sum_{k=m+1}^nc_k<\eps$. Cauchy criterion.
+
+\satz{Ratio test}{Quotientenkriterium}
+$a_n\ne0$ and $|a_{n+1}/a_n|\le\theta<1$ for $n\ge n_0$ $\Rightarrow$ absolutely convergent.
+\idea Induction: $|a_n|\le|a_{n_0}|\theta^{n-n_0}$. A geometric majorant.
+
+\satz{Root test}{Wurzelkriterium}
+$\sqrt[n]{|a_n|}\le q<1$ for $n\ge N$ $\Rightarrow$ absolutely convergent; $\sqrt[n]{|a_n|}\ge1$ for infinitely many $n$
+$\Rightarrow$ divergent.
+\idea $|a_n|\le q^n$: geometric majorant. Otherwise $|a_n|\ge1$ infinitely often: the terms do not tend to $0$.
+
+\satz{Cauchy product}{Cauchy-Produkt}
+$\sum a_n$, $\sum b_n$ absolutely convergent $\Rightarrow$ $\sum c_n$, $c_n=\sum_{k=0}^na_kb_{n-k}$, converges absolutely to
+$\bigl(\sum a_n\bigr)\bigl(\sum b_n\bigr)$.
+\idea $\sum_{n\le N}|c_n|\le\bigl(\sum|a_k|\bigr)\bigl(\sum|b_\ell|\bigr)$, so absolute convergence. $A_NB_N-C_N$ is the sum of
+$a_kb_\ell$ over the square $k,\ell\le N$ minus the triangle $k+\ell\le N$; there $k>\frac N2$ or $\ell>\frac N2$, so it is bounded
+by tails of $\sum|a_k|$ and $\sum|b_\ell|$, which tend to $0$.
+
+\satz{The exponential series}{Exponentialfunktion}
+$\exp x$ converges absolutely for every $x$, and $\exp(x+y)=\exp x\exp y$.
+\idea Ratio $\frac{|x|}{n+1}\le\frac12$ once $n+1\ge2|x|$. The functional equation: the Cauchy product's $n$-th term is
+$\sum_k\frac{x^ky^{n-k}}{k!(n-k)!}=\frac{(x+y)^n}{n!}$ by the binomial theorem. Consequences: $\exp x\exp(-x)=1$, so $\exp x\ne0$
+and $\exp(-x)=\frac1{\exp x}$; $\exp x>0$; $\exp n=e^n$.
+
+\subsection{Chapter 4}
+
+\satz{Sequences and epsilon-delta agree}{Folgen- und $\eps$-$\delta$-Kriterium}
+$\lim_{x\to y}f(x)=c$ iff $\forall\eps\ \exists\delta\ \forall x\in D: 0<|x-y|<\delta\Rightarrow|f(x)-c|<\eps$.
+\idea From $\eps$-$\delta$ to sequences: a sequence $x_n\to y$ with $x_n\ne y$ eventually lies in the window. Back, by
+contradiction: if $\eps_0$ defeats every $\delta$, pick $x_n$ with $0<|x_n-y|<\frac1n$ and $|f(x_n)-c|\ge\eps_0$. Then $x_n\to y$,
+but $f(x_n)\not\to c$.
+
+\satz{Continuity is preserved}{Rechenregeln, Verkettung}
+Sums, multiples, products, quotients (denominator $\ne0$) and compositions of continuous functions are continuous.
+\idea Sequence criterion and the limit laws. Composition: $x_n\to y\Rightarrow f(x_n)\to f(y)\Rightarrow g(f(x_n))\to g(f(y))$.
+
+\satz{$\exp$, $\sin$, $\cos$ are continuous}{Stetigkeit elementarer Funktionen}
+\idea $|\exp x-1|\le2|x|$ for $|x|\le1$, and $\exp x=\exp y\exp(x-y)$. For $\sin$, $\cos$: $\frac{\sin h}h\to1$, $\cos h\to1$,
+then the addition theorems.
+
+\satz{Intermediate value theorem}{Zwischenwertsatz}
+$f\colon[a,b]\to\R$ continuous and $c$ between $f(a)$ and $f(b)$ $\Rightarrow$ some $p\in[a,b]$ has $f(p)=c$.
+\idea Reduce to $c=0$, $f(a)<0<f(b)$. Bisect, keeping $f(a_n)\le0\le f(b_n)$. $a_n$ increases, $b_n$ decreases, and
+$b_n-a_n=2^{-n}(b-a)$, so both tend to one $p$. Continuity: $f(p)\le0\le f(p)$.
+
+\satz{Extreme value theorem}{Satz vom Maximum und Minimum}
+$f\colon[a,b]\to\R$ continuous $\Rightarrow$ $f$ is bounded and attains a maximum and a minimum.
+\idea Unbounded would give $|f(x_n)|\ge n$; Bolzano--Weierstraß gives $x_{n_k}\to p\in[a,b]$ (closed!), and $f(x_{n_k})\to f(p)$
+is bounded. Contradiction. Maximum: $M=\sup f([a,b])$; pick $f(x_n)>M-\frac1n$; a subsequence tends to some $p$, and $f(p)=M$.
+
+\satz{Heine--Cantor}{Satz von Heine--Cantor}
+$f\colon[a,b]\to\R$ continuous $\Rightarrow$ $f$ uniformly continuous.
+\idea Otherwise there are $\eps_0$ and $x_n,y_n$ with $|x_n-y_n|<\frac1n$, $|f(x_n)-f(y_n)|\ge\eps_0$. Bolzano--Weierstraß:
+$x_{n_k}\to p\in[a,b]$, and then $y_{n_k}\to p$. Continuity at $p$: $f(x_{n_k})-f(y_{n_k})\to0$. Contradiction.
+
+\satz{Continuous extension to the ends}{stetige Fortsetzung an Randpunkte}
+$f\colon(a,b)\to\R$ uniformly continuous $\Rightarrow$ a unique continuous $\tilde f\colon[a,b]\to\R$ agrees with $f$ on $(a,b)$.
+\idea $x_n\to a$ is Cauchy, so $(f(x_n))$ is Cauchy (uniform continuity) and converges to some $A$. Interleave two such
+sequences into one: the limit does not depend on the choice. Set $\tilde f(a)=A$; the same at $b$.
+
+\satz{Approximation by step functions}{Approximation durch Treppenfunktionen}
+$f\colon[a,b]\to\R$ continuous, $\eps>0$ $\Rightarrow$ step functions $\varphi\le f\le\psi$ with $\psi-\varphi<\eps$.
+\idea Heine--Cantor gives $\delta$. Partition $[a,b]$ into pieces shorter than $\delta$. On each piece $f$ attains a minimum
+$m_k$ and a maximum $M_k$ (extreme value theorem), and $M_k-m_k<\eps$. Let $\varphi=m_k$ and $\psi=M_k$ on the pieces.
+
+\satz{Inverse function theorem}{Satz über die Umkehrfunktion}
+$I$ an interval, $f\colon I\to\R$ continuous and strictly monotone $\Rightarrow$ $f(I)$ is an interval, $f\colon I\to f(I)$ is
+bijective, and $f^{-1}$ is continuous and strictly monotone in the same direction.
+\idea Interval: IVT. Injective: strict monotonicity. Continuity of $f^{-1}$ at $y_0=f(x_0)$ (increasing case): with
+$y_\pm=f(x_0\pm\eps)$ and $\delta=\min\{y_0-y_-,\ y_+-y_0\}$, any $|y-y_0|<\delta$ lies between $y_-$ and $y_+$, so
+$f^{-1}(y)$ lies between $x_0-\eps$ and $x_0+\eps$.
+
+\satz{$\exp$ and $\log$}{Exponentialfunktion und Logarithmus}
+$\exp\colon\R\to(0,\infty)$ is continuous, strictly increasing and bijective; $\log=\exp^{-1}$ is continuous, strictly increasing,
+and $\log(xy)=\log x+\log y$.
+\idea $\exp h>1$ for $h>0$, so $\exp y=\exp x\exp(y-x)>\exp x$ for $y>x$. $\exp n\ge1+n\to\infty$ and $\exp(-n)\to0$; the IVT
+gives every $r>0$. For $\log$: apply $\exp$ to both sides and use injectivity.
+
+\satz{The exponential functional equation}{Charakterisierung von $a^x$}
+$F\colon\R\to\R$ continuous with $F(x+y)=F(x)F(y)$ $\Rightarrow$ $F\equiv0$, or $F(x)=a^x$ with $a=F(1)>0$.
+\idea $F(0)=F(0)^2$. If $F(0)=0$, then $F\equiv0$. Otherwise $F(x)=F(\frac x2)^2\ge0$ and $F(x)F(-x)=1$, so $F>0$. Then $F(n)=a^n$,
+$F(\frac pq)^q=a^p$ gives $F(\frac pq)=a^{p/q}$, and density of $\Q$ with continuity gives every real $x$.
+
+% =====================================================================================
+\section{Counterexamples}
+
+\opening{``B}{eweisen oder widerlegen''} is the favourite question of every hard examiner, and it punishes the student who starts
+proving before checking. Spend sixty seconds trying the usual monsters first. A counterexample is the cheapest proof in
+mathematics: one line, and the claim is dead.
+\marginkael{questioning}
+
+\begin{panel}{Bestiary}{try these first}{}
+\begin{itemize}
+  \item $(-1)^n$: bounded, two accumulation points, divergent.
+  \item $n^{(-1)^n}$: one accumulation point, unbounded, divergent.
+  \item $\sqrt n$ and the harmonic sums $H_n$: steps shrink to $0$, still divergent.
+  \item $\sum\frac1n$ and $\sum\frac1{n^2}$: the same ratio limit $1$, opposite fates. $\sum\frac{(-1)^n}n$: convergent, not
+        absolutely.
+  \item $D$, $1$ on $\Q$ and $0$ elsewhere: continuous nowhere. $xD(x)$: continuous exactly at $0$.
+  \item $x^2$ on $\R$ and $\frac1x$ on $(0,1]$: continuous, not uniformly. $\sqrt x$: uniformly continuous, not Lipschitz.
+  \item The jump: $0$ for $x<0$, $1$ for $x\ge0$. $(0,1)$ and $\{q\in\Q:q^2<2\}$: sets missing their bound.
+\end{itemize}
+\end{panel}
+
+\needspace{12\baselineskip}\begin{panel}{False}{numbers and sets}{}
+\begin{twocol}{52mm}{Tempting claim}{Killed by}
+\row{A bounded set has a maximum.}{$(0,1)$: $\sup=1\notin(0,1)$.}
+\row{A bounded set of rationals has a supremum in $\Q$.}{$\{q\in\Q: q^2<2\}$.}
+\row{Nested intervals always share a point.}{$(0,\frac1n)$: open. $[n,\infty)$: unbounded.}
+\row{$x^2\le y^2\Rightarrow x\le y$.}{$x=1$, $y=-2$. Squares forget signs; compare $|x|$, $|y|$.}
+\row{$\mathbb Z$ is a field.}{$2$ has no inverse in $\mathbb Z$.}
+\row{$\mathbb C$ can be ordered.}{$i^2=-1$ would be a positive square.}
+\end{twocol}
+\end{panel}
+
+\needspace{12\baselineskip}\begin{panel}{False}{sequences}{}
+\begin{twocol}{52mm}{Tempting claim}{Killed by}
+\row{Bounded $\Rightarrow$ convergent.}{$(-1)^n$.}
+\row{Monotone $\Rightarrow$ convergent.}{$n$.}
+\row{Exactly one accumulation point $\Rightarrow$ convergent.}{$n^{(-1)^n}$. (True if bounded.)}
+\row{$|a_{n+1}-a_n|\to0\Rightarrow$ convergent.}{$\sqrt n$; $H_n$.}
+\row{$a_nb_n\to0\Rightarrow a_n\to0$ or $b_n\to0$.}{$(1,0,1,0,\dots)$ and $(0,1,0,1,\dots)$.}
+\row{$a_n+b_n$ convergent $\Rightarrow$ both convergent.}{$(-1)^n$ and $-(-1)^n$.}
+\row{$a_n>0$ for all $n$, $a_n\to a\Rightarrow a>0$.}{$\frac1n\to0$. Limits keep only $\ge$.}
+\row{A sequence has finitely many accumulation points.}{An enumeration of $\Q$: every real number is one.}
+\row{Solve $L=g(L)$, done.}{$a_{n+1}=2a_n$, $a_1=1$.}
+\end{twocol}
+\end{panel}
+
+\needspace{12\baselineskip}\begin{panel}{False}{series}{}
+\begin{twocol}{52mm}{Tempting claim}{Killed by}
+\row{$a_n\to0\Rightarrow\sum a_n$ converges.}{$\sum\frac1n$.}
+\row{Convergent $\Rightarrow$ absolutely convergent.}{$\sum\frac{(-1)^n}n$.}
+\row{$|a_{n+1}/a_n|<1$ for all $n$ $\Rightarrow$ convergent.}{$\frac1n$: ratio $\frac n{n+1}<1$. You need a fixed $\theta<1$.}
+\row{Ratio limit $1$ decides.}{$\sum\frac1n$ diverges, $\sum\frac1{n^2}$ converges.}
+\row{Leibniz works without monotonicity.}{$b_{2k}=\frac1k$, $b_{2k+1}=\frac1{k^2}$: the pairs sum to $\frac1k-\frac1{k^2}$,
+which diverges.}
+\row{Two convergent series have a convergent Cauchy product.}{$\sum\frac{(-1)^n}{\sqrt{n+1}}$ squared (Move~09).}
+\row{$\sum a_n$ convergent $\Rightarrow\sum a_n^2$ convergent.}{$a_n=\frac{(-1)^n}{\sqrt n}$.}
+\row{$\sum a_n$ convergent, $(b_n)$ bounded $\Rightarrow\sum a_nb_n$ convergent.}{$a_n=\frac{(-1)^n}n$, $b_n=(-1)^n$.}
+\end{twocol}
+\end{panel}
+
+\needspace{12\baselineskip}\begin{panel}{False}{functions}{}
+\begin{twocol}{52mm}{Tempting claim}{Killed by}
+\row{Continuous on $(a,b)$ $\Rightarrow$ bounded.}{$\frac1x$ on $(0,1)$.}
+\row{Continuous on $[a,b)$ $\Rightarrow$ attains a maximum.}{$x$ on $[0,1)$.}
+\row{Continuous $\Rightarrow$ uniformly continuous.}{$x^2$ on $\R$; $\frac1x$ on $(0,1]$.}
+\row{Uniformly continuous $\Rightarrow$ bounded.}{$x$ on $\R$.}
+\row{Uniformly continuous $\Rightarrow$ Lipschitz.}{$\sqrt x$ on $[0,1]$.}
+\row{The IVT holds without continuity.}{The jump at $0$ on $[-1,1]$.}
+\row{The IVT holds on $\Q$.}{$x^2-2$ on $[0,2]\cap\Q$.}
+\row{$f+g$ continuous $\Rightarrow f,g$ continuous.}{$D$ and $1-D$.}
+\row{$|f|$ continuous $\Rightarrow f$ continuous.}{$2D-1$, with values $\pm1$.}
+\row{The limit exists at $x_0$ $\Rightarrow$ continuous at $x_0$.}{$0$ for $x\ne0$, $1$ at $0$.}
+\row{Injective $\Rightarrow$ monotone.}{$x$ on $[0,1)$, $3-x$ on $[1,2]$. (True for continuous $f$ on an interval.)}
+\row{Continuous bijection $\Rightarrow$ continuous inverse.}{$x$ on $[0,1)$, $x-1$ on $[2,3]$, onto $[0,2]$: the inverse jumps at
+$1$. The domain is not an interval.}
+\end{twocol}
+\end{panel}
+
+% =====================================================================================
+\section{The exam itself}
+
+\opening{Y}{ou will be} tired at minute seventy, and the professor grades what is on the paper, not what was in your head. These
+are the habits that turn understanding into points.
+
+\begin{panel}[unbreakable]{Checklist}{full marks}{volle Punktzahl}
+\begin{enumerate}
+  \item Quantifiers in the order of the definition; $N$ or $\delta$ named explicitly.
+  \item Every inequality valid where you use it. Say where: ``für $n\ge3$'', ``da $|x-1|<1$''.
+  \item Every theorem you cite gets its name \emph{and} its hypotheses, checked in writing: IVT (continuous on a closed
+        interval), Leibniz (three conditions), Cauchy product (absolute convergence), monotone convergence (monotone and
+        bounded), Heine--Cantor ($[a,b]$).
+  \item Arrows: $=$ joins objects, $\Rightarrow$ joins statements, $\iff$ only when both directions hold. (Your UE01.)
+  \item An equation solved by $\Rightarrow$ gives candidates. Plug them in, check the domain. (Your UE01/7.)
+  \item The step that carries the problem is proved, never asserted. (Your UE01/2b.)
+  \item Skript tools only: no derivatives, no monotonicity via $f'>0$, no L'Hospital, no Taylor, no integrals, no
+        $(1+\frac1n)^n\to e$, no periodicity of $\sin$ or the number $\pi$. Results from the Übungen: safest to reprove them in
+        two lines, as this folio does.
+\end{enumerate}
+\end{panel}
+
+\begin{panel}[unbreakable]{Speed}{ninety minutes}{}
+\begin{enumerate}
+  \item Minutes 0--3: read every question. Tag each: \textbf{D} definition or statement, \textbf{S} a Skript proof, \textbf{R} a
+        move.
+  \item D first: the most points per minute. Add one example and one non-example; it costs twenty seconds.
+  \item S next, when the Idea line comes at once. Write the idea as a sentence first, then the details.
+  \item R: name the move from its ``When'' line. Scratch backwards in the margin, fair copy forwards.
+  \item ``Beweisen oder widerlegen'': sixty seconds against the bestiary before you invest in a proof.
+  \item Stuck? Write the definition unfolded, all quantifiers, and the first line of the skeleton. Partial credit lives there,
+        and so does the next step.
+  \item Never polish $N$ or $\delta$. Crude and correct beats tight and late.
+  \item Last five minutes: every cited theorem has its hypotheses next to it.
+\end{enumerate}
+\end{panel}
+
+\begin{panel}[unbreakable]{Phrasebook}{the test is in German}{Formulierungen}
+\begin{itemize}
+  \item Sei $\eps>0$ beliebig. \ Nach der archimedischen Eigenschaft existiert $N\in\N$ mit $N>\frac3\eps$.
+  \item Dann gilt für alle $n\ge N$: \dots \ Somit ist $\lim_{n\to\infty}a_n=\frac12$ gezeigt.
+  \item Setze $\delta:=\min\{1,\frac\eps7\}$. Für alle $x\in D$ mit $|x-x_0|<\delta$ gilt \dots
+  \item Angenommen, \dots\ Dann \dots, ein Widerspruch. Also gilt \dots
+  \item Ohne Einschränkung (o.\,B.\,d.\,A.) sei $x<y$.
+  \item Induktionsanfang ($n=1$): \dots \ Induktionsvoraussetzung: Für ein $n\in\N$ gelte \dots \ Induktionsschritt
+        ($n\to n+1$): \dots
+  \item Die Funktion $h$ ist als Summe stetiger Funktionen stetig auf $[0,1]$. Nach dem Zwischenwertsatz existiert \dots
+  \item Die Reihe konvergiert nach dem Majorantenkriterium mit der Majorante $\sum\frac1{n^2}$.
+  \item Gegenbeispiel: \dots\ Damit ist die Aussage falsch.
+\end{itemize}
+\end{panel}
+
+% =====================================================================================
+\section{Fourteen days}
+
+\opening{F}{ourteen days} is enough, if every day is a test and none is a reread. About two hours a day. Day~1 is the day you
+start; Day~14 is the evening before the test. If the date moves, compress Days~8 and~9.
+\aside{Fourteen days. I once watched a star collapse in less, and it had far less to learn.}
+
+\medskip
+\begin{plan}
+\pday{01}{Parts I and II. Then, on a blank page, write the eight definitions of the negation table with their negations.}
+  {all eight, quantifiers in order}
+\pday{02}{Part III: the keystone, the terms, Moves 01--03, tasks \ref{t:fac}--\ref{t:comp}. Vorbereitung §1--3 cold.}
+  {every task right without the key}
+\pday{03}{Part IV: Moves 04--05, tasks \ref{t:epsA}--\ref{t:hp}. Vorbereitung §4--5 cold.}
+  {an $\eps$-$N$ proof in under 8 minutes}
+\pday{04}{Move 06, Part V: Moves 07--08, tasks \ref{t:rec}--\ref{t:param}. Vorbereitung §6--8 cold.}
+  {you name the test before computing}
+\pday{05}{Move 09, Part VI: Moves 10--12, tasks \ref{t:leib1}--\ref{t:inf}. Vorbereitung §9--12 cold.}
+  {an $\eps$-$\delta$ proof in under 8 minutes}
+\pday{06}{Moves 13--16, tasks \ref{t:sq}--\ref{t:inv}. Vorbereitung §13--16 cold.}
+  {all sixteen moves named from their ``When'' lines}
+\pday{07}{Part VII, chapters 1--2: each theorem's statement and Idea from a blank page. Mark every miss.}
+  {misses listed}
+\pday{08}{Part VII, chapters 3--4, then Part VIII with the right column covered. Redo Day~7's misses.}
+  {each claim killed in one line}
+\pday{09}{Your homework, cold: Übung 2/2, 3/4, 3/7, 4/3--4/5, 5/3, 5/6, 5/7. Whatever fails goes to \cmd{/exercise}.}
+  {each one written as for the test}
+\pday{10}{Mock exam with \cmd{/exam}: ninety minutes, timed, unseen problems, graded strictly.}
+  {graded}
+\pday{11}{Every mock error into the grimoire, re-attempted the same day; redo the move it belongs to.}
+  {every error re-solved}
+\pday{12}{Teach-back with \cmd{/teach}: the Cauchy criterion and the IVT, out loud. Then a 20-minute sprint through every term
+  of Parts III--VI.}
+  {no gaps found}
+\pday{13}{A second, shorter mock (60 minutes), or a mixed set of every task you missed.}
+  {80\,\% or more}
+\pday{14}{Light. Blank-page recall of the triggers and the negation table. Nothing new. Sleep.}
+  {asleep before midnight}
+\end{plan}
+
+\subsection{The key}
+Answers and first moves only. If the first move is not enough, bring the attempt to \cmd{/exercise}: hints come one rung at a
+time, and you keep the proof.
+
+\keyline{t:fac}Step: $(n+1)!-1+(n+1)(n+1)!=(n+1)!\,(n+2)-1=(n+2)!-1$.
+\keyline{t:fac2}Base $24>16$. Step: $(n+1)!=(n+1)\,n!>(n+1)2^n\ge2\cdot2^n$.
+\keyline{t:supmn}$\sup=\max=2$ at $m=n=1$. $\inf=0$, not attained: every element is $>0$; for $\eps$ take $m=n>\frac2\eps$.
+\keyline{t:supc}Upper bound $ca\le c\sup A$. Least: pick $a>\sup A-\frac\eps c$.
+\keyline{t:bij}$g(x)=(x+1)^2$, strictly increasing; $g^{-1}(y)=\sqrt y-1$, which is $\ge0$ exactly when $y\ge1$.
+\keyline{t:comp}Apply $g$ to $f(x_1)=f(x_2)$. For surjectivity, $z=g(f(x))$ is hit by $f(x)$. Example: $M=P=\{1\}$,
+$N=\{1,2\}$, $f(1)=1$, $g\equiv1$.
+\keyline{t:epsA}$|a_n-3|=\frac{14}{n+4}<\frac{14}n$; $N>\frac{14}\eps$.
+\keyline{t:epsB}$|a_n|\le\frac{n+1}{n^2}\le\frac2n$; $N>\frac2\eps$.
+\keyline{t:abs}Reverse triangle inequality. The converse fails: $(-1)^n$. It holds when $a=0$.
+\keyline{t:sqrt}$a=0$: $\sqrt{a_n}<\eps\iff a_n<\eps^2$. $a>0$: conjugate, $|\sqrt{a_n}-\sqrt a|\le\frac{|a_n-a|}{\sqrt a}$.
+\keyline{t:hp}Even $n$: $\to2$. Odd $n$: $\to-1$. Accumulation points $\{-1,2\}$; divergent.
+\keyline{t:rec}$L=3$. Bound $0\le a_n<3$. Increasing: $a_{n+1}^2-a_n^2=(3-a_n)(2+a_n)>0$.
+\keyline{t:heron}$x_{n+1}-\sqrt a=\frac{(x_n-\sqrt a)^2}{2x_n}\ge0$, then $x_{n+1}-x_n=\frac{a-x_n^2}{2x_n}\le0$ from $n=2$
+on. Limit $\sqrt a$.
+\keyline{t:cauchy}For $m>n$: $|s_m-s_n|=\sum_{k=n+1}^m2^{-k}<2^{-n}$. Choose $N$ with $2^N>\frac1\eps$ ($2^N\ge1+N$).
+\keyline{t:tel}$\frac12$. $\frac1{(2n-1)(2n+1)}=\frac12\bigl(\frac1{2n-1}-\frac1{2n+1}\bigr)$.
+\keyline{t:geo}$\frac72=\frac32+2$.
+\keyline{t:log}$S_N=\sum_{n=1}^N\bigl(\log(n+1)-\log n\bigr)=\log(N+1)$, unbounded since $\log e^k=k$.
+\keyline{t:ratio}Convergent: the ratio is $\frac{(1+1/n)^2}3\le\frac34$ for $n\ge2$.
+\keyline{t:root}Convergent: $\frac n{3n-1}\le\frac12$ for all $n\ge1$.
+\keyline{t:comp2}Divergent: $\frac1{\sqrt{n(n+1)}}\ge\frac1{n+1}$.
+\keyline{t:hard}Divergent: the ratio is $\frac3{(1+1/n)^n}\ge1$, so $a_n\ge a_1=3$: not a null sequence.
+\keyline{t:param}Exactly for $|x|<1$. At $|x|\ge1$ the terms do not tend to $0$.
+\keyline{t:leib1}Conditionally convergent: Leibniz; and $\frac1{2n+1}\ge\frac1{3n}$ for $n\ge1$.
+\keyline{t:leib2}Absolutely convergent: the ratio is $\frac{(1+1/n)^2}2\le\frac89$ for $n\ge3$.
+\keyline{t:leib3}Conditionally convergent: $b_n=\frac1{\sqrt{n+1}+\sqrt n}$ decreases to $0$, and $b_n\ge\frac1{2(n+1)}$.
+\keyline{t:exp1}$t=\exp x$: $t^2-4t+1=0$, $t=2\pm\sqrt3>0$. So $x=\pm\log(2+\sqrt3)$, as $(2-\sqrt3)(2+\sqrt3)=1$.
+\keyline{t:exp2}$1$: divide by $\exp x$; $\exp(-2x)\to0$.
+\keyline{t:exp3}$0$: for $x\ge0$, $\exp x\ge\frac{x^3}6$, so $\frac{x^2}{\exp x}\le\frac6x$.
+\keyline{t:ed1}$|x^3-1|=|x-1|\,|x^2+x+1|<7|x-1|$ when $|x-1|<1$. $\delta=\min\{1,\frac\eps7\}$.
+\keyline{t:ed2}For $x\ne2$ the quotient is $x+2$, and $|x+2-4|=|x-2|$. $\delta=\eps$.
+\keyline{t:ed3}$|x-2|<1\Rightarrow x>1\Rightarrow\bigl|\frac1x-\frac12\bigr|=\frac{|x-2|}{2x}<\frac{|x-2|}2$. $\delta=\min\{1,2\eps\}$.
+\keyline{t:ext}$f(0)=\frac12$. Conjugate: $f(x)=\frac1{\sqrt{1+x}+1}$.
+\keyline{t:inf}For $x\ge3$: $\bigl|f(x)-2\bigr|=\frac{x+6}{x^2-3}\le\frac{3x}{x^2/2}=\frac6x$. $M=\max\{3,\frac6\eps\}$.
+\keyline{t:sq}Yes, with $\tilde f(0)=0$: $|\sqrt x\sin\frac1x|\le\sqrt x$.
+\keyline{t:dir}At $0$: $|xD(x)|\le|x|$. At $x_0\ne0$: rationals give $q_n\to x_0$, irrationals give $0$; they differ.
+\keyline{t:ivt3}$f(-2)<0<f(0)$, $f(1)<0<f(2)$: three disjoint sign changes.
+\keyline{t:chord}$h(x)=f(x+\frac12)-f(x)$ on $[0,\frac12]$: $h(0)+h(\frac12)=f(1)-f(0)=0$.
+\keyline{t:odd}Factor out the leading term: $p(x)=a_nx^n(1+r(x))$ with $r(x)\to0$ as $|x|\to\infty$. Opposite signs at $\pm R$.
+\keyline{t:uc1}$\bigl|\frac1{1+x^2}-\frac1{1+y^2}\bigr|=\frac{|x-y|\,|x+y|}{(1+x^2)(1+y^2)}$, and $\frac{|x|}{1+x^2}\le\frac12$.
+\keyline{t:uc2}$(0,1]$: $x_n=\frac1{n+1}$, $y_n=\frac1n$. $[1,\infty)$: $\bigl|\frac1x-\frac1y\bigr|=\frac{|x-y|}{xy}\le|x-y|$.
+\keyline{t:uc3}$x_n=n$, $y_n=n+\frac1n$: $\exp y_n-\exp x_n=\exp n\,(\exp\frac1n-1)\ge\frac{\exp n}n>1$.
+\keyline{t:inv}For $0\le x<y$: $f(y)-f(x)=\frac{(y-x)(x+y+xy)}{(1+x)(1+y)}>0$. $f(n)\ge\frac n2$, image $[0,\infty)$.
+$f^{-1}(y)=\frac{y+\sqrt{y^2+4y}}2$.
+
+\begin{triggers}
+\trigger{$|a_n-a|$ is a fraction}{one fraction; numerator up, denominator down, to $\frac Cn$}
+\trigger{A minus sign in a denominator}{keep half: $n^2-5\ge\frac{n^2}2$ for $n\ge4$}
+\trigger{A difference of roots}{the conjugate}
+\trigger{Supremum or infimum}{upper bound, then an element beyond $s-\eps$; Archimedes picks the index}
+\trigger{A recursive sequence}{bound by induction, factor $a_{n+1}-a_n$, then $L=g(L)$ and the bound picks the root}
+\trigger{Signs that oscillate}{split the indices by the period; two limits mean divergence}
+\trigger{A product in a series denominator}{partial fractions, then telescope}
+\trigger{$n!$ or $c^n$ in a series}{the ratio test with one fixed $\theta<1$}
+\trigger{An alternating series}{$\sum|a_n|$ first; then Leibniz, monotonicity by cross-multiplying}
+\trigger{$\eps$-$\delta$ with a product}{restrict $\delta\le1$, bound the other factor}
+\trigger{A glue point or a parameter}{one-sided limits equal to the value}
+\trigger{``Genau eine Lösung''}{IVT for existence, strict monotonicity for uniqueness}
+\trigger{Not uniformly continuous?}{two sequences, closer and closer, where $f$ is steepest}
+\trigger{An inverse function}{continuous, strictly monotone, image by the IVT, then the theorem}
+\trigger{``Beweisen oder widerlegen''}{sixty seconds against the bestiary first}
+\end{triggers}
+
+\begin{deck}
+\card{Def}{The supremum $s$ of $M$, in its $\eps$-form.}{$s$ is an upper bound of $M$, and $\forall\eps>0\ \exists x\in M: x>s-\eps$.}
+\card{Def}{Uniform continuity, and its negation.}{$\forall\eps\,\exists\delta\,\forall x,y: |x-y|<\delta\Rightarrow|f(x)-f(y)|<\eps$;
+fails: $\exists\eps\,\forall\delta\,\exists x,y: |x-y|<\delta$, $|f(x)-f(y)|\ge\eps$.}
+\card{Why}{Why is $L=g(L)$ not a proof that $a_{n+1}=g(a_n)$ converges to $L$?}{It assumes the limit exists: $a_{n+1}=2a_n$
+gives $L=0$ and diverges.}
+\card{Trigger}{Continuous on an open or unbounded set; is it uniformly continuous? Reach for?}{Two sequences with
+$|x_n-y_n|\to0$ and $|f(x_n)-f(y_n)|\ge\eps_0$, where $f$ is steepest.}
+\card{Trigger}{$n!$ or $c^n$ in a series. Reach for?}{The ratio test with a fixed $\theta<1$; Bernoulli gives
+$(1+\frac1n)^n\ge2$.}
+\end{deck}
+
+\end{document}

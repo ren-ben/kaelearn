@@ -23,15 +23,22 @@ gets tested against them.
 | LA MC drill (`la-mc-prep.pdf`): Part I cold, then again two days before the test | now |
 | First review of the 14 rigid-body concepts (EP1, folios physics 01 and 02) | 2026-11-16 |
 | First review of the 10 LA concepts (test pool) | 2026-11-17 |
+| ANA Übungstest: work the 14-day plan of folio 01 (Part X); Day 10 is a timed mock via `/exam` | daily from 2026-11-22 |
+| First review of the 22 concepts met in folio 01 (Sixteen Moves) | 2026-11-28 |
 
 ## Analysis
 
-Analysis 1 (ANA) · Cummings, *Real Analysis*.
+Analysis 1 (ANA) · Cummings, *Real Analysis*. Übungstest (open questions) on Skript ch. 1–4: the playbook is
+[[01-sixteen-moves.pdf]].
 
 ```mermaid
 flowchart LR
   subgraph RN[Real numbers]
     F[Field] --> AV[Absolute value] --> PN[p-norm]
+    BI[Bernoulli inequality]
+    SUP[Supremum] --> AR[Archimedean property]
+    SUP --> NI[Nested intervals]
+    CS[Countable set]
   end
   subgraph FN[Functions]
     IP[Image and preimage]
@@ -39,20 +46,64 @@ flowchart LR
     SUR[Surjective function] --> INV
     INJ --> SM[Strictly monotone function]
   end
+  subgraph SQ[Sequences]
+    CV[Convergent sequence] --> AP[Accumulation point]
+    MC[Monotone convergence theorem]
+    BW[Bolzano-Weierstrass theorem] --> CY[Cauchy sequence]
+  end
+  subgraph SR[Series]
+    SE[Series] --> CT[Convergence tests] --> AC[Absolute convergence] --> CP[Cauchy product]
+  end
+  subgraph CO[Continuity]
+    EX[Exponential function]
+    LF[Limit of a function] --> CF[Continuous function]
+    CF --> IVT[Intermediate value theorem]
+    CF --> EVT[Extreme value theorem]
+    CF --> UC[Uniform continuity] --> CE[Continuous extension]
+    UC --> STF[Step function]
+  end
   IP --> SUR
+  AR --> CV
+  SUP --> MC
+  NI --> BW
+  CY --> CT
+  CP --> EX
+  IVT --> INV
+  SM --> INV
 ```
 
 | Concept | Level | Next | Folio | Last evidence |
 |---|---|---|---|---|
-| [[Field]] | 1 | 2026-10-19 | | 2026-10-12 ANA UE01/1: checked $\mathbb{Z}_2$, one case argued by an instance |
-| [[Absolute value]] | 1 | 2026-10-19 | | 2026-10-12 ANA UE01/2: (a) clean, (b) key step unproved |
+| [[Field]] | 1 | 2026-10-19 | [[01-sixteen-moves.pdf]] | 2026-10-12 ANA UE01/1: checked $\mathbb{Z}_2$, one case argued by an instance |
+| [[Absolute value]] | 1 | 2026-10-19 | [[01-sixteen-moves.pdf]] | 2026-10-12 ANA UE01/2: (a) clean, (b) key step unproved |
 | [[p-norm]] | 1 | 2026-10-19 | | 2026-10-12 ANA UE01/3: sets right, inclusions from the sketch |
-| [[Image and preimage]] | 1 | 2026-10-19 | | 2026-10-12 ANA UE01/4: all eight right; arrows in (a) mistyped |
-| [[Injective function]] | 1 | 2026-10-19 | | 2026-10-12 ANA UE01/5: all verdicts right |
-| [[Surjective function]] | 1 | 2026-10-19 | | 2026-10-12 ANA UE01/5: verdicts right; reversed inequality in 5c |
-| [[Inverse function]] | 1 | 2026-10-19 | | 2026-10-12 ANA UE01/5b: $f_2^{-1}=f_2$, with $f^{-1}
-eq 1/f$ noted |
-| [[Strictly monotone function]] | 1 | 2026-10-19 | | 2026-10-12 ANA UE01/6: right structure, wrong reason cited |
+| [[Image and preimage]] | 1 | 2026-10-19 | [[01-sixteen-moves.pdf]] | 2026-10-12 ANA UE01/4: all eight right; arrows in (a) mistyped |
+| [[Injective function]] | 1 | 2026-10-19 | [[01-sixteen-moves.pdf]] | 2026-10-12 ANA UE01/5: all verdicts right |
+| [[Surjective function]] | 1 | 2026-10-19 | [[01-sixteen-moves.pdf]] | 2026-10-12 ANA UE01/5: verdicts right; reversed inequality in 5c |
+| [[Inverse function]] | 1 | 2026-10-19 | [[01-sixteen-moves.pdf]] | 2026-10-12 ANA UE01/5b: $f_2^{-1}=f_2$, with $f^{-1}\neq 1/f$ noted |
+| [[Strictly monotone function]] | 1 | 2026-10-19 | [[01-sixteen-moves.pdf]] | 2026-10-12 ANA UE01/6: right structure, wrong reason cited |
+| [[Bernoulli inequality]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01; used in UE02/1 |
+| [[Supremum]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Move 02 and keystone |
+| [[Archimedean property]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01; cited in UE02/3 |
+| [[Nested intervals]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01 |
+| [[Countable set]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Part VII |
+| [[Convergent sequence]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Move 04; UE03 used limit laws where the definition was asked |
+| [[Accumulation point]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Move 05 |
+| [[Monotone convergence theorem]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Move 06; UE03/7 Heron solved |
+| [[Bolzano-Weierstrass theorem]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Part VII |
+| [[Cauchy sequence]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Move 06 |
+| [[Series]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Move 07; UE03/3b telescope solved |
+| [[Convergence tests]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Move 08; UE04 used $(1-\frac1k)^k\to\frac1e$, not in the Skript |
+| [[Absolute convergence]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Move 09; UE04/5b Leibniz monotonicity asserted, not shown |
+| [[Cauchy product]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01; UE05/0 solved |
+| [[Exponential function]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Move 10 |
+| [[Limit of a function]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Moves 11–12; UE05/1–2 solved |
+| [[Continuous function]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Moves 11, 13; UE05/3a $\delta$ found |
+| [[Intermediate value theorem]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Move 14; UE05/5a, 5/7 solved |
+| [[Extreme value theorem]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Part VII |
+| [[Uniform continuity]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Move 15; UE05/3b solved |
+| [[Continuous extension]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01; UE05/5b, 8b solved |
+| [[Step function]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Part VII |
 
 Homework solved on paper counts as "met". Level 2 needs a teach-back or a clean self-explanation.
 
@@ -154,7 +205,7 @@ flowchart LR
 | Concept | Level | Next | Folio | Last evidence |
 |---|---|---|---|---|
 | [[Implication]] | 1 | 2026-10-19 | | 2026-10-12 ANA UE01/7: $A\Rightarrow B$ right; converse refuted with part of $A$ |
-| [[Mathematical induction]] | 1 | 2026-10-19 | | 2026-10-12 ANA UE01/8: correct; step opened with the goal |
+| [[Mathematical induction]] | 1 | 2026-10-19 | [[01-sixteen-moves.pdf]] | 2026-10-12 ANA UE01/8: correct; step opened with the goal |
 
 ## ODEs
 

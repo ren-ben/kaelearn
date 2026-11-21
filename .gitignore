@@ -8,3 +8,6 @@ __pycache__/
 .env.*
 !.env.example
 *.mp4
+
+# source PDFs dropped into the repo root stay local (the handwritten ones are big)
+/*.pdf
