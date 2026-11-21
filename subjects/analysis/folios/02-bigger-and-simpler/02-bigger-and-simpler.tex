@@ -1,0 +1,1012 @@
+% Folio 02, analysis: the estimate toolbox of folio 01 (Part II), taken apart tool by tool.
+% Thirteen tools: what each says, why it is true, the signal that calls for it, a worked example,
+% its trap, and tasks with a key that gives answers and first moves only.
+\documentclass{kaelearn}
+\subject{Analysis I}
+\folio{02}
+\title{Bigger and\\Simpler}
+\shorttitle{The toolbox}
+\subtitle{Thirteen estimates that turn\\a definition into a proof.}
+\sources{Skript ch.~1--4 · Folio 01, Part II · UE~3--5}
+\readtime{2 min view · 60 min folio · 17 tasks}
+\filed{2026-11-21}
+\plate{plate.png}{The far horizon}
+\kael{curious}
+
+\makeatletter
+% the plain needspace leaves a -100 penalty that a ragged page prefers to break at, which strands half-empty
+% pages; \Needspace breaks only when the space is really missing
+\let\needspace\Needspace
+% tasks T01, T02, ... carry labels, so the key always matches
+\newcounter{task}
+\renewcommand\thetask{T\twodigit{\arabic{task}}}
+\newcommand\task[1]{\par\smallskip\noindent\refstepcounter{task}\label{#1}%
+  {\tek\fontsize{9.5}{10}\selectfont\color{klhi}\thetask}\hspace{7pt}}
+\newenvironment{yourturn}{\begin{panel}{Your turn}{answers and first moves in the key}{}}{\end{panel}}
+\newcommand\keyline[1]{\par\smallskip\noindent\hangindent=2.7em\hangafter=1%
+  \makebox[2.7em][l]{\tek\fontsize{9.5}{10}\selectfont\color{klhi}\ref{#1}}}
+% tool furniture
+\newcommand\when[1]{\par\smallskip\noindent\hangindent=3.2em\hangafter=1%
+  \makebox[3.2em][l]{\color{kldim}\pix{When}}#1\par\smallskip}
+\newcommand\trap[1]{\par\smallskip\noindent\hangindent=3.2em\hangafter=1%
+  \makebox[3.2em][l]{\color{kldim}\pix{Trap}}#1\par}
+\newcommand\pf{\par\smallskip\noindent{\color{kldim}\pix{Proof}}\enspace}
+% the two documents of an epsilon proof, side by side
+\newenvironment{twodocs}{\par\smallskip\noindent\tabularx{\linewidth}{@{}X@{\hspace{7mm}}X@{}}%
+  {\color{kldim}\pix{Scratch // backwards}} & {\color{kldim}\pix{Proof // forwards}}\\\kl@rule{2}}%
+  {\endtabularx\par\smallskip}
+% tables as rows of minipages, so a page may break between any two rows
+\newlength\klcolw
+\newcommand\kl@cell[2]{\begin{minipage}[t]{#1}\raggedright\strut#2\strut\end{minipage}}
+\newcommand\kl@sep{\par\nopagebreak\vspace{1pt}\noindent\ledline{\linewidth}\par\vspace{2pt}}
+\newenvironment{twocol}[3]{\par\needspace{6\baselineskip}\setlength\klcolw{#1}\row{\color{kldim}\pix{#2}}{\color{kldim}\pix{#3}}\nopagebreak}{\par}
+\newcommand\row[2]{\noindent\kl@cell{\klcolw}{#1}\hspace{8pt}\kl@cell{\dimexpr\linewidth-\klcolw-8pt\relax}{#2}\kl@sep}
+\renewenvironment{triggers}{\begin{panel}{Triggers}{if you see this, reach for that}{}\par
+  \setlength\klcolw{60mm}\row{\color{kldim}\pix{You see}}{\color{kldim}\pix{Reach for}}}{\end{panel}}
+\renewcommand\trigger[2]{\row{#1}{#2}}
+\pretocmd{\section}{\needspace{14\baselineskip}}{}{}
+\pretocmd{\subsection}{\needspace{10\baselineskip}}{}{}
+\makeatother
+\newcommand\N{\mathbb N}
+\newcommand\R{\mathbb R}
+\newcommand\eps{\varepsilon}
+\newcommand\cmd[1]{{\mono\fontsize{9}{11}\selectfont #1}}
+
+\begin{document}
+\makecover
+
+% =====================================================================================
+\section{The bridge}
+
+\opening{Y}{ou need} $|a_n-a|<\eps$ for every $n$ beyond some $N$. Solving that inequality exactly is a quadratic headache
+for $\frac{6n-1}{n^2+3n}$ and hopeless for anything with a root or a power in it. You do not need to solve it. You need
+\emph{one} $N$ after which it holds, and any $N$ will do.
+
+So you cheat, legally. Find something \emph{bigger} than $|a_n-a|$ that you \emph{can} solve. If
+\[ |a_n-2|\le\frac6n , \]
+then $\frac6n<\eps$ finishes the job, and that one you solve in your head: $n>\frac6\eps$. The bigger expression is a bridge
+from what you have to an inequality you can solve. Folio~01 listed the thirteen standard bridges in one table. Here each one is
+taken apart: what it says, why it is true, the signal that calls for it, a worked example, its trap, and problems for you.
+\aside{Archimedes bounded the number of grains of sand that would fill the universe, from above, by $10^{63}$. He never counted
+one. That is the whole art.}
+
+\par\needspace{72mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,width=.88\linewidth,height=50mm,xmin=3,xmax=33,ymin=0,ymax=1.6,
+  xlabel={$n$},xtick={5,10,17,21,30},ytick={0.3,1},yticklabels={$\varepsilon$,$1$}]
+  \draw[kldim,dashed,line width=.5pt] (axis cs:3,0.3)--(axis cs:33,0.3);
+  \draw[kldim,dashed,line width=.5pt] (axis cs:21,0)--(axis cs:21,1.6) node[below right,text=klink]{$N=21$};
+  \draw[kldim,dashed,line width=.5pt] (axis cs:17,0)--(axis cs:17,0.9) node[above,text=kldim]{$17$};
+  \addplot[only marks,mark=square,mark size=1.4pt,color=kldim,samples at={4,...,32}] {6/x};
+  \addplot[only marks,mark=square*,mark size=1.4pt,color=klhi,samples at={4,...,32}] {(6*x-1)/(x^2+3*x)};
+  \node[right,text=kldim] at (axis cs:5.3,1.2) {bridge $\frac6n$};
+  \node[right,text=klhi] at (axis cs:4.4,0.42) {truth};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{The truth $|a_n-2|=\frac{6n-1}{n^2+3n}$ (filled) under its bridge $\frac6n$ (hollow), with $\eps=0.3$. The bridge
+lies above the truth everywhere, so once the bridge is below $\eps$, the truth is too. The price is a later $N$: 21 instead of
+17. $N$ costs nothing.}
+
+\begin{twominute}
+\begin{itemize}
+  \item \textbf{Never solve $|a_n-a|<\eps$ exactly.} Bound $|a_n-a|$ by something bigger and simple, $\frac Cn$ or
+        $C\,|x-x_0|$, and solve that.
+  \item \textbf{One way only.} Every link in the chain is $=$, $\le$ or $<$. A fraction grows when its numerator goes up or its
+        denominator goes down. Test any doubtful link with $n=10$.
+  \item \textbf{Split} (01--03). The goal measures one pair, your information another: insert the middle term, use the
+        triangle inequality, give each piece $\frac\eps2$.
+  \item \textbf{Denominators need lower bounds} (02, 05). A moving denominator: the reverse triangle inequality. A minus sign
+        in a denominator: keep half of the top power.
+  \item \textbf{Rewrite first} (06--07). Roots: the conjugate. Powers: factor out $x-y$.
+  \item \textbf{Exponents} (08--11). Bernoulli, a later binomial term, \mbox{$2\le(1+\frac1n)^n\le3$}, and
+        \mbox{$\exp x\ge\frac{x^k}{k!}$}: each turns a power into a polynomial you can solve.
+  \item \textbf{Series} (12). Compare with a telescope or a geometric sum; bound a block by its smallest term.
+  \item \textbf{$\eps$-$\delta$} (13). Restrict $\delta$ first to freeze the other factor. $N$ is a max, $\delta$ is a min.
+\end{itemize}
+\end{twominute}
+
+\begin{guessfirst}
+\begin{enumerate}
+  \item Is $\frac1{n^2-5}\le\frac1{n^2}$? Decide in five seconds, without algebra.
+  \item You know $a_n\to a$ and $a_n-b_n\to0$. To prove $b_n\to a$, what do you subtract and add back?
+  \item Bernoulli gives $(1+h)^n\ge1+nh$. Why is that not enough to prove $\sqrt[n]n\to1$?
+\end{enumerate}
+\end{guessfirst}
+
+\begin{terms}
+\term{estimate}{Abschätzung}{a bound, in this course almost always from above}
+\term{triangle inequality}{Dreiecksungleichung}{$|x+y|\le|x|+|y|$}
+\term{reverse triangle inequality}{umgekehrte Dreiecksungleichung}{$\bigl||x|-|y|\bigr|\le|x-y|$}
+\term{Bernoulli's inequality}{Bernoullische Ungleichung}{$(1+h)^n\ge1+nh$ for $h\ge-1$}
+\term{binomial theorem}{binomischer Lehrsatz}{$(a+b)^n=\sum_k\binom nk a^kb^{n-k}$}
+\term{telescoping sum}{Teleskopsumme}{neighbours cancel; first and last survive}
+\term{partial fractions}{Partialbruchzerlegung}{one fraction into a difference of simpler ones}
+\term{ratio test}{Quotientenkriterium}{$|\frac{a_{n+1}}{a_n}|\le\theta<1$ from some $n$ on}
+\end{terms}
+
+\begin{keystone}{The one-way rule}{Abschätzung nach oben}
+An estimate in an $\eps$-proof is a single chain
+\[
+\begin{aligned}
+|a_n-a| &= \dots\\
+&\le \dots\\
+&\le \frac Cn\\
+&< \eps
+\end{aligned}
+\]
+in which every link is $=$, $\le$ or $<$. You may replace a quantity by a \textbf{bigger} one, never by a smaller one. For a
+fraction with positive numerator and denominator, bigger means: numerator up, or denominator down.
+\end{keystone}
+
+Every tool below is this rule applied to one particular shape.
+
+\begin{twocol}{34mm}{Family}{Tools}
+\row{Splitting}{01 triangle inequality · 02 reverse triangle inequality · 03 splitting a product}
+\row{Fractions}{04 numerator up, denominator down · 05 keep half}
+\row{Rewrite first}{06 the conjugate · 07 $x^n-y^n$}
+\row{Exponents}{08 Bernoulli · 09 a later binomial term · 10 the stand-ins for $e$ · 11 $\exp$ beats powers}
+\row{Series}{12 telescopes and blocks}
+\row{$\eps$ and $\delta$}{13 restrict $\delta$}
+\end{twocol}
+
+\medskip
+Estimates fail in two ways: a link points the wrong way, or the chain ends in something that does not tend to $0$. Two habits
+catch both.
+
+\emph{Test on a number.} Before you trust a link, put $n=10$ into both sides. Is $\frac1{n^2-5}\le\frac1{n^2}$? At $n=10$ that
+reads $\frac1{95}$ against $\frac1{100}$, and $\frac1{95}$ is the bigger one. The link is false, and you know it in five
+seconds.
+
+\emph{Aim at a goal shape.} For a sequence: $\frac Cn$ (or $\frac C{\sqrt n}$, or $Cq^n$), finished by Archimedes with
+$N>\frac C\eps$. For a function at $x_0$: $C\,|x-x_0|$, finished by $\delta=\frac\eps C$. At infinity: $\frac Cx$, finished by
+$M=\frac C\eps$. Every link should move you toward the shape.
+
+And one piece of bookkeeping. Every condition you impose on the way, such as $n\ge3$ or $|x-x_0|<1$, is paid at the end:
+$N$ is a max, $\delta$ is a min.
+
+\why{Why is a crude bound allowed? Doesn't the proof need the best $N$?}{The definition says \emph{there is} an $N$. Any $N$
+that wins proves that one exists; the smallest one answers a question nobody asked. A crude bound has exactly one duty left:
+it must still tend to $0$. $\frac{6n-1}{n^2+3n}\le\frac6n$ is crude and fine. $\frac{6n-1}{n^2+3n}\le\frac{6n}{3n}=2$ is true
+and useless, because $2<\eps$ fails for every $\eps\le2$.}
+
+% =====================================================================================
+\section{Splitting}
+
+\opening{H}{alf of all} the estimates in this course concern the distance between two things you cannot compare directly.
+The triangle inequality compares them through a third.
+
+\subsection{Tool 01\quad Splitting a difference}
+\[ |x+y|\le|x|+|y| \]
+Its distance form holds for any three numbers:
+\[ |x-z|\le|x-y|+|y-z| . \]
+$|x-z|$ is the distance from $x$ to $z$ on the number line. The right side is the walk from $x$ to $z$ by way of $y$. A detour
+is never shorter.
+\aside{Euclid proved it as Book~I, Proposition~20. The Epicureans mocked him for it: even a donkey, they said, walks straight to
+the hay.}
+
+\par\needspace{36mm}
+\begin{center}
+\begin{tikzpicture}[x=1mm,y=1mm]
+  \draw[kllow,line width=.6pt] (0,0)--(120,0);
+  \draw[klhi,line width=.7pt] (12,2) to[bend left=28] node[above,text=klhi]{$|x-z|$} (58,2);
+  \draw[kldim,dashed,line width=.6pt] (12,-2) to[bend right=24] node[below,text=kldim]{$|x-y|$} (102,-2);
+  \draw[kldim,dashed,line width=.6pt] (102,2) to[bend right=34] node[above,text=kldim]{$|y-z|$} (58,2);
+  \foreach \p/\l in {12/x,58/z,102/y}{\fill[klhi] (\p,0) circle (1.1pt); \node[text=klink] at (\p,-3.2) {$\l$};}
+\end{tikzpicture}
+\end{center}
+\plotcaption{Straight from $x$ to $z$ (solid), or by way of $y$ (dashed). The detour is at least as long; it is exactly as long
+only when $y$ lies between $x$ and $z$.}
+
+\textbf{What ``a difference must be split'' means.} Your goal measures one pair, say $|b_n-a|$. Your information measures
+other pairs: $a_n$ is close to $a$, and $a_n$ is close to $b_n$. Goal and information do not match. So insert the thing your
+information is about: subtract it and add it back, which changes nothing. Then the triangle inequality cuts the goal into pieces,
+each matching one piece of information:
+\[
+\begin{aligned}
+|b_n-a| &= |(b_n-a_n)+(a_n-a)|\\
+&\le |b_n-a_n|+|a_n-a| .
+\end{aligned}
+\]
+Both pieces are now things you control. Give each half the budget, $\frac\eps2$, and let $N$ be the larger of the two $N$s.
+
+\when{the goal and the hypothesis talk about different pairs. The middle term is whatever links them: the limit, a term of a
+subsequence, a neighbouring sequence.}
+
+\begin{twocol}{52mm}{Goal}{Insert, then split}
+\row{Uniqueness of a limit: $|a-b|$}{insert $a_n$: \ $|a-a_n|+|a_n-b|$}
+\row{Convergent $\Rightarrow$ Cauchy: $|a_m-a_n|$}{insert $a$: \ $|a_m-a|+|a-a_n|$}
+\row{Convergent $\Rightarrow$ bounded: $|a_n|$}{insert $a$: \ $|a_n-a|+|a|<1+|a|$ for $n\ge N$ (play $\eps=1$)}
+\row{Cauchy, and $a_{n_k}\to a$: $|a_n-a|$}{insert $a_{n_k}$: \ $|a_n-a_{n_k}|+|a_{n_k}-a|$}
+\row{Sum rule: $|(a_n+b_n)-(a+b)|$}{regroup: \ $|a_n-a|+|b_n-b|$}
+\row{A numerator of mixed signs: $|2n+5(-1)^n|$}{no insert needed: \ $\le2n+5\le7n$}
+\end{twocol}
+
+\begin{panel}[unbreakable]{Example}{splitting}{}
+Claim: if $a_n\to a$ and $a_n-b_n\to0$, then $b_n\to a$.
+\begin{twodocs}
+Goal: $|b_n-a|<\eps$. Nothing is known about $b_n$ alone. Known: $|a_n-a|$ is small, and $|a_n-b_n|$ is small. Insert $a_n$:
+\[
+\begin{aligned}
+|b_n-a| &\le |b_n-a_n|\\
+&\quad+|a_n-a| .
+\end{aligned}
+\]
+Budget: $\frac\eps2$ for each piece.
+&
+Let $\eps>0$. Choose $N_1$ with $|a_n-a|<\frac\eps2$ for all $n\ge N_1$, and $N_2$ with $|a_n-b_n|<\frac\eps2$ for all $n\ge
+N_2$. Let $N=\max\{N_1,N_2\}$. For every $n\ge N$,
+\[
+\begin{aligned}
+|b_n-a| &\le |b_n-a_n|+|a_n-a|\\
+&< \tfrac\eps2+\tfrac\eps2=\eps .
+\end{aligned}
+\]
+\hfill\qedsymbol
+\end{twodocs}
+\end{panel}
+
+\trap{$|x-y|\le|x|-|y|$. False: take $x=0$ and $y=1$. A minus sign inside becomes a \emph{plus} outside: $|x-y|\le|x|+|y|$.}
+\trap{A split that does not go to $0$. $|a_n-a|\le|a_n|+|a|$ is true and worthless. Insert the term your information is
+about, not just any term.}
+
+\begin{yourturn}
+\task{t:uniq}A sequence has at most one limit.
+\task{t:sub}$(a_n)$ is a Cauchy sequence, and a subsequence converges: $a_{n_k}\to a$. Then $a_n\to a$.
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{Tool 02\quad Lower bounds: the reverse triangle inequality}
+\[ \bigl||x|-|y|\bigr|\le|x-y| \]
+The form you will use most:
+\[ |x|\ge|y|-|x-y| . \]
+Two points close to each other are about equally far from $0$.
+
+\pf{$|x|=|(x-y)+y|\le|x-y|+|y|$ by Tool 01, so $|x|-|y|\le|x-y|$. Swap $x$ and $y$ for the other sign.}
+
+\textbf{Why a second inequality at all?} Tool 01 only gives \emph{upper} bounds: it says how big a sum can get. A denominator
+needs a \emph{lower} bound, because a fraction grows when its denominator goes down. When the denominator is a moving thing,
+a sequence $b_n$ or a variable $x$, this is the only lower-bound tool you have.
+
+\textbf{Main use: keep away from $0$.} If $b_n\to b\ne0$, then $|b_n|>\frac{|b|}2$ for all large $n$. Play the definition with
+$\eps=\frac{|b|}2$: there is an $N$ with $|b_n-b|<\frac{|b|}2$ for all $n\ge N$, and then
+\[
+\begin{aligned}
+|b_n| &\ge |b|-|b_n-b|\\
+&> |b|-\frac{|b|}2\\
+&= \frac{|b|}2 .
+\end{aligned}
+\]
+
+\par\needspace{30mm}
+\begin{center}
+\begin{tikzpicture}[x=1mm,y=1mm]
+  \fill[pattern={dither25},pattern color=klink] (50,-2.5) rectangle (110,2.5);
+  \draw[kllow,line width=.6pt] (0,0)--(122,0);
+  \fill[klink] (20,0) circle (1.1pt); \node[text=klink] at (20,-5.5) {$0$};
+  \fill[klhi] (80,0) circle (1.3pt); \node[text=klhi] at (80,-5.5) {$b$};
+  \foreach \p in {57,66,73,86,93,104}{\draw[klhi,line width=.6pt] (\p,-1.6)--(\p,1.6);}
+  \draw[kldim,line width=.5pt,|-|] (20,6)--(50,6) node[midway,above,text=kldim]{$\frac{|b|}2$};
+  \draw[kldim,line width=.5pt,|-|] (50,6)--(80,6) node[midway,above,text=kldim]{$\frac{|b|}2$};
+\end{tikzpicture}
+\end{center}
+\plotcaption{With $\eps=\frac{|b|}2$ the band around $b$ stops halfway to $0$. Every late $b_n$ (the ticks) lives in the band,
+so it stays at least $\frac{|b|}2$ away from $0$.}
+
+\when{a denominator that moves: $\frac1{b_n}$ with $b_n\to b\ne0$; $\frac1x$ near $x_0\ne0$. Also the question
+``$|a_n|\to|a|$?'', which is one line: $\bigl||a_n|-|a|\bigr|\le|a_n-a|$.}
+
+\begin{panel}[unbreakable]{Example}{a moving denominator}{}
+Claim: if $b_n\to b\ne0$ and every $b_n\ne0$, then $\frac1{b_n}\to\frac1b$.
+\begin{twodocs}
+One fraction:
+\[ \Bigl|\frac1{b_n}-\frac1b\Bigr|=\frac{|b-b_n|}{|b_n|\,|b|} . \]
+The top is small. The bottom needs a lower bound: $|b_n|>\frac{|b|}2$ for $n\ge N_1$. Then
+\[ \frac{|b-b_n|}{|b_n|\,|b|}\le\frac{2\,|b_n-b|}{|b|^2} , \]
+and that is $<\eps$ once $|b_n-b|<\frac{\eps|b|^2}2$.
+&
+Let $\eps>0$. Choose $N_1$ with $|b_n|>\frac{|b|}2$ for $n\ge N_1$ (above), and $N_2$ with $|b_n-b|<\frac{\eps|b|^2}2$ for
+$n\ge N_2$. For every $n\ge\max\{N_1,N_2\}$,
+\[
+\begin{aligned}
+\Bigl|\frac1{b_n}-\frac1b\Bigr| &= \frac{|b_n-b|}{|b_n|\,|b|}\\
+&\le \frac{2\,|b_n-b|}{|b|^2}\\
+&< \eps .
+\end{aligned}
+\]
+\hfill\qedsymbol
+\end{twodocs}
+\end{panel}
+
+\trap{The converse. $|a_n|\to|a|$ does not give $a_n\to a$: think of $a_n=(-1)^n$. It does when $a=0$, because
+$|a_n-0|=\bigl||a_n|-0\bigr|$.}
+\trap{$|b_n|\ge|b|$. False in general: $b_n=1-\frac1n$ tends to $1$ from the side of $0$.}
+
+\begin{yourturn}
+\task{t:sign}$f\colon D\to\R$ is continuous at $x_0$ and $f(x_0)>0$. Then there is a $\delta>0$ with $f(x)>0$ for all $x\in D$
+with $|x-x_0|<\delta$. (This is the sign-keeping lemma inside the proof of the intermediate value theorem.)
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{Tool 03\quad Splitting a product}
+\[ a_nb_n-ab=(a_n-a)\,b_n+a\,(b_n-b) \]
+\pf{Add zero in the middle: $a_nb_n-ab_n+ab_n-ab$. Group the first two terms and the last two.}
+
+The rule behind it: \emph{change one factor at a time.} Go from $a_nb_n$ to $ab_n$ (the first factor moves), then from $ab_n$
+to $ab$ (the second moves). Each step costs one small difference times something bounded.
+
+\par\needspace{52mm}
+\begin{center}
+\begin{tikzpicture}[x=1mm,y=1mm]
+  \fill[pattern={dither25},pattern color=klink] (42,0) rectangle (70,36);
+  \fill[pattern={dither25},pattern color=klink] (0,25) rectangle (42,36);
+  \draw[kldim,line width=.5pt] (0,0) rectangle (70,36);
+  \draw[klhi,line width=.7pt] (0,0) rectangle (42,25);
+  \node[text=klhi] at (21,12.5) {$ab$};
+  \node[fill=klpage,inner sep=1.8pt,text=klink] at (56,18) {$(a_n-a)\,b_n$};
+  \node[fill=klpage,inner sep=1.8pt,text=klink] at (21,30.5) {$a\,(b_n-b)$};
+  \node[text=kldim] at (21,-3.5) {$a$};
+  \node[text=kldim] at (56,-3.5) {$a_n-a$};
+  \node[text=kldim,left] at (-1,12.5) {$b$};
+  \node[text=kldim,left] at (-1,30.5) {$b_n-b$};
+\end{tikzpicture}
+\end{center}
+\plotcaption{For positive numbers, $a_nb_n-ab$ is the area of the L-shaped region: one strip of width $a_n-a$ and height
+$b_n$, plus one strip of width $a$ and height $b_n-b$. That is the identity, drawn.}
+
+Then the estimate:
+\[
+\begin{aligned}
+|a_nb_n-ab| &\le |a_n-a|\,|b_n|+|a|\,|b_n-b|\\
+&\le K\,|a_n-a|+|a|\,|b_n-b| ,
+\end{aligned}
+\]
+where $K>0$ bounds every $|b_n|$ (convergent sequences are bounded: Tool 01's table). Make each piece smaller than
+$\frac\eps2$ by asking for
+\[ |a_n-a|<\frac\eps{2K} \qquad\text{and}\qquad |b_n-b|<\frac\eps{2(|a|+1)} . \]
+Why $|a|+1$ and not $|a|$? If $a=0$, then $\frac\eps{2|a|}$ does not exist. With $|a|+1$ the second piece is
+$\frac{|a|}{|a|+1}\cdot\frac\eps2<\frac\eps2$, whatever $a$ is.
+
+For functions the same identity reads
+\[
+\begin{aligned}
+f(x)g(x)-f(x_0)g(x_0) &= \bigl(f(x)-f(x_0)\bigr)\,g(x)\\
+&\quad+f(x_0)\bigl(g(x)-g(x_0)\bigr) .
+\end{aligned}
+\]
+
+\when{a product of two moving factors: the product rule, $f\cdot g$ in $\eps$-$\delta$ form, the Cauchy product.}
+\trap{Bounding $|b_n|$ by $|b|$. Late terms may exceed $|b|$. Use a bound $K$ for all of them, or $|b_n|<|b|+1$ for
+$n\ge N$ (Tool 01).}
+
+\begin{yourturn}
+\task{t:nullb}$a_n\to0$ and $(b_n)$ is bounded. Then $a_nb_n\to0$. Does this survive if $(b_n)$ is unbounded?
+\end{yourturn}
+
+% =====================================================================================
+\section{Fractions}
+
+\opening{M}{ost sequences} on the test are fractions of polynomials, and so is $|a_n-a|$ once you write it as one fraction.
+Two tools handle all of them.
+
+\subsection{Tool 04\quad Numerator up, denominator down}
+If the top grows, or the bottom shrinks while staying positive, the fraction grows:
+\[ \frac cd\le\frac{c'}{d'}\qquad\text{when } 0\le c\le c' \text{ and } d\ge d'>0 . \]
+The plan for a fraction $|a_n-a|$:
+\begin{enumerate}
+  \item Write it as one fraction. Fix its sign for $n\ge n_0$, so the absolute value disappears.
+  \item Numerator up: drop negative terms; raise every positive lower power to the top power ($5\le5n$ and $n\le n^2$ for
+        $n\ge1$).
+  \item Denominator down: drop positive terms. A negative term is Tool 05.
+  \item Cancel to $\frac Cn$.
+\end{enumerate}
+
+\begin{twocol}{56mm}{The term}{What you may do}
+\row{a negative term on top: $6n-1$}{drop it: $6n-1\le6n$}
+\row{a positive term on top: $4n+5$}{raise it: $4n+5\le9n$}
+\row{a positive term below: $n^2+3n$}{drop it: $n^2+3n\ge n^2$}
+\row{a negative term below: $n^2-5$}{neither. Keep half: Tool 05}
+\end{twocol}
+
+\begin{panel}[unbreakable]{Example}{numerator up, denominator down}{}
+Claim: $a_n=\dfrac{n-2n^2}{n^2+1}\to-2$.
+\begin{twodocs}
+One fraction:
+\[
+\begin{aligned}
+a_n+2 &= \frac{n-2n^2+2n^2+2}{n^2+1}\\
+&= \frac{n+2}{n^2+1} ,
+\end{aligned}
+\]
+positive for every $n$. Top up: $n+2\le3n$. Bottom down: $n^2+1\ge n^2$. So
+\[ |a_n+2|\le\frac{3n}{n^2}=\frac3n . \]
+&
+Let $\eps>0$, and choose $N\in\N$ with $N>\frac3\eps$. For every $n\ge N$,
+\[
+\begin{aligned}
+|a_n+2| &= \frac{n+2}{n^2+1}\\
+&\le \frac{3n}{n^2}=\frac3n\\
+&\le \frac3N<\eps .
+\end{aligned}
+\]
+\hfill\qedsymbol
+\end{twodocs}
+\end{panel}
+
+\trap{Raising a term below the line. $n^3+4n\le5n^3$ is true and points the wrong way: a bigger denominator makes the fraction
+smaller. Below the line only lower bounds help.}
+\trap{Forgetting the sign. If the top can be negative, as in $\frac{2-7n}{\dots}$, take the absolute value first:
+$|2-7n|=7n-2$ for $n\ge1$.}
+
+\begin{yourturn}
+\task{t:frac}With the definition: $\dfrac{n^2-3n+1}{2n^2+n}\to\dfrac12$.
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{Tool 05\quad A minus sign below: keep half}
+Look at the denominator $n^2-5$. Tool 04 says: denominator down. Dropping the $-5$ leaves $n^2$, and $n^2$ is
+\emph{bigger} than $n^2-5$. So
+\[ \frac1{n^2-5}\le\frac1{n^2} \]
+is false. You made the denominator bigger, the fraction smaller, and the chain now points down. At $n=10$:
+$\frac1{95}>\frac1{100}$.
+
+That is why the minus sign matters so much, and only below the line. On top, a minus sign makes the numerator smaller, so
+deleting it moves the fraction \emph{up}: allowed. Below, a minus sign makes the denominator smaller, so deleting it moves the
+fraction \emph{down}: forbidden. The same symbol has the opposite effect, because a denominator works upside down.
+\marginkael{questioning}
+
+\textbf{The fix.} You need something below $n^2-5$ that is still a clean power. Give away a fixed share of the leading term to
+pay for the minus:
+\[
+\begin{aligned}
+n^2-5\ge\frac{n^2}2 &\iff \frac{n^2}2\ge5\\
+&\iff n^2\ge10 ,
+\end{aligned}
+\]
+which holds for every $n\ge4$. So for $n\ge4$,
+\[ \frac1{n^2-5}\le\frac2{n^2} . \]
+
+\par\needspace{70mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,width=.8\linewidth,height=55mm,xmin=0,xmax=6.2,ymin=-6,ymax=38,clip=false,
+  xlabel={$n$},xtick={1,2,3,4,5,6},ytick={0,10,20,30}]
+  \draw[kldim,dashed,line width=.5pt] (axis cs:0,0)--(axis cs:6.2,0);
+  \addplot[kldim,dashed,domain=0:6,samples=60,line width=.6pt] {x^2};
+  \addplot[klhi,domain=0:6,samples=60,line width=.8pt] {x^2-5};
+  \addplot[kldim,dotted,domain=0:6,samples=60,line width=.9pt] {x^2/2};
+  \addplot[only marks,mark=square*,mark size=1.5pt,color=klhi,samples at={1,...,6}] {x^2-5};
+  \node[right,text=kldim] at (axis cs:6.05,36) {$n^2$};
+  \node[right,text=klhi] at (axis cs:6.05,31) {$n^2-5$};
+  \node[right,text=kldim] at (axis cs:6.05,18) {$\frac{n^2}2$};
+  \draw[kldim,line width=.5pt] (axis cs:3.162,-6)--(axis cs:3.162,5) node[above,text=kldim]{$\sqrt{10}$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{$n^2-5$ (solid) lies below $n^2$ (dashed), so $n^2$ is no lower bound for it. It lies above $\frac{n^2}2$
+(dotted) from $\sqrt{10}$ on, so from $n=4$: that is the lower bound you use. At $n=1$ and $n=2$ it is even negative.}
+
+\textbf{Why half?} Any fixed share works: $n^2-5\ge\frac9{10}n^2$ once $n^2\ge50$, so from $n=8$. Half is simply the easiest to
+compute. What you cannot keep is \emph{all} of $n^2$. The $-5$ must be paid for, and a fixed share of the leading power is the
+currency that leaves a clean power behind.
+
+\textbf{The recipe.} For a denominator $c\,n^k-(\text{lower terms})$ with $c>0$:
+\begin{enumerate}
+  \item Bound the lower terms from above by one power: $3n+4\le7n$.
+  \item Find where half the leading term beats it: $\frac{n^2}2\ge7n$ exactly when $n\ge14$.
+  \item Conclude $n^2-3n-4\ge\frac{n^2}2$ for $n\ge14$. The $14$ goes into $N$.
+\end{enumerate}
+The truth is $n\ge8$. Crude is fine.
+
+\textbf{The second reason for $n\ge n_0$.} For $n=1,2$ the denominator $n^2-5$ is negative, and every rule about fractions above
+assumed a positive denominator. So the side condition is not pedantry: without it the inequalities are false. $N$ must be at
+least $n_0$.
+
+\why{Why does a minus sign on top cost nothing, while one below costs half the leading term?}{Because the chain may only go up.
+A minus on top makes the fraction smaller than it would be without it, so deleting it is a step up: allowed for free. A minus
+below makes the fraction bigger than it would be without it, so deleting it is a step down: forbidden. To get a clean power
+below the line you have to buy one, and half the leading term is the price.}
+
+\begin{panel}[unbreakable]{Example}{keep half}{}
+Claim: $a_n=\dfrac{n^2+1}{n^2-4n}\to1$.
+\begin{twodocs}
+For $n\ge5$ the denominator $n(n-4)$ is positive, and
+\[
+\begin{aligned}
+a_n-1 &= \frac{n^2+1-n^2+4n}{n^2-4n}\\
+&= \frac{4n+1}{n^2-4n} .
+\end{aligned}
+\]
+Top up: $4n+1\le5n$. Bottom: keep half,
+\[
+\begin{aligned}
+n^2-4n\ge\frac{n^2}2 &\iff \frac{n^2}2\ge4n\\
+&\iff n\ge8 .
+\end{aligned}
+\]
+So for $n\ge8$: $|a_n-1|\le\frac{5n}{n^2/2}=\frac{10}n$.
+&
+Let $\eps>0$. Choose $N\in\N$ with $N\ge8$ and $N>\frac{10}\eps$. For every $n\ge N$,
+\[
+\begin{aligned}
+|a_n-1| &= \frac{4n+1}{n^2-4n}\\
+&\le \frac{5n}{n^2/2}=\frac{10}n\\
+&\le \frac{10}N<\eps .
+\end{aligned}
+\]
+\hfill\qedsymbol
+\end{twodocs}
+\end{panel}
+
+\trap{Dropping the minus: $\frac1{n^2-5}\le\frac1{n^2}$. Test it on $n=10$ before you write it.}
+\trap{Forgetting $n_0$. ``Choose $N>\frac{10}\eps$'' alone fails for $\eps=5$: it allows $N=3$, where $n^2-4n=-3$.}
+
+\begin{yourturn}
+\task{t:half}With the definition: $\dfrac{2n^2+3}{n^2-6n}\to2$.
+\end{yourturn}
+
+% =====================================================================================
+\section{Rewrite first}
+
+\opening{S}{ome expressions} hide their size. $\sqrt{n+1}-\sqrt n$ is a tiny difference of two large numbers, and no
+inequality will tell you how tiny until you rewrite it. These two identities bring the smallness into view.
+
+\subsection{Tool 06\quad The conjugate}
+\[ \sqrt a-\sqrt b=\frac{a-b}{\sqrt a+\sqrt b}\qquad(a,b\ge0,\ \text{not both } 0) \]
+\pf{$(\sqrt a-\sqrt b)(\sqrt a+\sqrt b)=a-b$. Divide by $\sqrt a+\sqrt b>0$.}
+
+The left side is a difference, and cancellation hides how big it is. The right side is a quotient. The smallness now sits on
+top as $a-b$, which you usually know exactly. Below sits a \emph{sum} of positive terms, which Tool 04 lets you shrink: drop one
+of them, or bound both by the smaller.
+
+\emph{A sequence.} Here $a-b=1$:
+\[
+\begin{aligned}
+\sqrt{n+1}-\sqrt n &= \frac1{\sqrt{n+1}+\sqrt n}\\
+&\le \frac1{2\sqrt n} ,
+\end{aligned}
+\]
+the goal shape $\frac C{\sqrt n}$. It is $<\eps$ as soon as $n>\frac1{4\eps^2}$.
+
+\emph{Continuity of the root at $x_0>0$.} Drop $\sqrt x\ge0$ from the denominator:
+\[
+\begin{aligned}
+|\sqrt x-\sqrt{x_0}| &= \frac{|x-x_0|}{\sqrt x+\sqrt{x_0}}\\
+&\le \frac{|x-x_0|}{\sqrt{x_0}} .
+\end{aligned}
+\]
+So $\delta=\eps\sqrt{x_0}$ works, with no restriction needed.
+
+\emph{A limit with the Rechenregeln.} Divide by $n$ after the conjugate:
+\[
+\begin{aligned}
+\sqrt{n^2+n}-n &= \frac n{\sqrt{n^2+n}+n}\\
+&= \frac1{\sqrt{1+\frac1n}+1}\ \longrightarrow\ \frac12 ,
+\end{aligned}
+\]
+because $1\le\sqrt{1+\frac1n}\le1+\frac1n$, squeezed: $(1+t)^2\ge1+t$ for $t\ge0$.
+
+\when{a difference of roots: $\sqrt{n+1}-\sqrt n$, $\sqrt{n^2+n}-n$, continuity of $\sqrt{\phantom{x}}$, and
+$\frac{\sqrt{1+x}-1}x$ as $x\to0$.}
+\trap{$x_0=0$. The bound above divides by $\sqrt{x_0}$. Do it directly: $\sqrt x<\eps$ exactly when $x<\eps^2$, so
+$\delta=\eps^2$.}
+\trap{$\sqrt{a+b}=\sqrt a+\sqrt b$. False: $\sqrt2\ne2$. True is $\sqrt{a+b}\le\sqrt a+\sqrt b$ (square both sides).}
+
+\begin{yourturn}
+\task{t:conjA}Compute $\lim_{n\to\infty}\bigl(\sqrt{n^2+3n}-n\bigr)$.
+\task{t:conjB}With $\eps$ and $\delta$: $x\mapsto\sqrt{x+1}$ is continuous at $x_0=3$.
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{\texorpdfstring{Tool 07\quad $x^n-y^n$}{Tool 07: x\textasciicircum n - y\textasciicircum n}}
+\[ x^n-y^n=(x-y)\bigl(x^{n-1}+x^{n-2}y+\dots+xy^{n-2}+y^{n-1}\bigr) \]
+The first two cases:
+\[
+\begin{aligned}
+x^2-y^2 &= (x-y)(x+y),\\
+x^3-y^3 &= (x-y)(x^2+xy+y^2).
+\end{aligned}
+\]
+\pf{Multiply out the right side. $x$ times the bracket gives $x^n+x^{n-1}y+\dots+xy^{n-1}$; $-y$ times the bracket gives
+$-x^{n-1}y-\dots-xy^{n-1}-y^n$. Everything cancels except $x^n-y^n$.}
+
+A difference of powers always contains the difference of the bases as a factor. In an $\eps$-$\delta$ proof that factor is
+$|x-x_0|$, exactly what $\delta$ controls. In a monotonicity proof it carries the sign.
+\begin{itemize}
+  \item \textbf{$\eps$-$\delta$ for polynomials.} Factor out $x-x_0$; bound the rest with Tool 13.
+  \item \textbf{Monotonicity.} For $0\le x<y$ the bracket has no negative terms and contains $y^{n-1}>0$, so
+        $y^n-x^n>0$. Hence $x\mapsto x^n$ is strictly increasing on $[0,\infty)$, and $n$-th roots are unique.
+  \item \textbf{The geometric sum.} Put $y=1$: $1+x+\dots+x^{n-1}=\frac{x^n-1}{x-1}$ for $x\ne1$.
+  \item \textbf{Any root.} Put $x=\sqrt[k]a$ and $y=\sqrt[k]b$: a conjugate for $k$-th roots. Tool 06 is the case $k=2$.
+\end{itemize}
+
+\begin{example}{$x^3$ is continuous at $2$}
+Factor:
+\[ |x^3-8|=|x-2|\,|x^2+2x+4| . \]
+Restrict $|x-2|<1$. Then $1<x<3$, so
+\[ x^2+2x+4<9+6+4=19 , \]
+and $|x^3-8|<19\,|x-2|$. Take $\delta=\min\{1,\frac\eps{19}\}$.
+\end{example}
+
+\trap{The bracket has $n$ terms, every mixed product included: $x^3-y^3\ne(x-y)(x^2+y^2)$. Check with $x=2$, $y=1$: $7$
+against $5$.}
+
+\begin{yourturn}
+\task{t:poly}With $\eps$ and $\delta$: $f(x)=x^3-x$ is continuous at $x_0=2$.
+\end{yourturn}
+
+% =====================================================================================
+\section{Exponents}
+
+\opening{W}{hen $n$ sits} in an exponent, as in $q^n$, $\sqrt[n]a$, $\sqrt[n]n$ or $\frac n{2^n}$, algebra cannot solve for it.
+The tools of this part trade the power for a polynomial that bounds it from below, and a polynomial you can solve.
+
+\subsection{Tool 08\quad Bernoulli: a power grows at least linearly}
+\[ (1+h)^n\ge1+nh\qquad\text{for } h\ge-1,\ n\in\N \]
+\pf{Induction. For $n=1$ both sides are equal. Step:
+\[
+\begin{aligned}
+(1+h)^{n+1} &= (1+h)^n(1+h)\\
+&\ge (1+nh)(1+h)\\
+&= 1+(n+1)h+nh^2\\
+&\ge 1+(n+1)h .
+\end{aligned}
+\]
+The first $\ge$ multiplies an inequality by $1+h$. That keeps its direction only if $1+h\ge0$: there is the hypothesis
+$h\ge-1$.}
+
+For $h\ge0$ this is the first two terms of the binomial theorem, the rest being $\ge0$. Bernoulli's gift is that it also holds
+for $-1\le h<0$.
+
+\emph{Use 1: $q^n\to0$ for $0<|q|<1$.} Write $\frac1{|q|}=1+h$ with $h>0$. Then
+\[
+\begin{aligned}
+|q^n| &= \frac1{(1+h)^n}\\
+&\le \frac1{1+nh}\\
+&< \frac1{nh} ,
+\end{aligned}
+\]
+and $\frac1{nh}<\eps$ for $n>\frac1{h\eps}$.
+
+\emph{Use 2: name the excess.} Claim: $\sqrt[n]a\to1$ for $a>1$. Since $a>1$, also $\sqrt[n]a>1$ (Tool 07, monotonicity), so
+write $\sqrt[n]a=1+h_n$ with $h_n>0$. Raise to the $n$-th power:
+\[
+\begin{aligned}
+a &= (1+h_n)^n\\
+&\ge 1+nh_n ,
+\end{aligned}
+\]
+so $0<h_n\le\frac{a-1}n$. That is $|\sqrt[n]a-1|\le\frac{a-1}n$, the goal shape. The pattern: when you suspect $x_n\to1$ and
+$x_n$ is defined by a power, call the excess $h_n$, push the defining equation through Bernoulli, and $h_n$ is trapped.
+
+\emph{Use 3:} $(1+\frac1n)^n\ge1+n\cdot\frac1n=2$.
+
+\when{$n$ in an exponent over a base near $1$: $q^n$, $\sqrt[n]a$, $(1+\frac1n)^n$. Also $q^n\to\infty$ for $q>1$, since
+$q^n\ge1+n(q-1)$.}
+\trap{Bernoulli bounds a power from \emph{below}. That helps when the power sits in a denominator, as in $q^n=\frac1{(1+h)^n}$,
+or must be shown large. It can never show that a power is small.}
+
+\begin{yourturn}
+\task{t:bern1}With the definition: $\bigl(\frac23\bigr)^n\to0$. Give $N$ explicitly.
+\task{t:bern2}$0<a<1\Rightarrow\sqrt[n]a\to1$.
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{Tool 09\quad Keep a later binomial term}
+\[ (1+h)^n\ge\binom nk h^k\qquad\text{for } h\ge0,\ 0\le k\le n \]
+The one you will use most, $k=2$:
+\[ (1+h)^n\ge\frac{n(n-1)}2\,h^2\qquad(n\ge2) . \]
+\pf{$(1+h)^n=\sum_{j=0}^n\binom nj h^j$. For $h\ge0$ every term is $\ge0$, and a sum of nonnegative terms is at least any one
+of them.}
+
+\textbf{Why Bernoulli is not enough.} Take $\sqrt[n]n\to1$ and name the excess: $\sqrt[n]n=1+h_n$ with $h_n\ge0$. Bernoulli
+gives $n\ge1+nh_n$, so $h_n\le\frac{n-1}n<1$. True, and useless: it does not tend to $0$. The power has to beat $n$, which is
+itself a line, and Bernoulli's line cannot beat a line. Keep the quadratic term instead:
+\[
+\begin{aligned}
+n &= (1+h_n)^n\\
+&\ge \frac{n(n-1)}2\,h_n^2 ,
+\end{aligned}
+\]
+so $h_n^2\le\frac2{n-1}$ and
+\[ 0\le h_n\le\sqrt{\frac2{n-1}}\qquad(n\ge2) . \]
+That tends to $0$; it is $<\eps$ as soon as $n>1+\frac2{\eps^2}$.
+
+\textbf{The rule:} to beat $n^k$, keep the term $k+1$.
+
+\emph{Second use: $\frac n{2^n}\to0$.} $2^n=(1+1)^n\ge\binom n2=\frac{n(n-1)}2$, so
+\[
+\begin{aligned}
+\frac n{2^n} &\le \frac{2n}{n(n-1)}\\
+&= \frac2{n-1} .
+\end{aligned}
+\]
+The same works for $\frac{n^k}{b^n}$ with any $b>1$: write $b=1+h$ and keep the term $k+1$.
+
+\when{$\sqrt[n]n$; a power of $n$ against an exponential, such as $\frac{n^k}{b^n}$.}
+\trap{$h<0$. Then the terms alternate in sign, and dropping them is illegal. Below $0$ only Bernoulli survives.}
+
+\begin{yourturn}
+\task{t:binom}With the definition: $\dfrac{n^2}{2^n}\to0$.
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{\texorpdfstring{Tool 10\quad Two and three: the stand-ins for $e$}{Tool 10: two and three, the stand-ins for e}}
+\[ 2\le\Bigl(1+\frac1n\Bigr)^n\le3\qquad(n\ge1) \]
+and, a little sharper,
+\[ \Bigl(1+\frac1n\Bigr)^n\ge\frac94\qquad(n\ge2) . \]
+Your Skript, up to chapter~4, never proves $(1+\frac1n)^n\to e$. Using that limit, or $(1-\frac1k)^k\to\frac1e$ as in your
+Übung~4, assumes a theorem you do not have. Nearly every time it shows up, a bound is all you need.
+
+\pf{The $2$ is Bernoulli (Tool 08). For $\frac94$, keep three binomial terms:
+\[
+\begin{aligned}
+\Bigl(1+\frac1n\Bigr)^n &\ge 1+n\cdot\frac1n+\binom n2\frac1{n^2}\\
+&= 2+\frac{n-1}{2n}\\
+&\ge 2+\frac14 .
+\end{aligned}
+\]
+For the $3$, take the binomial theorem term by term. For $k\ge1$,
+\[
+\begin{aligned}
+\binom nk\frac1{n^k} &= \frac{n(n-1)\cdots(n-k+1)}{k!\;n^k}\\
+&\le \frac1{k!}\\
+&\le \frac1{2^{k-1}} ,
+\end{aligned}
+\]
+since each of the $k$ factors on top is at most $n$, and $k!=1\cdot2\cdots k\ge2^{k-1}$. Summing,
+$(1+\frac1n)^n\le1+\bigl(1+\frac12+\frac14+\cdots\bigr)=3$.}
+
+\textbf{Where it lives: the ratio test with $n!$ and $n^n$.} The Skript's ratio test wants one fixed $\theta<1$ with
+$\bigl|\frac{a_{n+1}}{a_n}\bigr|\le\theta$ from some $n$ on. The bounds give that $\theta$.
+
+\begin{twocol}{40mm}{Series}{The ratio, and the verdict}
+\row{$\displaystyle\sum\frac{n!}{n^n}$}{$\dfrac1{(1+\frac1n)^n}\le\dfrac12$: convergent}
+\row{$\displaystyle\sum\frac{n^n}{n!\,4^n}$}{$\dfrac{(1+\frac1n)^n}4\le\dfrac34$: convergent}
+\row{$\displaystyle\sum\frac{2^n\,n!}{n^n}$}{$\dfrac2{(1+\frac1n)^n}\le\dfrac89$ for $n\ge2$: convergent. The bound $2$ only
+gives $\le1$, which proves nothing.}
+\row{$\displaystyle\sum\frac{n^n}{n!\,2^n}$}{$\dfrac{(1+\frac1n)^n}2\ge1$: the terms never shrink, so they do not tend to
+$0$: divergent}
+\end{twocol}
+
+\trap{Writing ``$\to e$''. Whatever its truth, the Skript has not proved it. Write the bound.}
+\trap{A ratio $\le1$ proves nothing. You need one fixed $\theta<1$. If $2$ is too weak, use $\frac94$.}
+
+\begin{yourturn}
+\task{t:e}Convergent or divergent: $\displaystyle\sum_{n\ge1}\frac{(2n)!}{n!\;n^n}$.
+\end{yourturn}
+
+% ------------------------------------------------------------------------------------
+\subsection{\texorpdfstring{Tool 11\quad $\exp$ beats every power}{Tool 11: exp beats every power}}
+\[ \exp x\ge\frac{x^k}{k!}\qquad\text{for } x\ge0,\ k\ge0 \]
+In particular $\exp x\ge1+x$ and $\exp x\ge1+x+\frac{x^2}2$ for $x\ge0$.
+
+\pf{$\exp x=\sum_{j\ge0}\frac{x^j}{j!}$. For $x\ge0$ every term is $\ge0$, so the sum is at least any finite part of it.
+The same move as Tool 09.}
+
+\emph{At infinity.} Keep the term $k+1$, as in Tool 09:
+\[
+\begin{aligned}
+\frac{x^k}{\exp x} &\le \frac{x^k\,(k+1)!}{x^{k+1}}\\
+&= \frac{(k+1)!}x\ \longrightarrow\ 0 .
+\end{aligned}
+\]
+\emph{Near $0$.} For $|x|\le1$, using $|x|^{j-1}\le1$ and $\frac1{j!}\le\frac1{2^{j-1}}$ from Tool 10:
+\[
+\begin{aligned}
+|\exp x-1| &= \Bigl|\sum_{j\ge1}\frac{x^j}{j!}\Bigr|\\
+&\le |x|\sum_{j\ge1}\frac{|x|^{j-1}}{j!}\\
+&\le |x|\sum_{j\ge1}\frac1{2^{j-1}}\\
+&= 2|x| .
+\end{aligned}
+\]
+With $\exp x-\exp x_0=\exp x_0\,\bigl(\exp(x-x_0)-1\bigr)$ this gives continuity everywhere:
+\[ |\exp x-\exp x_0|\le2\exp(x_0)\,|x-x_0|\qquad\text{for } |x-x_0|\le1 . \]
+
+\when{$\exp$ against a power at infinity; $\exp$ near a point.}
+\trap{Dropping terms needs $x\ge0$. For $x<0$ the terms alternate in sign.}
+
+\begin{yourturn}
+\task{t:exp}With the definition: $\exp\bigl(\frac1n\bigr)\to1$.
+\end{yourturn}
+
+% =====================================================================================
+\section{Sums}
+
+\opening{A}{series is} the sequence of its partial sums, and you can almost never compute a partial sum. Two kinds you can:
+geometric sums and telescopes. Everything else is compared to one of those, or bounded block by block.
+
+\subsection{Tool 12\quad Telescopes and blocks}
+\[ \sum_{k=2}^n\Bigl(\frac1{k-1}-\frac1k\Bigr)=1-\frac1n \]
+\pf{Write it out: $(1-\frac12)+(\frac12-\frac13)+\dots+(\frac1{n-1}-\frac1n)$. Each term cancels a piece of its neighbour; the
+first and the last survive.}
+
+\textbf{Compare with a telescope.} For $k\ge2$,
+\[
+\begin{aligned}
+\frac1{k^2} &\le \frac1{k(k-1)}\\
+&= \frac1{k-1}-\frac1k ,
+\end{aligned}
+\]
+so
+\[
+\begin{aligned}
+\sum_{k=1}^n\frac1{k^2} &\le 1+\Bigl(1-\frac1n\Bigr)\\
+&< 2 .
+\end{aligned}
+\]
+The partial sums increase and stay below $2$, so $\sum\frac1{k^2}$ converges by monotone convergence. Partial fractions build
+the telescopes:
+\[ \frac1{(k+a)(k+b)}=\frac1{b-a}\Bigl(\frac1{k+a}-\frac1{k+b}\Bigr)\qquad(a\ne b) . \]
+And for a geometric comparison, $\frac1{k!}\le\frac1{2^{k-1}}$ (Tool 10).
+
+\textbf{Bound a block.} A block of $m$ terms lies between $m$ times its smallest term and $m$ times its largest. The harmonic
+series:
+\[
+\begin{aligned}
+\frac1{n+1}+\dots+\frac1{2n} &\ge n\cdot\frac1{2n}\\
+&= \frac12 .
+\end{aligned}
+\]
+So $s_{2n}-s_n\ge\frac12$ for every $n$. The partial sums are not a Cauchy sequence (play $\eps=\frac12$ with $m=2n$), and
+$\sum\frac1k$ diverges.
+
+\par\needspace{62mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,width=.88\linewidth,height=46mm,xmin=0.3,xmax=16.7,ymin=0,ymax=1.08,
+  xlabel={$k$},xtick={1,4,5,8,12,16},ytick={0.125,0.5,1},yticklabels={$\frac18$,$\frac12$,$1$}]
+  \addplot[ybar,bar width=5pt,draw=kldim,fill=klfaint,samples at={1,...,16}] {1/x};
+  \addplot[ybar,bar width=5pt,draw=klhi,pattern={dither25},pattern color=klink,samples at={5,...,8}] {1/x};
+  \draw[klhi,dashed,line width=.6pt] (axis cs:4.4,0.125)--(axis cs:8.6,0.125);
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{The block $k=5,\dots,8$ (that is, $n=4$): four bars, none lower than the last one, $\frac18$ (dashed). So the block
+sums to at least $4\cdot\frac18=\frac12$. Every block from $n+1$ to $2n$ does the same, so the partial sums keep climbing.}
+
+\when{bounding partial sums: a product in the denominator (partial fractions), terms like $\frac1{k^2}$ or $\frac1{k!}$;
+divergence through the Cauchy criterion: a block that stays $\ge c>0$.}
+\trap{The index. $\frac1{k(k-1)}$ starts at $k=2$; the term $k=1$ needs its own line.}
+
+\begin{yourturn}
+\task{t:tel}Compute $\displaystyle\sum_{k\ge1}\frac1{k(k+2)}$.
+\task{t:block}$\displaystyle\sum_{k\ge1}\frac1{\sqrt k}$ diverges.
+\end{yourturn}
+
+% =====================================================================================
+\section{Freezing}
+
+\opening{I}{n an $\eps$-$\delta$ proof} the trouble is rarely the small factor. It is the other one.
+
+\subsection{\texorpdfstring{Tool 13\quad Restrict $\delta$}{Tool 13: restrict delta}}
+For $f(x)=x^2$ at $x_0$:
+\[ |x^2-x_0^2|=|x-x_0|\,|x+x_0| . \]
+The first factor is what $\delta$ controls. The second moves with $x$, and $\delta$ is not allowed to depend on $x$. So
+freeze it. Promise first that $|x-x_0|<1$. That traps $x$ in a fixed interval, and there the second factor has a fixed bound,
+by Tool 01:
+\[
+\begin{aligned}
+|x+x_0| &= |(x-x_0)+2x_0|\\
+&\le |x-x_0|+2|x_0|\\
+&< 1+2|x_0| .
+\end{aligned}
+\]
+So $|x^2-x_0^2|<(1+2|x_0|)\,|x-x_0|$, which is $<\eps$ once $|x-x_0|<\frac\eps{1+2|x_0|}$. Both promises at once:
+\[ \delta=\min\Bigl\{1,\ \frac\eps{1+2|x_0|}\Bigr\} . \]
+$\delta$ must keep two promises: small enough to freeze, small enough to finish. The min keeps both, just as $N$, the max,
+satisfies every condition on $n$.
+
+\why{Why can't $\delta$ simply be $\frac\eps{|x+x_0|}$?}{Because of the order $\forall\eps\ \exists\delta\ \forall x$. You choose
+$\delta$ before the opponent chooses $x$, so $\delta$ may depend on $\eps$ and $x_0$, never on $x$. ``$\delta=\frac\eps{|x+x_0|}$''
+is a different number for every $x$, which is no choice at all. The restriction replaces the moving factor by its worst case on
+a fixed interval, and a worst case is a number.}
+
+\textbf{Choosing the radius.} The $1$ is arbitrary, until it is not. The restriction must keep $x$ away from every point where
+the frozen factor blows up: a zero of a denominator, the edge of the domain. Take $f(x)=\frac{x+1}{x-2}$ at $x_0=3$:
+\[
+\begin{aligned}
+f(x)-f(3) &= \frac{x+1}{x-2}-4\\
+&= \frac{-3\,(x-3)}{x-2} .
+\end{aligned}
+\]
+The frozen factor is $\frac3{|x-2|}$, and it explodes at $x=2$, at distance $1$ from $x_0$. With $|x-3|<1$ the point $x$ can
+come arbitrarily close to $2$: no bound. Take half the distance. $|x-3|<\frac12$ gives $x>\frac52$, so $x-2>\frac12$, and
+\[
+\begin{aligned}
+|f(x)-f(3)| &< \frac{3\,|x-3|}{1/2}\\
+&= 6\,|x-3| .
+\end{aligned}
+\]
+So $\delta=\min\{\frac12,\frac\eps6\}$.
+
+\par\needspace{70mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[klplot,width=.84\linewidth,height=56mm,xmin=1.6,xmax=5,ymin=0,ymax=14,clip=false,
+  xlabel={$x$},xtick={2,2.5,3,3.5,4},xticklabels={$2$,$\frac52$,$3$,$\frac72$,$4$},ytick={4},yticklabels={$4$}]
+  \fill[pattern={dither25},pattern color=klink] (axis cs:2.5,0) rectangle (axis cs:3.5,9.2);
+  \draw[kldim,dashed,line width=.5pt] (axis cs:2,0)--(axis cs:2,14);
+  \addplot[klhi,line width=.8pt,domain=2.24:5,samples=160] {(x+1)/(x-2)};
+  \fill[klhi] (axis cs:3,4) circle (1.6pt);
+  \draw[kldim,line width=.5pt,|-|] (axis cs:2,12.4)--(axis cs:4,12.4) node[right,text=kldim]{$|x-3|<1$};
+  \draw[klink,line width=.5pt,|-|] (axis cs:2.5,10.4)--(axis cs:3.5,10.4) node[right,text=klink]{$|x-3|<\frac12$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\plotcaption{The interval $|x-3|<1$ reaches the pole at $x=2$, where the factor $\frac3{|x-2|}$ has no bound. The interval
+$|x-3|<\frac12$ (shaded) stays clear of it, and there the factor is at most $6$.}
+
+\textbf{The rule:} restrict to half the distance from $x_0$ to the nearest bad point. For $\frac1x$ at $x_0\ne0$ that is
+$\frac{|x_0|}2$, and then $|x|>\frac{|x_0|}2$ by Tool 02.
+
+\when{$\eps$-$\delta$ where $|f(x)-f(x_0)|$ is $|x-x_0|$ times something that depends on $x$: polynomials, quotients, roots.}
+\trap{A restriction that reaches a bad point: $\delta\le1$ for $\frac1x$ at $x_0=\frac12$.}
+\trap{Forgetting the min. $\delta=\frac\eps{1+2|x_0|}$ alone fails for large $\eps$: at $x_0=0$ and $\eps=100$ it allows
+$x=50$, where $x^2=2500$.}
+
+\begin{yourturn}
+\task{t:delta}With $\eps$ and $\delta$: $f(x)=\frac1{x^2}$ is continuous at $x_0=1$.
+\end{yourturn}
+
+% =====================================================================================
+\section{The key}
+
+Answers and first moves only. Write each proof out in full, as for the test. If the first move is not enough, bring the
+attempt to \cmd{/exercise}.
+
+\keyline{t:uniq}Suppose $a\ne b$ and play $\eps=\frac{|a-b|}2$. For large $n$, insert $a_n$:
+$|a-b|\le|a-a_n|+|a_n-b|<|a-b|$.
+\keyline{t:sub}Cauchy with $\frac\eps2$ gives $N$. Fix one $k$ with $n_k\ge N$ and $|a_{n_k}-a|<\frac\eps2$. For $n\ge N$,
+insert $a_{n_k}$.
+\keyline{t:sign}Play $\eps=\frac{f(x_0)}2$. Then $f(x)>f(x_0)-\frac{f(x_0)}2>0$.
+\keyline{t:nullb}$|a_nb_n|\le K\,|a_n|$; choose $N$ for $\frac\eps K$. Unbounded: no, $a_n=\frac1n$ and $b_n=n^2$.
+\keyline{t:frac}$\bigl|a_n-\frac12\bigr|=\frac{7n-2}{4n^2+2n}\le\frac7{4n}$. $N>\frac7{4\eps}$.
+\keyline{t:half}$|a_n-2|=\frac{12n+3}{n^2-6n}$ for $n\ge7$, and $\le\frac{15n}{n^2/2}=\frac{30}n$ for $n\ge12$. $N\ge12$ and
+$N>\frac{30}\eps$.
+\keyline{t:conjA}$\frac32$. The conjugate gives $\frac3{\sqrt{1+3/n}+1}$, and $1\le\sqrt{1+\frac3n}\le1+\frac3n$.
+\keyline{t:conjB}$|\sqrt{x+1}-2|=\frac{|x-3|}{\sqrt{x+1}+2}\le\frac{|x-3|}2$. $\delta=2\eps$.
+\keyline{t:poly}$x^3-x-6=(x-2)(x^2+2x+3)$, and the bracket is $<18$ for $|x-2|<1$. $\delta=\min\{1,\frac\eps{18}\}$.
+\keyline{t:bern1}$\frac32=1+\frac12$: $\bigl(\frac23\bigr)^n\le\frac1{1+n/2}<\frac2n$. $N>\frac2\eps$.
+\keyline{t:bern2}$b=\frac1a>1$: $|\sqrt[n]a-1|=\frac{\sqrt[n]b-1}{\sqrt[n]b}\le\sqrt[n]b-1\le\frac{b-1}n$.
+\keyline{t:binom}Keep $k=3$: $2^n\ge\frac{n(n-1)(n-2)}6\ge\frac{n^3}{24}$ for $n\ge4$, since $n-1\ge\frac n2$ and
+$n-2\ge\frac n2$. So $\frac{n^2}{2^n}\le\frac{24}n$.
+\keyline{t:e}Divergent. The ratio is $\frac{2(2n+1)}{n+1}\cdot\frac1{(1+1/n)^n}\ge3\cdot\frac13=1$, so $a_n\ge a_1=2$.
+\keyline{t:exp}$|\exp(\frac1n)-1|\le\frac2n$ by Tool 11. $N>\frac2\eps$.
+\keyline{t:tel}$\frac34$. $\frac1{k(k+2)}=\frac12\bigl(\frac1k-\frac1{k+2}\bigr)$, so
+$s_n=\frac12\bigl(1+\frac12-\frac1{n+1}-\frac1{n+2}\bigr)$.
+\keyline{t:block}Every term up to $n$ is $\ge\frac1{\sqrt n}$, so $s_n\ge\frac n{\sqrt n}=\sqrt n$: unbounded.
+\keyline{t:delta}$\bigl|\frac1{x^2}-1\bigr|=\frac{|x-1|\,|x+1|}{x^2}<10\,|x-1|$ for $|x-1|<\frac12$.
+$\delta=\min\{\frac12,\frac\eps{10}\}$.
+
+\begin{triggers}
+\trigger{The goal measures one pair, your information another}{Tool 01: insert the middle term; $\frac\eps2$ each; $N$ a max}
+\trigger{A denominator that moves: $b_n\to b\ne0$, or $\frac1x$}{Tool 02: $\eps=\frac{|b|}2$, then $|b_n|>\frac{|b|}2$}
+\trigger{A product of two moving factors}{Tool 03: change one factor at a time}
+\trigger{$|a_n-a|$ is a fraction of polynomials}{Tool 04: one fraction, top up, bottom down, to $\frac Cn$}
+\trigger{A minus sign in a denominator}{Tool 05: keep half; $n_0$ goes into $N$}
+\trigger{A difference of roots}{Tool 06: the conjugate}
+\trigger{A difference of powers; $\eps$-$\delta$ for a polynomial}{Tool 07: factor out $x-x_0$}
+\trigger{$q^n$, $\sqrt[n]a$}{Tool 08: Bernoulli; name the excess $h_n$}
+\trigger{$\sqrt[n]n$, $\frac{n^k}{b^n}$}{Tool 09: keep the binomial term $k+1$}
+\trigger{$(1+\frac1n)^n$; $n!$ against $n^n$ in a ratio}{Tool 10: $2\le(1+\frac1n)^n\le3$, and $\frac94$ from $n=2$}
+\trigger{$\exp$ against a power}{Tool 11: $\exp x\ge\frac{x^{k+1}}{(k+1)!}$}
+\trigger{Partial sums}{Tool 12: telescope, geometric sum, or a block}
+\trigger{$\eps$-$\delta$ with a factor that moves with $x$}{Tool 13: restrict $\delta$ first; half the distance to the bad point}
+\end{triggers}
+
+\begin{deck}
+\card{Why}{Why may you drop the $-1$ in $\frac{6n-1}{n^2}$, but not the $-5$ in $\frac1{n^2-5}$?}{Dropping a minus on top makes
+the fraction bigger: allowed. Dropping one below makes it smaller: forbidden. Keep half: $n^2-5\ge\frac{n^2}2$ for $n\ge4$.}
+\card{Trigger}{You must show $b_n\to a$, and you know $a_n\to a$ and $a_n-b_n\to0$. Reach for?}{Insert $a_n$, the triangle
+inequality, $\frac\eps2$ each, $N=\max\{N_1,N_2\}$.}
+\card{Trigger}{A denominator $b_n$ with $b_n\to b\ne0$. Reach for?}{Play $\eps=\frac{|b|}2$; the reverse triangle inequality
+gives $|b_n|>\frac{|b|}2$.}
+\card{Why}{Why does Bernoulli fail for $\sqrt[n]n\to1$, and what works?}{$n\ge1+nh_n$ only gives $h_n<1$: a line cannot beat a
+line. Keep the quadratic term: $n\ge\frac{n(n-1)}2h_n^2$, so $h_n\le\sqrt{\frac2{n-1}}$.}
+\card{Why}{Why $\delta=\min\{1,\frac\eps C\}$ and not $\frac\eps{|x+x_0|}$?}{$\delta$ is chosen before $x$, so it cannot depend on
+$x$. The $1$ freezes the moving factor at its worst case $C$; the min keeps both promises.}
+\end{deck}
+
+\end{document}

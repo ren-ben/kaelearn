@@ -24,18 +24,21 @@ gets tested against them.
 | First review of the 14 rigid-body concepts (EP1, folios physics 01 and 02) | 2026-11-16 |
 | First review of the 10 LA concepts (test pool) | 2026-11-17 |
 | ANA Übungstest: work the 14-day plan of folio 01 (Part X); Day 10 is a timed mock via `/exam` | daily from 2026-11-22 |
-| First review of the 22 concepts met in folio 01 (Sixteen Moves) | 2026-11-28 |
+| Folio 02 (Bigger and Simpler): read it with Day 1 of the plan; tasks T01–T17 spread over Days 2–4 | 2026-11-22 |
+| First review of the 22 concepts met in folio 01 (Sixteen Moves) and the 2 of folio 02 | 2026-11-28 |
 
 ## Analysis
 
 Analysis 1 (ANA) · Cummings, *Real Analysis*. Übungstest (open questions) on Skript ch. 1–4: the playbook is
-[[01-sixteen-moves.pdf]].
+[[01-sixteen-moves.pdf]]; its estimate toolbox, taken apart tool by tool, is [[02-bigger-and-simpler.pdf]].
 
 ```mermaid
 flowchart LR
   subgraph RN[Real numbers]
     F[Field] --> AV[Absolute value] --> PN[p-norm]
     BI[Bernoulli inequality]
+    AV --> TI[Triangle inequality] --> ES[Estimate]
+    BI --> ES
     SUP[Supremum] --> AR[Archimedean property]
     SUP --> NI[Nested intervals]
     CS[Countable set]
@@ -64,6 +67,7 @@ flowchart LR
   end
   IP --> SUR
   AR --> CV
+  ES --> CV
   SUP --> MC
   NI --> BW
   CY --> CT
@@ -75,14 +79,16 @@ flowchart LR
 | Concept | Level | Next | Folio | Last evidence |
 |---|---|---|---|---|
 | [[Field]] | 1 | 2026-10-19 | [[01-sixteen-moves.pdf]] | 2026-10-12 ANA UE01/1: checked $\mathbb{Z}_2$, one case argued by an instance |
-| [[Absolute value]] | 1 | 2026-10-19 | [[01-sixteen-moves.pdf]] | 2026-10-12 ANA UE01/2: (a) clean, (b) key step unproved |
+| [[Absolute value]] | 1 | 2026-10-19 | [[01-sixteen-moves.pdf]], [[02-bigger-and-simpler.pdf]] | 2026-10-12 ANA UE01/2: (a) clean, (b) key step unproved |
 | [[p-norm]] | 1 | 2026-10-19 | | 2026-10-12 ANA UE01/3: sets right, inclusions from the sketch |
 | [[Image and preimage]] | 1 | 2026-10-19 | [[01-sixteen-moves.pdf]] | 2026-10-12 ANA UE01/4: all eight right; arrows in (a) mistyped |
 | [[Injective function]] | 1 | 2026-10-19 | [[01-sixteen-moves.pdf]] | 2026-10-12 ANA UE01/5: all verdicts right |
 | [[Surjective function]] | 1 | 2026-10-19 | [[01-sixteen-moves.pdf]] | 2026-10-12 ANA UE01/5: verdicts right; reversed inequality in 5c |
 | [[Inverse function]] | 1 | 2026-10-19 | [[01-sixteen-moves.pdf]] | 2026-10-12 ANA UE01/5b: $f_2^{-1}=f_2$, with $f^{-1}\neq 1/f$ noted |
 | [[Strictly monotone function]] | 1 | 2026-10-19 | [[01-sixteen-moves.pdf]] | 2026-10-12 ANA UE01/6: right structure, wrong reason cited |
-| [[Bernoulli inequality]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01; used in UE02/1 |
+| [[Bernoulli inequality]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]], [[02-bigger-and-simpler.pdf]] | 2026-11-21 folio 01; used in UE02/1 |
+| [[Triangle inequality]] | 1 | 2026-11-28 | [[02-bigger-and-simpler.pdf]] | 2026-11-21 folio 02, Tools 01–02; asked what "a difference must be split" means |
+| [[Estimate]] | 1 | 2026-11-28 | [[02-bigger-and-simpler.pdf]] | 2026-11-21 folio 02, keystone; asked why a minus sign in a denominator matters |
 | [[Supremum]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01, Move 02 and keystone |
 | [[Archimedean property]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01; cited in UE02/3 |
 | [[Nested intervals]] | 1 | 2026-11-28 | [[01-sixteen-moves.pdf]] | 2026-11-21 folio 01 |
